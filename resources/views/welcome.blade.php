@@ -65,7 +65,7 @@
           <h3>CRUD</h3>
           <img src="../assets/images/crud.png" alt="CRUD Table"/>
           <h3>ERD</h3>
-          <img src="../assets/images/erd.png" alt="Entity Relationship Diagram"/>
+          <img src="images/erd.png" alt="Entity Relationship Diagram"/>
         </div>
       </div>
     </div>
