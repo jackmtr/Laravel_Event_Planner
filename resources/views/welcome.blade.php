@@ -13,16 +13,16 @@
             <li>Phil Weier</li>
             <li>Hassan Hosseinpour</li>
             <li>Jackie Cheng</li>
-            <li>Rosalia M</li>
-            <li>Slav D</li>
+            <li>Rosalia Matzumiya</li>
+            <li>Slav Dujakoviz</li>
           </ul>
           <h3>Resources</h3>
           <ul>
-            <li><a href-"https://app.zeplin.io/project.html#pid=571519d7c7312f087aaab277&dashboard">Wireframes</a></li>
-            <li><a href-"https://github.com/philweier/istuary_event_crm.git">GitHub Repo</a></li>
-            <li><a href-"http://ec2-54-187-26-151.us-west-2.compute.amazonaws.com:5000/">Istuary UI Framework</a></li>
-            <li><a href-"https://bcit-istuary.slack.com">Slack</a></li>
-            <li><a href-"https://docs.google.com/spreadsheets/d/1f8GCFfC76Y-VBU9_Vw1UOBd4wKu5u1xAUujHznWfXGo/edit?ts=5715686f#gid=0">Scrum Document</a></li>
+            <li><a href="https://app.zeplin.io/project.html#pid=571519d7c7312f087aaab277&dashboard">Wireframes</a></li>
+            <li><a href="https://github.com/philweier/istuary_event_crm.git">GitHub Repo</a></li>
+            <li><a href="http://ec2-54-187-26-151.us-west-2.compute.amazonaws.com:5000/">Istuary UI Framework</a></li>
+            <li><a href="https://bcit-istuary.slack.com">Slack</a></li>
+            <li><a href="https://docs.google.com/spreadsheets/d/1f8GCFfC76Y-VBU9_Vw1UOBd4wKu5u1xAUujHznWfXGo/edit?ts=5715686f#gid=0">Scrum Document</a></li>
           </ul>
           <h3>Functional requirments</h3>
           <ul>
@@ -35,7 +35,7 @@
                 <li>Invite individual guests to event</li>
                 <li>Invite previous event attendees to event</li>
                 <li>Update rsvp status for event guests</li>
-                <li>Assign table seating</li>
+                <li>Assign table seating with guests</li>
                 <li>Update guest attendance status at event</li>
                 <li>Support multiple event planner logins and track contacts added and guests checked in</li>
                 <li>Real-time updates of views to reflect changes to database</li>
@@ -43,12 +43,12 @@
             </li>
             <li>Important
               <ul>
-                <li>None so far</li>
+                <li>Display active event planners</li>
               </ul>
             </li>
             <li>Nice to have
               <ul>
-                <li>None so far</li>
+                <li>Buddy Seating</li>
               </ul>
             </li>
           </ul>
@@ -62,6 +62,8 @@
           </ul>
           <h3>Use Case</h3>
           <img src="../assets/images/usecase.png" alt="Use Case Diagram"/>
+          <h3>CRUD</h3>
+          <img src="../assets/images/crud.png" alt="CRUD Table"/>
           <h3>ERD</h3>
           <img src="../assets/images/erd.png" alt="Entity Relationship Diagram"/>
         </div>
