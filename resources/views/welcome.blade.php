@@ -61,11 +61,11 @@
             <li>Sass</li>
           </ul>
           <h3>Use Case</h3>
-          <img src="/images/Istuary_Events_UseCase_V1.0.png" alt="Use Case Diagram"/>
+          <img src="/images/Istuary_Events_UseCase_V1.0.png" alt="Use Case Diagram" width="600"/>
           <h3>CRUD</h3>
-          <img src="/images/Istuary_Events_Crud_V1.0.png" alt="CRUD"/>
+          <img src="/images/Istuary_Events_Crud_V1.0.png" alt="CRUD" width="600"/>
           <h3>ERD</h3>
-          <img src="images/erd.png" alt="Entity Relationship Diagram"/>
+          <img src="/images/ERD2016-04-20.png" alt="Entity Relationship Diagram" width="600"/>
         </div>
       </div>
     </div>
