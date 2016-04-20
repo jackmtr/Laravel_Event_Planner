@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/testdb', function(){
+    return User::all();
+});
 
 Route::auth();
 
