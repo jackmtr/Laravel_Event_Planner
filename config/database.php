@@ -1,5 +1,44 @@
 <?php
 
+$mysql = [];
+if (env("APP_ENV") == "production") {
+  $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+  $server = $url["host"];
+  $username = $url["user"];
+  $password = $url["pass"];
+  $db = substr($url["path"], 1);
+
+  $conn = new mysqli($server, $username, $password, $db);
+
+  $mysql = [
+    'driver' => 'mysql',
+    'host' => $host,
+    'port' => env('DB_PORT', '3306'),
+    'database' => $database,
+    'username' => $username,
+    'password' => $password,
+    'charset' => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix' => '',
+    'strict' => false,
+    'engine' => null,
+  ];
+} else {
+  $mysql = [
+    'driver' => 'mysql',
+    'host' => env('DB_HOST', 'localhost'),
+    'port' => env('DB_PORT', '3306'),
+    'database' => env('DB_DATABASE', 'forge'),
+    'username' => env('DB_USERNAME', 'forge'),
+    'password' => env('DB_PASSWORD', ''),
+    'charset' => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix' => '',
+    'strict' => false,
+    'engine' => null,
+  ];
+}
+
 return [
 
     /*
@@ -52,19 +91,7 @@ return [
             'prefix' => '',
         ],
 
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-            'strict' => false,
-            'engine' => null,
-        ],
+        'mysql' => $mysql,
 
         'pgsql' => [
             'driver' => 'pgsql',
