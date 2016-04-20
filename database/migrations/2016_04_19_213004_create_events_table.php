@@ -15,11 +15,16 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->increments('eventId');
             $table->string('eventName');
-            $table->string('status')->nullable();
+            $table->integer('event_status');
             $table->string('confirmedGuests')->nullable();
             $table->dateTime('eventTime')->nullable();
             $table->date('eventDate')->nullable();
             $table->string('location')->nullable();
+            $table->integer('number_of_tables')->nullable();
+            $table->integer('number_of_seats')->nullable();
+
+
+
 
         });
     }

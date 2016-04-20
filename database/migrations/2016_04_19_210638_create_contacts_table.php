@@ -22,7 +22,7 @@ class CreateContactsTable extends Migration
             $table->string('company')->nullable();
             $table->string('phoneNumber');
             $table->string('notes')->nullable();
-            $table->string('watchItId')->nullable();
+            $table->string('wichatId')->nullable();
 
         });
     }
