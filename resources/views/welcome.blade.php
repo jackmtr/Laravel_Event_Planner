@@ -66,6 +66,8 @@
           <img src="/images/Istuary_Events_Crud_V1.0.png" alt="CRUD" width="600"/>
           <h3>ERD</h3>
           <img src="/images/ERD2016-04-20.png" alt="Entity Relationship Diagram" width="600"/>
+          <h3>Timeline Plan</h3>
+          <img src="/images/Timeline.png" alt="Timeline Plan"/>
         </div>
       </div>
     </div>
