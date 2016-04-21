@@ -12,18 +12,18 @@ class CreateContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('contacts', function(Blueprint $table){
             $table->increments('contactId');
-            $table->timestamps();
-            $table->string('firstName');
-            $table->string('lastName');
+            $table->string('fname');
+            $table->string('lname');
             $table->string('email')->unique();
-            $table->string('occupation')->nullable();
-            $table->string('company')->nullable();
-            $table->string('phoneNumber');
-            $table->string('notes')->nullable();
-            $table->string('wichatId')->nullable();
-
+            $table->string('occupation');
+            $table->string('company');
+            $table->string('wichat');
+            $table->longtext('notes');
+            $table->integer('addedBy')->unsigned();
+            $table->timestamps();
+            $table->foreign('addedBy')->references('userId')->on('users');
         });
     }
 
