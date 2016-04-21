@@ -13,6 +13,7 @@ class EventsTableSeeder extends Seeder
     public function run()
     {
         //
+        DB::table('users')->delete();
         foreach(range(1,10)as $index){
 
             $faker = Faker::create();

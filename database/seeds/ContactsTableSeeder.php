@@ -13,6 +13,7 @@ class ContactsTableSeeder extends Seeder
     public function run()
     {
         //
+        DB::table('users')->delete();
         foreach(range(1,100)as $index){
 
             $faker = Faker::create();
