@@ -10,29 +10,32 @@ class InvitedContacts extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('invitedContacts', function (Blueprint $table) {
-            $table->increments('invited_contact_id')->unique();
-            $table->timestamps();
-            $table->integer('status_rsvp');
-            $table->integer('number_of_guests');
-            $table->integer('contactId')->unsigned();
-            $table->integer('userId')->unsigned();
 
+        public function up()
+        {
+            Schema::create('guestLists', function (Blueprint $table) {
+                $table->increments('guestListid');
+                $table->integer('additionalGuests');
+                $table->boolean('rsvp');
+                $table->integer('checkedInBy')->unsigned()->nullable();
+                $table->integer('contactId')->unsigned();
+                $table->integer('eventId')->unsigned();
+                $table->timestamps();
+                // foreign keys references
+                $table->foreign('checkedInBy')->references('userid')->on('users');
+                $table->foreign('contactId')->references('contactId')->on('contacts');
+                $table->foreign('eventId')->references('eventId')->on('events');
+            });
 
-            $table->foreign('contactId')->references('contactId')->on('contacts');
-            $table->foreign('userId')->references('userId')->on('users');
-        });
-    }
+        }
+            /**
+             * Reverse the migrations.
+             *
+             * @return void
+             */
+            public function down()
+            {
+                Schema::drop('guestLists');
+            }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::drop('invitedContacts');
-    }
 }

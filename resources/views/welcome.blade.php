@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="panel panel-default">
-        <div class="panel-heading">Project Outline</div>
+        <div class="panel-heading">Project Outline - Last Updated: 10:09pm April 20,2016</div>
 
         <div class="panel-body">
           <h3>Team Members</h3>
@@ -66,6 +66,8 @@
           <img src="/images/Istuary_Events_Crud_V1.0.png" alt="CRUD" width="600"/>
           <h3>ERD</h3>
           <img src="/images/ERD2016-04-20.png" alt="Entity Relationship Diagram" width="600"/>
+          <h3>Timeline Plan</h3>
+          <img src="/images/Timeline.PNG" alt="Timeline Plan"/>
         </div>
       </div>
     </div>

@@ -12,22 +12,17 @@ class EventTableSeats extends Migration
      */
     public function up()
     {
-        Schema::create('eventTableSeats', function (Blueprint $table) {
-            $table->increments('eventTableSeatId');
-            $table->timestamps();
-            $table->integer('tableNum');
-            $table->integer('seatNum');
-            $table->boolean('checkIn');
-            $table->integer('eventId')->unsigned();
-            $table->integer('invited_contact_id')->unsigned();
-            $table->integer('userid')->unsigned();
 
+            Schema::create('eventTableSeats', function (Blueprint $table) {
+                $table->increments('tableSeatingid');
+                $table->integer('tableNum');
+                $table->integer('seatNum');
+                $table->integer('guestListId')->unsigned();
+                $table->timestamps();
 
+                $table->foreign('guestListId')->references('guestListId')->on('guestLists');
+            });
 
-            $table->foreign('invited_contact_id')->references('invited_contact_id')->on('invitedContacts');
-            $table->foreign('eventId')->references('eventId')->on('events');
-            $table->foreign('userId')->references('userId')->on('users');
-        });
     }
 
     /**

@@ -12,9 +12,8 @@ if (env("APP_ENV") == "production") {
 
   $mysql = [
     'driver' => 'mysql',
-    'host' => $host,
-    'port' => env('DB_PORT', '3306'),
-    'database' => $database,
+    'host' => $server,
+    'database' => $db,
     'username' => $username,
     'password' => $password,
     'charset' => 'utf8',

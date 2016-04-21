@@ -27,12 +27,12 @@ class EventsTableSeeder extends Seeder
 
             DB::table('events')->insert([
                 'eventName'=> $fakeName,
-                'event_status'=>$fakeStatus,
-                'eventTime'=>$fakeEventTime,
-                'eventDate' => $fakeEventDate,
+                'eventStatus'=>$fakeStatus,
+                'time'=>$fakeEventTime,
+                'date' => $fakeEventDate,
                 'location' => $fakeLocation,
-                'number_of_tables' => $fakeNumTables,
-                'number_of_seats' => $fakeNumSeats,
+                'numOfTables' => $fakeNumTables,
+                'seatsPerTable' => $fakeNumSeats,
 
             ]);
 
