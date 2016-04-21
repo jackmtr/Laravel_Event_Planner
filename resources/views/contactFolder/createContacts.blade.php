@@ -2,14 +2,14 @@
 @section('content')
 	<h1>Create Contact</h1>
 
-    {!! Form::open(array('url' => 'events', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => true)) !!}
+    {!! Form::open(array('url' => 'contacts/create', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => true)) !!}
         <div class="form-group">
-            {!! Form::label('fname', 'First Name: ') !!}
-            {!! Form::text('fname', "", ['class' => 'form-control']) !!}
+            {!! Form::label('firstName', 'First Name: ') !!}
+            {!! Form::text('firstName', "", ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('lname', 'Last Name: ') !!}
-            {!! Form::text('lname', "", ['class' => 'form-control']) !!}
+            {!! Form::label('lastName', 'Last Name: ') !!}
+            {!! Form::text('lastName', "", ['class' => 'form-control']) !!}
         </div>   
         <div class="form-group">
             {!! Form::label('email', 'Email: ') !!}

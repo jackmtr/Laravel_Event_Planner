@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use App\Contact;
 use App\Http\Requests;
+//use Carbon\Carbon;
+use Request;
 
 class ContactController extends Controller
 {
@@ -25,11 +26,21 @@ class ContactController extends Controller
      */
     public function index()
     {
-    	return view('contactFolder.contacts');
+        $contacts = Contact::all()->toArray();
+
+    	return view('contactFolder.contacts', compact('contacts'));
     }
 
     public function create()
     {
         return view('contactFolder.createContacts');
+    }
+
+    public function store(Request $request){
+        $input = Request::all();
+
+        Contact::create($input);
+
+        return redirect('contacts');
     }
 }

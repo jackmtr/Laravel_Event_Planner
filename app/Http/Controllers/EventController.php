@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use App\Http\Requests;
-use Illuminate\Http\Request;
+//use Carbon\Carbon;
+use Request;
 
 class EventController extends Controller
 {
@@ -24,11 +26,25 @@ class EventController extends Controller
      */
     public function index()
     {
-        return view('eventFolder.events');
+        $openEvents = Event::where('event_status', 0)->get();
+        $checkInEvents = Event::where('event_status', 1)->get();
+        $completedEvents = Event::where('event_status', 2)->get();
+
+        return view('eventFolder.events', compact('openEvents', 'checkInEvents', 'completedEvents'));
     }
 
     public function create(){
         return view('eventFolder.createEvents');
+    }
+
+    public function store(){
+        
+        $input = Request::all();
+        $input['event_status'] = 0;
+        
+        Event::create($input);
+
+        return redirect('events');
     }
 
 }
