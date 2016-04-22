@@ -12,16 +12,16 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
-            $table->increments('eventid');
-            $table->string('eventName');
-            $table->date('date');
-            $table->datetime('time');
-            $table->string('location');
-            $table->longtext('description');
-            $table->integer('numOfTables');
-            $table->integer('seatsPerTable');
-            $table->integer('eventStatus');
+        Schema::create('events', function (Blueprint $table){
+            $table->increments('event_id');
+            $table->string('event_name');
+            $table->date('event_date');
+            $table->datetime('event_time');
+            $table->string('event_location');
+            $table->longtext('event_description');
+            $table->integer('num_of_tables');
+            $table->integer('seats_per_table');
+            $table->integer('event_status');
             $table->timestamps();
         });
     }

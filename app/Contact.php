@@ -7,15 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     protected $fillable = [
-    	'first_name',
-    	'last_name',
-		'email',
-		'occupation',
-		'company',
-		'wechat_id',
-		'notes',
-		//'user_id',
-		'added_by',
+    	'firstName',
+    	'lastName',
+    	'email',
+    	'occupation',
+    	'company',
+    	'notes',
     ];
 
     public $timestamps = false;

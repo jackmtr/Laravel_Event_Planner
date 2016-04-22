@@ -1,17 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
+<h1>
+    <div>
+        <h1>Active Events</h1>
+        <a href="{{ url('/events/create') }}"> (icon) Add Event</a>
+        <h4>Table with clickable open/checkin events</h4>
     </div>
-</div>
+    <div>
+        <h1>Ended Events</h1>
+        <h4>Table with clickable completed events</h4>
+    </div>
+</h1>
 @endsection
