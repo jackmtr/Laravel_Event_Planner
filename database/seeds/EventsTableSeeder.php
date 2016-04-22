@@ -12,31 +12,27 @@ class EventsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('users')->delete();
+        DB::table('events')->delete();
+
         foreach(range(1,10)as $index){
 
             $faker = Faker::create();
             $fakeName = $faker->country;
-            $fakeStatus = $faker->randomNumber($nbDigits = 1);
             $fakeEventTime = $faker->time($format = 'H:i:s', $max = 'now');
             $fakeEventDate = $faker->date($format = 'Y-m-d', $max = 'now');
             $fakeLocation = $faker->address;
             $fakeNumTables = $faker->randomDigitNotNull;
             $fakeNumSeats = $faker->randomDigitNotNull;
 
-
             DB::table('events')->insert([
-                'eventName'=> $fakeName,
-                'eventStatus'=>$fakeStatus,
-                'time'=>$fakeEventTime,
-                'date' => $fakeEventDate,
-                'location' => $fakeLocation,
-                'numOfTables' => $fakeNumTables,
-                'seatsPerTable' => $fakeNumSeats,
-
+                'event_name'=> $fakeName,
+                'event_status'=>0,
+                'event_time'=>$fakeEventTime,
+                'event_date' => $fakeEventDate,
+                'event_location' => $fakeLocation,
+                'num_of_tables' => $fakeNumTables,
+                'seats_per_table' => $fakeNumSeats,
             ]);
-
         }
     }
 }

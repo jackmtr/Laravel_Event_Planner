@@ -12,8 +12,8 @@ class ContactsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('users')->delete();
+        DB::table('contacts')->delete();
+
         foreach(range(1,100)as $index){
 
             $faker = Faker::create();
@@ -21,22 +21,18 @@ class ContactsTableSeeder extends Seeder
             $fakeLastName = $faker->lastName($gender=null);
             $fakeEmail = $faker->email;
             $fakeCompany = $faker->company;
-            $fakeNotes = $faker->realText($maxNbChars = 50, $indexSize = 2);
             $fakeWichat = $faker->email;
             $fakeAddedBy = $faker->numberBetween(1,2);
 
-
             DB::table('contacts')->insert([
-                'fname'=> $fakeFirstName,
-                'lname'=>$fakeLastName,
+                'first_name'=> $fakeFirstName,
+                'last_name'=>$fakeLastName,
                 'email'=>$fakeEmail,
                 'company' => $fakeCompany,
-                'notes' => $fakeNotes,
-                'wichat' => $fakeWichat,
+                'wechat_id' => $fakeWichat,
                 'occupation' => $fakeCompany,
-                'addedBy' => $fakeAddedBy,
+                'added_by' => $fakeAddedBy,
             ]);
-
         }
     }
 }
