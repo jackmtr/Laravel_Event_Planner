@@ -39,10 +39,10 @@ class ContactController extends Controller
 
     public function store(Request $request){
 
-        $authEmail = Auth::user()->email;
+        $authId = Auth::user()->user_id;
         //dd($authEmail);
         $input = Request::all();
-        $input["added_by"] = $authEmail;
+        $input["added_by"] = $authId;
         //dd($input);
 
         Contact::create($input);

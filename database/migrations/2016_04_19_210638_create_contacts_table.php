@@ -21,9 +21,9 @@ class CreateContactsTable extends Migration
             $table->string('company')->nullable();
             $table->string('wechat_id')->nullable();
             $table->longtext('notes')->nullable();
-            $table->string('added_by');
+            $table->integer('added_by')->unsigned();
             $table->timestamps();
-            $table->foreign('added_by')->references('email')->on('users');
+            $table->foreign('added_by')->references('user_id')->on('users');
         });
     }
 
