@@ -1,0 +1,74 @@
+/* ------------------------------
+  Variables - Color
+------------------------------ */
+
+/* ------ Project Theme ------ */
+
+// Project Colors
+$jade          : #1e8f98;
+$stone : #5f5f5f;
+$lime : #bed883;
+$forest : #647f29;
+$tan : #d8c383;
+$near-black : #332f2a;
+$wood : #725f22;
+$teal : #1cb0c1;
+$pretty-black : #202020;
+$lochness : #7fb88d;
+
+// System Default Colors
+$white   : #ffffff;
+//$black   : #252525;
+//$success : #3bc374;
+//$warning : #e6ca23;
+//$error   : #dd4627;
+
+// Grayscale
+$gray-10 : #ececec;
+$gray-20 : #eaeaea;
+$gray-30 : #a0a0a0;
+$gray-40 : #d8d8d8;
+
+// Shadows
+//$text-shadow       : 0 0 4px rgba(0, 0, 0, 0.35);
+//$box-shadow        : 0 0 4px 0 rgba(0, 0, 0, 0.30);
+//$inset-box-shadow  : inset 0 1px 2px 0 rgba(0,0,0,0.15);
+
+/* ------ Setting Colors ------ */
+
+// Main Colors
+$color-primary   : $jade;
+$color-secondary : $gray-10;
+
+// Main Color Shades
+//$color-primary-l-30 : lighten($color-primary, 45%);
+//$color-primary-l-20 : lighten($color-primary, 20%);
+//$color-primary-l-10 : lighten($color-primary, 5%);
+//$color-primary-d-10 : darken($color-primary, 5%);
+//$color-primary-d-20 : darken($color-primary, 10%);
+//$color-primary-d-30 : darken($color-primary, 20%);
+
+//$color-secondary-l-30 : lighten($color-secondary, 45%);
+//$color-secondary-l-20 : lighten($color-secondary, 20%);
+//$color-secondary-l-10 : lighten($color-secondary, 5%);
+//$color-secondary-d-10 : darken($color-secondary, 5%);
+//$color-secondary-d-20 : darken($color-secondary, 10%);
+//$color-secondary-d-30 : darken($color-secondary, 20%);
+
+// Background Colors
+$color-bg-body   : $white;
+$color-bg-header : $jade;
+$color-bg-main   : $gray-10;
+//$color-bg-footer : $gray-20;
+
+// Border Colors
+//$color-border : $gray-20;
+
+// Text
+$color-text-body       : $near-black;
+$color-text-heading-h1 : $white;
+$color-text-heading-h2 : $stone;
+$color-text-heading-h3 : $stone;
+$color-text-heading-h4 : $gray-40;
+$color-link            : $color-primary;
+$color-link-hover      : $color-primary-l-10;

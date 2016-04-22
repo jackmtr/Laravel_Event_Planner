@@ -1,0 +1,49 @@
+/* ------------------------------
+  Loaders
+------------------------------ */
+
+/* ----- Progress Bar ----- */
+
+.progress-wrapper {position: relative;}
+
+.progress-text {
+  margin-top: 0;
+  padding-right: $spacing-x-large;
+  + .progress-bar {margin-top: $spacing-medium;}
+}
+
+.progress-bar {
+  height: 15px;
+  background-color: $gray-20;
+  border-radius: 8px;
+}
+
+.progress-number {
+  position: absolute;
+  top: -3px;
+  right: 0;
+  font-size: $font-size-large;
+}
+
+.progress {
+  height:100%;
+  background-color: $color-primary;
+  border-radius: 8px;
+  font-size:0;
+}
+
+/* ----- Spinner ----- */
+
+.spinner {
+  text-align: center;
+  i {
+    color: $gray-30;
+    font-size: $font-size-xx-large;
+  }
+  &.small {
+    i {font-size: $font-size-large;}
+  }
+  &.large {
+    i {font-size: $font-size-xx-large + 16;}
+  }
+}

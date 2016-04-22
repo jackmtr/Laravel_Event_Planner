@@ -1,0 +1,189 @@
+/* ------------------------------
+  Helpers
+------------------------------ */
+
+/* ----- Text Style ----- */
+
+// Text Sizes
+.text-xx-large {
+	font-size: $font-size-xx-large;
+}
+.text-x-large {
+	font-size: $font-size-x-large;
+}
+.text-large {
+	font-size: $font-size-large;
+}
+.text-default {
+	font-size: $font-size-default;
+}
+.text-small {
+	font-size: $font-size-small;
+}
+
+// Text Transform
+.text-capitalize {
+	text-transform: capitalize;
+}
+
+// Text Color
+.text-primary {
+	color: $color-primary !important;
+}
+.text-secondary {
+	color: $color-secondary !important;
+}
+.text-white {
+	color: $white !important;
+}
+.text-black {
+	color: $black !important;
+}
+
+// Paragraph Block
+.full-width {
+	width: 100% !important;
+}
+
+// Text transform
+.lowercase {
+	text-transform: lowercase !important;
+}
+.uppercase {
+	text-transform: uppercase !important;
+}
+.capitalize {
+	text-transform: capitalize !important;
+}
+.strike {
+	text-decoration:line-through !important;
+}
+
+/* ----- Border ---- */
+
+.border-primary {
+	border: $border-thin solid $color-primary;
+}
+
+.border-gray {
+	border: $border-thin solid $gray-20;
+}
+
+/* ----- Hr ---- */
+
+.hr-thin {
+  border-width: $border-thin 0 0;
+}
+.hr-thick {
+  border-width: $border-thick 0 0;
+}
+
+/* ----- Inline Children Positioning ---- */
+
+.child-left {
+	text-align: left !important;
+}
+.child-center {
+	text-align: center !important;
+}
+.child-right {
+	text-align: right !important;
+}
+
+/* ----- Positioning ---- */
+
+.center-all {
+	position: absolute;
+	top:50%;
+	left: 50%;
+	@include transform(-50%, -50%);
+}
+.center-vertical {
+	position:absolute;
+	top: 50%;
+	@include transform(0, -50%);
+}
+.center-horizontal {
+	margin-left: auto;
+	margin-right: auto;
+}
+.float-left {
+	float: left !important;
+}
+.float-right {
+	float: right !important;
+}
+.relative {
+	position: relative;
+}
+
+/* ----- Display and Visibility ----- */
+
+.invisible {
+	visibility: hidden;
+}
+.hide {
+	display: none;
+}
+.inline {
+	display: inline !important;
+}
+.block {
+	display: block !important;
+}
+.overflow-hidden {
+	overflow: hidden;
+}
+.overflow-auto {
+	overflow: auto;
+}
+.overflow-visible {
+	overflow: visible;
+}
+.overflow-ellipsis {
+	overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ----- Responsive Utilities ----- */
+
+.show-phone {
+	@include tablet-and-up {display: none};
+}
+.show-mobile {
+	@include laptop-and-up {display: none};
+}
+.show-tablet-only {
+	display: none;
+	@include tablet-and-up {display: block};
+	@include laptop-and-up {display: none};
+}
+.show-tablet-and-up {
+	display: none;
+	@include tablet-and-up {display: block};
+}
+.show-laptop-and-up {
+	display: none;
+	@include laptop-and-up {display: block};
+}
+
+/* ----- Others ----- */
+
+// Change to Default List Style
+.default-list-style {
+	margin: 10px 0;
+	padding-left: 1.5em;
+	list-style: disc;
+	li {margin: 10px 0;}
+}
+
+// Sticky
+.sticky-left {
+	bottom: initial !important;
+	left: initial !important;
+}
+.sticky-right {
+	bottom: initial !important;
+	right: initial !important;
+}

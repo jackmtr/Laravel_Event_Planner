@@ -1,2 +1,133 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+/**
+ * Istuary UI Framework
+ * @author: Elle Kasai
+ * @version: 1.1.0, 2016-03-30
+ */
 
+// Setting
+@import "settings/normalize";
+@import "settings/font";
+@import "settings/var-color";
+@import "settings/var-typography";
+@import "settings/var-layout";
+@import "settings/var-module";
+@import "settings/mixins";
+@import "settings/base";
+
+// Angular Animations
+@import "angular/angular-animate";
+
+// Layout
+@import "layout/grid";
+@import "layout/container";
+@import "layout/section";
+
+// Modules
+@import "modules/button";
+@import "modules/footer";
+@import "modules/form";
+@import "modules/helper";
+@import "modules/loaders";
+@import "modules/toast";
+@import "modules/pagination";
+@import "modules/panel";
+@import "modules/popup";
+@import "modules/status";
+@import "modules/table";
+@import "modules/tooltip";
+
+// Project
+@import "project/sg-variables";
+@import "project/sg-base";
+@import "project/sg-container";
+@import "project/sg-image";
+@import "project/sg-notes";
+@import "project/sg-side-nav";
+@import "project/sg-spacer";
+@import "project/sg-table";
+@import "project/sg-trigger-up";
+
+.clearfix{
+	overflow: auto;
+}
+
+.navbar{
+  background-color: $jade;
+   li{
+   	color: $white;
+   	list-style: none;
+   	font-size: $font-size-default;
+
+   }
+
+   li a{
+   	color: $white;
+   	font-size: $font-size-default;
+   }
+
+   ul {
+
+   }
+
+   .navbar-brand{
+   	color: $white;
+   	font-size: $font-size-x-large ;
+
+   }
+
+   .nav navbar-nav navbar-right{
+   	//float:right;
+   }
+
+   .navbar-header{
+   	width: 900px;
+   	float:left;
+   }
+
+   .navbar-collapse{}
+
+ }
+
+ .second-navbar{
+ 	height: 40px;
+ 	padding: 0;
+ 	li{
+ 		display: inline;
+ 	
+ 		a{
+ 			color: $stone;
+ 			padding: 10px 20px;
+ 			text-decoration: none;
+
+ 		}
+ 		a:hover{
+ 			color: $jade;
+ 		}
+ 	}
+
+ 	li:hover{
+
+ 	}
+ }
+
+ .second-navbar{
+ 	background-color: $light-grey;
+
+ 	li{
+   		list-style: none;
+   		font-size: $font-size-medium;
+   }
+
+   li a{
+   	color: $stone;
+   	font-size: $font-size-default;
+   }
+
+   li a{
+   	color: $stone;
+   }
+
+   li a:hover{
+   	color: $jade;
+   }
+ }

@@ -1,0 +1,37 @@
+/* ---------------------------------
+  Project Style: Notes
+--------------------------------- */
+
+%notes-base {
+  margin-bottom: $spacing-small;
+  padding: $spacing-small $spacing-medium;
+  border: $border-thin solid;
+  width: 100%;
+  p {margin: 0;}
+  @include laptop-and-up {width: 700px;};
+}
+
+.sg-notes-designers {
+  @extend %notes-base;
+  border-color: $squash;
+}
+
+.sg-notes-developers {
+  @extend %notes-base;
+  border-color: $color-secondary;
+}
+
+.sg-notes-important {
+  @extend %notes-base;
+  @include clearfix;
+  border-color: $error;
+  i {
+    float: left;
+    margin-top: $spacing-small;
+    color: $error;
+    font-size: $font-size-large;
+  }
+  p {
+    padding-left: $spacing-large;
+  }
+}

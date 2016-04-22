@@ -1,0 +1,9 @@
+/* ------------------------------
+  Section
+------------------------------ */
+
+section {
+  position: relative;
+  margin-bottom: $spacing-x-large;
+  &:last-child {margin-bottom: 0;}
+}

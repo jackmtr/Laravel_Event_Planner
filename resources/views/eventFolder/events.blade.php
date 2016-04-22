@@ -1,13 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>
     <div>
     	<a href="{{ url('/events/create') }}"> (icon) Add Event</a>
-        <h1>Active Events</h1>
+        <h2>Active Events</h2>
         
-		<table>
-		<tr><th>Event</th><th>Status</th><th>Date</th><th>Time</th><th>Location</th><th>Description</th><th># of Tables</th><th># Seats per Table</th></tr>
+		<table class="table-wrapper">
+		<tr>
+			<th>Event</th>
+			<th>Status</th>
+			<th>Date</th>
+			<th>Time</th>
+			<th>Location</th>
+			<th>Description</th>
+			<th># of Tables</th>
+			<th># Seats per Table</th>
+		</tr>
 		@if (count($openEvents))
 			@foreach($openEvents as $openEvent)
 				<tr>
@@ -33,11 +41,10 @@
 
     </div>
     <div>
-        <h1>Ended Events</h1>
+        <h2>Ended Events</h2>
         <table>
 		<tr><th>Event</th><th>Status</th><th>Date</th><th>Time</th><th>Location</th><th>Description</th><th># of Tables</th><th># Seats per Table</th></tr>        	
         	
         </table>
     </div>
-</h1>
 @endsection

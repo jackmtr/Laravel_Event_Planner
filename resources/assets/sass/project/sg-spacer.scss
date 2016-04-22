@@ -1,0 +1,23 @@
+/* ---------------------------------
+  Project Style: Spacer
+--------------------------------- */
+
+.sg-spacer-xx-lg {
+  margin-bottom: $spacing-x-large !important;
+  @include laptop-and-up {margin-bottom: $spacing-x-large + $spacing-large !important;};
+}
+
+.sg-spacer-x-lg {
+  margin-bottom: $spacing-large !important;
+  @include laptop-and-up {margin-bottom: $spacing-x-large !important;};
+}
+
+.sg-spacer-lg {
+  margin-bottom: $spacing-medium !important;
+  @include laptop-and-up {margin-bottom: $spacing-large !important;};
+}
+
+.sg-spacer-md {
+  margin-bottom: $spacing-small + $spacing-x-small !important;
+  @include laptop-and-up {margin-bottom: $spacing-medium !important;};
+}
