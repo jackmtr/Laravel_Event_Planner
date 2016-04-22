@@ -13,14 +13,14 @@ class EventTableSeats extends Migration
     public function up()
     {
 
-            Schema::create('eventTableSeats', function (Blueprint $table) {
-                $table->increments('tableSeatingid');
-                $table->integer('tableNum');
-                $table->integer('seatNum');
-                $table->integer('guestListId')->unsigned();
+            Schema::create('event_table_seats', function (Blueprint $table) {
+                $table->increments('table_seating_id');
+                $table->integer('table_number');
+                $table->integer('seat_number');
+                $table->integer('guest_list_id')->unsigned();
                 $table->timestamps();
 
-                $table->foreign('guestListId')->references('guestListId')->on('guestLists');
+                $table->foreign('guest_list_id')->references('guest_list_id')->on('guestlists')->nullable();
             });
 
     }
@@ -32,6 +32,6 @@ class EventTableSeats extends Migration
      */
     public function down()
     {
-        Schema::drop('eventTableSeats');
+        Schema::drop('event_table_seats');
     }
 }

@@ -12,8 +12,13 @@
 @if (count($contacts))
 	@foreach($contacts as $contact)
 		<tr>
-			<td>{{{$contact['firstName']}}}</td>
-			<td>{{{$contact['lastName']}}}</td>
+			<td>{{$contact['first_name']}}</td>
+			<td>{{$contact['last_name']}}</td>
+			<td>{{$contact['email']}}</td>
+			<td>{{$contact['occupation']}}</td>
+			<td>{{$contact['company']}}</td>
+			<td>{{$contact['notes']}}</td>
+			<td>{{$contact['added_by']}}</td>
 		</tr>
 	@endforeach
 @else

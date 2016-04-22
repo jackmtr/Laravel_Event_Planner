@@ -16,9 +16,9 @@
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}">
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('user_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('user_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -30,9 +30,9 @@
                             <div class="col-md-6">
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('user_email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('user_email') }}</strong>
                                     </span>
                                 @endif
                             </div>

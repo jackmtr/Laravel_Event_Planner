@@ -16,9 +16,9 @@
                             <div class="col-md-6">
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="test = admin@email.com">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('user_email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('user_email') }}</strong>
                                     </span>
                                 @endif
                             </div>

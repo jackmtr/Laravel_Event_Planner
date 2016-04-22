@@ -13,17 +13,17 @@ class CreateContactsTable extends Migration
     public function up()
     {
         Schema::create('contacts', function(Blueprint $table){
-            $table->increments('contactId');
-            $table->string('fname');
-            $table->string('lname');
+            $table->increments('contact_id');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('occupation');
-            $table->string('company');
-            $table->string('wichat');
-            $table->longtext('notes');
-            $table->integer('addedBy')->unsigned();
+            $table->string('occupation')->nullable();
+            $table->string('company')->nullable();
+            $table->string('wechat_id')->nullable();
+            $table->longtext('notes')->nullable();
+            $table->string('added_by');
             $table->timestamps();
-            $table->foreign('addedBy')->references('userId')->on('users');
+            $table->foreign('added_by')->references('email')->on('users');
         });
     }
 

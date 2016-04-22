@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Http\Requests;
 //use Carbon\Carbon;
+use Auth;
 use Request;
 
 class ContactController extends Controller
@@ -37,7 +38,12 @@ class ContactController extends Controller
     }
 
     public function store(Request $request){
+
+        $authEmail = Auth::user()->email;
+        //dd($authEmail);
         $input = Request::all();
+        $input["added_by"] = $authEmail;
+        //dd($input);
 
         Contact::create($input);
 

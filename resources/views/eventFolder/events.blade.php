@@ -11,15 +11,18 @@
 		@if (count($openEvents))
 			@foreach($openEvents as $openEvent)
 				<tr>
-				<td>{{{ $openEvent['eventName']}}}</td>
+				<td>{{ $openEvent['event_name'] }}</td>
 				<td>
-					@if ( $openEvent['eventStatus'] == 0)
+					@if ( $openEvent['event_status'] == 0)
 					OPEN
 					@endif
 				</td>
-				<td>{{{$openEvent['eventDate']}}}</td>
-				<td>{{{$openEvent['eventTime']}}}</td>
-				<td>{{{$openEvent['location']}}}</td>
+				<td>{{$openEvent['event_date']}}</td>
+				<td>{{$openEvent['event_time']}}</td>
+				<td>{{$openEvent['event_location']}}</td>
+				<td>{{$openEvent['event_description']}}</td>
+				<td>{{$openEvent['num_of_tables']}}</td>
+				<td>{{$openEvent['seats_per_table']}}</td>
 				</tr>
 
 			@endforeach
