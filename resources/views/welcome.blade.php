@@ -23,6 +23,7 @@
             <li><a href="http://ec2-54-187-26-151.us-west-2.compute.amazonaws.com:5000/">Istuary UI Framework</a></li>
             <li><a href="https://bcit-istuary.slack.com">Slack</a></li>
             <li><a href="https://docs.google.com/spreadsheets/d/1f8GCFfC76Y-VBU9_Vw1UOBd4wKu5u1xAUujHznWfXGo/edit?ts=5715686f#gid=0">Scrum Document</a></li>
+            <li><a href="https://docs.google.com/document/d/1E-Qsbwf9yGgPdj8qfkMhFt_xiK9j6pwWIrhoSGOfJfI/edit?usp=sharing">Timeline Plan</a></li>
           </ul>
           <h3>Functional requirments</h3>
           <ul>
@@ -66,8 +67,6 @@
           <img src="/images/Istuary_Events_Crud_V1.0.png" alt="CRUD" width="600"/>
           <h3>ERD</h3>
           <img src="/images/ERD2016-04-20.png" alt="Entity Relationship Diagram" width="600"/>
-          <h3>Timeline Plan</h3>
-          <img src="/images/Timeline.PNG" alt="Timeline Plan"/>
         </div>
       </div>
     </div>
