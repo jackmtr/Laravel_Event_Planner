@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Model;
 
-class event extends Model
+class Event extends Model
 {
     protected $fillable = [
     	'event_name',

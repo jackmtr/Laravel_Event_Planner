@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Model;
 
 class Contact extends Model
 {
@@ -14,7 +14,6 @@ class Contact extends Model
 		'company',
 		'wechat_id',
 		'notes',
-		//'user_id',
 		'added_by',
     ];
 
