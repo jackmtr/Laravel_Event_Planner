@@ -121,3 +121,33 @@
 		}		
 	}
 }
+
+#login{
+
+	background-image: url("/images/LoginIstuary.png");
+	background-size: cover;
+	text-align: center;
+
+	.container{
+
+		font-family: 'Rajdhani', sans-serif;
+
+		h1{
+			color: $jade;
+			font-family: 'Rajdhani', sans-serif;
+		}
+
+		.panel{
+			position: absolute;
+			top: 42%;
+			left: 33%;
+			width:650px; 
+			height: 800px;
+			margin:300px 0px;
+
+			panel-body{
+				
+			}
+		}
+	}
+}

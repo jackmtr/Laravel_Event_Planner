@@ -1871,4 +1871,21 @@ h3 > span {
               text-decoration: none;
               border-bottom: solid 3px #1e8f98; }
 
+#login {
+  background-image: url("/images/LoginIstuary.png");
+  background-size: cover;
+  text-align: center; }
+  #login .container {
+    font-family: 'Rajdhani', sans-serif; }
+    #login .container h1 {
+      color: #1e8f98;
+      font-family: 'Rajdhani', sans-serif; }
+    #login .container .panel {
+      position: absolute;
+      top: 42%;
+      left: 33%;
+      width: 650px;
+      height: 800px;
+      margin: 300px 0px; }
+
 /*# sourceMappingURL=framework.css.map */
