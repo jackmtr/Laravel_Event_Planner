@@ -4,17 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class event extends Model
 {
     protected $fillable = [
-    	'eventName',
-    	'date',
-    	'time',
-    	'location',
-    	'description',
-    	'numOfTable',
-    	'seatsPerTable',
-    	'eventStatus',
+    	'event_name',
+    	'event_date',
+		'event_time',
+		'event_location',
+		'event_description',
+		'num_of_tables',
+		'seats_per_table',
     ];
 
     public $timestamps = false;
