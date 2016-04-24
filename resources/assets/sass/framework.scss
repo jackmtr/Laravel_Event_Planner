@@ -118,13 +118,45 @@
 	}
 }
 
-#login{
+.login{
 
 	background-image: url("/images/LoginIstuary.png");
 	background-size: cover;
-	text-align: center;
+	height: 1000px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
 
-	.container{
+	.flexbox{
+		background-color: $white;
+		width: 40%;
+		height: 700px;
+		text-align:center;
+		h2{
+			font-size: $font-size-h1;
+			margin: 25px;
+			color: $jade;
+		}
+		form{
+			input{
+				width: 500px;
+				height: 30px;
+				margin: 15px;
+				text-align: center;
+			}
+			.submit{
+				background-color: $jade;
+			}
+		}
+	}
+
+	//display: flex;
+	//text-align: center;
+	//align-items: center;
+	//justify-content: center;
+
+
+	/*.container{
 
 		h1{
 			color: $jade;
@@ -143,7 +175,7 @@
 				
 			}
 		}
-	}
+	}*/
 }
 
 .events{
@@ -205,6 +237,17 @@
 			    }
 			}
 		}
+	}
+}
+
+.contacts{
+	.contactheadings{
+		display: flex;
+		justify-content: space-between;	
+		h2, h3, a{
+			font-size: $font-size-larger;
+			margin: 10px 40px;		
+		} 		
 	}
 }
 
