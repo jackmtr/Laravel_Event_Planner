@@ -2,10 +2,7 @@
 
 @section('content')
 <div>
-<a href="{{ url('/contacts/create') }}"> (icon) Add Contact</a>
-
-<p>A list of all contacts</p>
-
+<a href="{{ url('/contacts/create') }}">Add Contact</a>
 <table>
 <tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Occupation</th><th>Company</th><th>Notes</th><th>Added By</th></tr>
 {{count($contacts)}}

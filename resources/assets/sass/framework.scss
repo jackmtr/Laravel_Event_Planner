@@ -208,6 +208,17 @@
 	}
 }
 
+.create-events, .create-contacts{
+
+	width: 100%;
+    height: 1000px;
+    display: flex;
+
+    .container{
+		h1{ color: $stone; }
+    }
+}
+
 .project-outline{
 	margin-top: 50px;
 }

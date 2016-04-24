@@ -8,7 +8,7 @@
 		        <a href="{{ url('/events/create') }}">Add Event</a>
 	    	</div>
 	    	<div class="openevents">
-		    	@foreach($openEvents as $openEvent)
+		    	@foreach($eventsWithCount as $openEvent)
 		    		<div class="singleopenevent">
 		    			<div class="singleeventleftbox">
 		    				<p>{{$openEvent['event_date']}}</p>
