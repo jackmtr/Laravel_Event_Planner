@@ -10,18 +10,20 @@
 	    	<div class="openevents">
 		    	@foreach($eventsWithCount as $openEvent)
 		    		<div class="singleopenevent">
-		    			<div class="singleeventleftbox">
+		    		<a href="#" class="singleeventleftbox">
+		    			<div>
 		    				<p>{{$openEvent['event_date']}}</p>
 		    				<p>{{$openEvent['event_name']}}</p>
 		    				<p>{{$openEvent['event_location']}}</p>
-		    			</div>
+		    			</div>		    			
+		    		</a>
 		    			<div class="singleeventrightbox">
 			    			<div class="checkedin">
 			    				<p>120</p>
 			    				<p>Checked In</p>			    				
 			    			</div>
 			    			<div class="duplicate">
-			    				<a href="#">Duplicate</a>
+			    				<a href="#">DUPLICATE</a>
 			    			</div>
 		    			</div>
 		    		</div>
