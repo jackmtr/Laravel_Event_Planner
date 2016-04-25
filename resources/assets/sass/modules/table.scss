@@ -1,0 +1,148 @@
+/* ------------------------------
+  Table
+------------------------------ */
+
+/* ----- Table Title ----- */
+
+.table-title {
+  margin-bottom: $spacing-small + $spacing-x-small;
+  @include clearfix;
+  @include laptop-and-up {margin-bottom: 0;};
+}
+.table-title-left  {float: left;}
+.table-title-right {float: right;}
+
+/* ----- Table Toolbar ----- */
+
+.table-toolbar {@include clearfix;}
+.table-toolbar-left {
+  float: left;
+  margin-bottom: $spacing-medium;
+}
+.table-toolbar-right {
+  float: left;
+  @include laptop-and-up {float: right;};
+}
+
+.table-toolbar-input {
+  display: inline-block;
+  margin-bottom: $spacing-small + $spacing-x-small;
+  vertical-align: middle;
+  + .table-toolbar-input {
+    margin-left: $spacing-small + $spacing-x-small + 3px;
+  }
+  label,
+  .input-icon-left,
+  .input-icon-right {
+    display: inline-block;
+  }
+  label {margin-bottom: 0;}
+  input {
+    min-width: 150px;
+    height: 30px;
+    margin-left: $spacing-x-small;
+    padding: $spacing-small $spacing-large $spacing-small $spacing-small;
+  }
+  .input-icon {
+    &-left, &-right {i {top: ($spacing-small - 2);}}
+  	&-left  {i {left: $spacing-small;}}
+  	&-right {i {right: $spacing-small;}}
+  }
+  @include tablet-and-up {
+    margin-bottom: 0;
+    + .table-toolbar-input,
+    + .table-toolbar-select {
+      margin-left: $spacing-small;
+    }
+  };
+}
+
+.table-toolbar-select {
+  height: 30px;
+  &:after {
+    top: 4px;
+    right: 12px;
+  }
+  select {
+    min-width: 150px;
+    width: 100%;
+    padding: $spacing-x-small $spacing-large $spacing-x-small $spacing-small !important;
+    font-size: $font-size-default;
+  }
+}
+
+.table-toolbar-button {
+  margin-left: $spacing-small;
+  padding: $spacing-x-small $spacing-small;
+  font-size: $font-size-default;
+}
+
+/* ----- Table Wrapper ----- */
+
+.table-wrapper {
+  margin-top: $spacing-medium;
+  border: $border-thin solid $gray-20;
+  border-radius: $radius-default;
+  overflow-x: scroll;
+}
+
+/* ----- Table Head ----- */
+
+.table-sort {
+  padding: 0;
+  a {
+    display: block;
+    height: 40px;
+    padding: $spacing-small $spacing-medium;
+    color: $color-text-body;
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+  &.ascend span, &.descend span {
+    &:after {
+      margin-left: $spacing-small;
+      font-family: FontAwesome;
+    }
+  }
+  &.ascend span  {&:after {content: "\f0d7";}}
+  &.descend span {&:after {content: "\f0d8";}}
+}
+
+/* ----- Table Body ----- */
+
+.table-link-more {
+  display: inline-block;
+  padding: $spacing-x-small $spacing-small;
+  text-align: center;
+  &:hover, &:focus {
+    background-color: $color-primary-l-20;
+    text-decoration: none;
+  }
+}
+
+tr.active {
+  a {
+    color: $white;
+    &.table-link-more {
+      &:hover, &:focus {color: $color-primary !important;}
+    }
+  }
+}
+
+/* ----- Scrollable Table Body ----- */
+
+.tbody-scroll {
+  thead, tbody {display: block;}
+  thead {width: 100%;}
+  tbody {
+    height: 400px;
+    overflow-y: scroll;
+  }
+  th, td {
+    min-width: 185px;
+    &:nth-child(1) {width: 30%;}
+    &:nth-child(2) {width: 50%;}
+    &:nth-child(3) {width: 20%;}
+  }
+}

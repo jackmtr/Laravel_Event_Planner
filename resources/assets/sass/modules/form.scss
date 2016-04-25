@@ -1,0 +1,95 @@
+/* ------------------------------
+  Form
+------------------------------ */
+
+/* ----- Label ----- */
+
+.label-required {
+	&:after {
+		margin-left: $spacing-x-small;
+		color: $error;
+		content: "*";
+	}
+}
+
+.label-radio,
+.label-checkbox {
+	&:hover {
+		cursor: pointer;
+		span:before {background-color: $gray-30;}
+	}
+	&.disabled {
+		cursor: default;
+	}
+}
+
+/* ----- Input ----- */
+
+.input-success {
+	@extend .border-success;
+}
+
+.input-error {
+	@extend .border-error;
+	+ .tooltip {
+		@extend .text-error;
+		.inner {box-shadow: 0 0 4px 0 $error;}
+		.arrow {text-shadow: -1px 0 1px $error;}
+	}
+}
+
+.input-round {
+	input {border-radius: 17px;}
+}
+
+.input-icon {
+	&-left, &-right {
+		position: relative;
+		i {
+			position: absolute;
+			top: $spacing-small;
+			color: $gray-40;
+		}
+	}
+	&-left {
+		input {padding-left: $spacing-medium * 2;}
+		i {left: $spacing-small + $spacing-x-small;}
+	}
+	&-right {
+		input {padding-right: $spacing-medium * 2;}
+		i {right: $spacing-small + $spacing-x-small;}
+	}
+}
+
+.input-with-button {
+	%button-base {margin-bottom: 0;}
+	input, .horizontal  {display: inline-block;}
+	input + .horizontal {margin-top: $spacing-small;}
+	input + .vertical   {margin-top: $spacing-small;}
+	@include tablet-and-up {
+		input, .horizontal  {display: inline-block;}
+		input + .horizontal {
+			margin-top: 0;
+			margin-left: $spacing-x-small;
+		}
+	};
+	@include laptop-and-up {
+		input + .vertical   {margin-top: $spacing-small + $spacing-x-small;}
+	};
+}
+
+/* ----- Select ----- */
+
+.select-wrapper {
+	display: inline-block;
+	position: relative;
+	height: 40px;
+	&:after {
+		content: "\f0d7";
+		position: absolute;
+		top: 12px;
+		right: $spacing-medium;
+		font-family: FontAwesome;
+		font-size: $font-size-button;
+  }
+}

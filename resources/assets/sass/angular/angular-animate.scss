@@ -1,0 +1,115 @@
+// Animation Creator
+
+// Animation class - Args: classname
+@mixin animation-class ($class){
+  -webkit-animation-name: $class;
+  -moz-animation-name: $class;
+  -ms-animation-name: $class;
+  -o-animation-name: $class;
+  animation-name: $class;
+}
+
+//Animation Duration - Args: 1s, 2s,etc.
+@mixin animation-duration ($duration){
+  -webkit-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -ms-animation-duration: $duration;
+  -o-animation-duration: $duration;
+  animation-duration: $duration;
+}
+
+@mixin transition-delay ($duration){
+  -webkit-transition-delay: $duration;
+  -moz-transition-delay: $duration;
+  -ms-transition-delay: $duration;
+  -o-transition-delay: $duration;
+  transition-delay: $duration;
+}
+@mixin transition-properties ($duration, $interpolation, $properties){
+  -webkit-transition: $duration $interpolation $properties;
+  -moz-transition: $duration $interpolation $properties;
+  -ms-transition: $duration $interpolation $properties;
+  -o-transition: $duration $interpolation $properties;
+  transition: $duration $interpolation $properties;
+}
+@mixin GenerateAngularAnimatorIn ($class, $timing){
+  &.ng-enter, &.ng-hide-remove, &.ng-enter-active {
+    @include animation-class($class);
+    @include animation-duration($timing);
+  }
+  &.ng-enter-stagger, &.ng-leave-stagger {
+    @include transition-delay(0.15s);
+  }
+  &.ng-enter, &.ng-leave, &.ng-move {
+    @include transition-properties(0.75s, linear, all);
+  }
+}
+@mixin GenerateAngularAnimatorOut ($class, $timing){
+  &.ng-leave, &.ng-hide-add {
+    @include animation-class($class);
+    @include animation-duration($timing);
+  }
+  &.ng-enter-stagger, &.ng-leave-stagger {
+    @include transition-delay(0.15s);
+  }
+  &.ng-enter, &.ng-leave, &.ng-move {
+    @include transition-properties(0.75s, linear, all);
+  }
+}
+$ng-anim-slow: 1s;
+$ng-anim-fast: 0.3s;
+// Ins
+.FadeInSlow       {@include GenerateAngularAnimatorIn(fadeIn, $ng-anim-slow);}
+.FadeInFast       {@include GenerateAngularAnimatorIn(fadeIn, $ng-anim-fast);}
+
+.FadeInUpSlow     {@include GenerateAngularAnimatorIn(fadeInUp, $ng-anim-slow);}
+.FadeInUpFast     {@include GenerateAngularAnimatorIn(fadeInUp, $ng-anim-fast);}
+
+.FadeInDownSlow   {@include GenerateAngularAnimatorIn(fadeInDown, $ng-anim-slow);}
+.FadeInDownFast   {@include GenerateAngularAnimatorIn(fadeInDown, $ng-anim-fast);}
+
+// Outs
+.FadeOutSlow      {@include GenerateAngularAnimatorOut(fadeOut, $ng-anim-slow);}
+.FadeOutFast      {@include GenerateAngularAnimatorOut(fadeOut, $ng-anim-fast);}
+
+.FadeOutUpSlow    {@include GenerateAngularAnimatorOut(fadeOutUp, $ng-anim-slow);}
+.FadeOutUpFast    {@include GenerateAngularAnimatorOut(fadeOutUp, $ng-anim-fast);}
+
+.FadeOutDownSlow  {@include GenerateAngularAnimatorOut(fadeOutDown, $ng-anim-slow);}
+.FadeOutDownFast  {@include GenerateAngularAnimatorOut(fadeOutDown, $ng-anim-fast);}
+
+//TODO SHOULD WE INCLUDE THIS FOR SHOWS?
+//&.ng-hide{opacity:0; display:block! important;};
+
+.SlidingDropdown {
+  @include transition-properties(1s, linear, max-height);
+  &.ng-hide{
+    display: block !important;
+    overflow: hidden;
+    max-height: 0;
+  }
+  &.ng-hide-remove{
+    max-height: 600px;
+  }
+  overflow-y: auto;
+  max-height: none;
+}
+
+
+// UI VIEW ANIMATIONS
+[ui-view]{
+  &.ng-enter{
+    //position: relative;
+    -webkit-transition:all 0.3s ease-in-out;
+    -moz-transition:all 0.3s ease-in-out;
+    -o-transition:all 0.3s ease-in-out;
+    transition:all 0.3s ease-in-out;
+
+    opacity: 0;
+  }
+  &.ng-enter-active {
+    opacity: 1;
+  }
+  //.ng-leave {opacity: 1;}
+  //.ng-leave-active {opacity: 0;}
+}

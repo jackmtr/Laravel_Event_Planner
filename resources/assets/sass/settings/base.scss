@@ -1,0 +1,238 @@
+/* ------------------------------
+  Base
+------------------------------ */
+
+body {
+  position: relative;
+  background-color: $color-bg-body;
+  color: $color-text-body;
+  font-family: $font-family-body;
+  font-size: $font-size-body;
+  line-height: $line-height-body;
+}
+
+main {
+  padding: $spacing-large 0 $spacing-x-large;
+  background-color: $color-bg-main;
+  @include laptop-and-up {
+    padding: ($spacing-x-large + $spacing-medium) 0 ($spacing-x-large * 4);
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box !important;
+}
+
+h1, h2, h3, h4 {
+  margin-top: 0;
+  font-family: $font-family-heading;
+  font-weight: $font-weight-heading;
+  line-height: $line-height-heading;
+}
+
+h1 {
+  margin-bottom: $spacing-small + $spacing-x-small;
+  color: $color-text-heading-h1;
+  font-size: $font-size-h1;
+  @include laptop-and-up {margin-bottom: $spacing-large;};
+}
+
+h2 {
+  margin-bottom: $spacing-small + $spacing-x-small;
+  color: $color-text-heading-h2;
+  font-size: $font-size-h2;
+  @include laptop-and-up {margin-bottom: $spacing-medium;};
+}
+
+h3 {
+  margin-bottom: $spacing-small;
+  color: $color-text-heading-h3;
+  font-size: $font-size-h3;
+  @include laptop-and-up {margin-bottom: $spacing-small + $spacing-x-small;};
+}
+
+h4 {
+  margin-bottom: $spacing-small;
+  color: $color-text-heading-h4;
+  font-size: $font-size-h4;
+}
+
+ol {
+  padding-left: $spacing-medium;
+  li {margin: $spacing-small 0;}
+}
+
+ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+label {
+	display: block;
+	margin-bottom: $spacing-small;
+	color: $gray-50;
+	font-size: $font-size-default;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+	min-width: 220px;
+	height: 35px;
+	padding: $spacing-x-small ($spacing-small + $spacing-x-small);
+	background-color: $white;
+	border: $border-thin solid $gray-30;
+	outline: none;
+	&:focus {
+		border-color: $color-primary;
+		box-shadow: 0 0 4px 0 $color-primary;
+	}
+	&[disabled] {
+		background-color: $gray-10;
+	}
+  @include laptop-and-up {min-width: 250px;};
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  position: absolute;
+	overflow: hidden;
+  width: 1px;
+	height: 1px;
+	margin: -1px;
+  padding: 0;
+	border: 0;
+  clip: rect(0 0 0 0);
+  + span:before {
+    display: inline-block;
+    margin-right: $spacing-small;
+    transition: 0.5s ease all;
+  }
+  &:checked {
+		+ span:before{background-color: $gray-40;}
+	}
+  &:disabled {
+    + span {
+      color: $gray-20;
+      &:before{
+        color: $gray-10;
+        background-color: $gray-10;
+      }
+    }
+  }
+}
+
+input[type="radio"] {
+	+ span:before {
+		content: '';
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		box-shadow: 0 0 0 1px $gray-40;
+		border: $border-default solid $white;
+		vertical-align: middle;
+	}
+}
+
+input[type="checkbox"] {
+	+ span:before {
+    content: "\f00c";
+		border: $border-thin solid $gray-40;
+    color: $white;
+		font-family: FontAwesome;
+		font-size: 14px;
+		line-height: 1;
+	}
+}
+
+textarea {
+  min-height: 150px;
+  resize: none;
+}
+
+select {
+  @extend .button-default;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	appearance: none;
+  padding: $spacing-small ($spacing-medium * 2) $spacing-small $spacing-medium !important;
+	outline: none;
+  &::-ms-expand {display: none;}
+}
+
+table {
+  width: 100%;
+}
+
+thead {
+  border-bottom: $border-thin solid $gray-30;
+}
+
+tbody {
+  border: none;
+  tr {
+    + tr {border-top: $border-thin solid $gray-10;}
+    &:hover, &:focus {
+      background-color: $color-primary-l-30;
+    }
+    &.active {
+      background-color: $color-primary;
+      color: $white;
+    }
+  }
+}
+
+th, td {
+  height: 40px;
+  padding: $spacing-small $spacing-medium;
+  border: none;
+}
+
+th {
+  background-color: $gray-10;
+  font-weight: $font-weight-default;
+  text-align: left;
+  &:nth-child(2n) {
+    background-color: $gray-20;
+  }
+}
+
+hr {
+  border: solid $color-border;
+  border-width: $border-default 0 0;
+}
+
+p {
+  max-width: 650px;
+  margin: 0 0 $spacing-small + $spacing-x-small;
+  color: $color-text-body;
+  line-height: $line-height-narrow;
+}
+
+a {
+  color: $color-link;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    color: $color-link-hover;
+    text-decoration: underline;
+  }
+}
+
+strong {
+  color: $gray-50;
+}
+
+small {
+  color: $gray-40;
+  font-size: $font-size-small;
+}

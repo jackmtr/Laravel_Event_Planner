@@ -1,0 +1,73 @@
+/* ------------------------------
+  Popup
+
+  We are unsure how you created your popup, or what popup libraries you may be using. For your reference, this is how we defined our popup styles.
+
+  .popup {
+  	display: none;
+  	position: fixed;
+  	top: 0;
+  	left: 0;
+  	z-index: 10;
+  	width: 100%;
+  	height: 100%;
+  	.panel {
+  		width: 90%;
+  		overflow-y: scroll;
+      max-width: 300px;
+      max-height: 400px;
+  		padding: $spacing-large $spacing-small;
+  		box-shadow: $box-shadow;
+      text-align: center;
+  		@extend .center-all;
+  		@include tablet-and-up {
+  			max-width: 700px;
+  			padding: $spacing-x-large;
+  		};
+  		h2 {
+  			font-size: $font-size-h3;
+  			@include tablet-and-up {font-size: $font-size-h2;};
+  		}
+  		%button-base {margin-bottom: 0;}
+  	}
+    .panel-inner {
+      position: relative;
+      .button      {margin-top: $spacing-large;}
+      .link-cancel {margin-top: $spacing-medium;}
+    }
+  }
+
+  .popup-mask {
+  	content: "";
+  	position: absolute;
+  	top:0;
+  	left:0;
+  	width: 100%;
+  	height: 100%;
+  	background-color: rgba($gray-40, 0.7);
+  	cursor: default !important;
+  }
+
+  .popup-cancel {
+    position: absolute;
+  	top  : $spacing-small * -3 + 2;
+  	right: $spacing-small * -1;
+  	@include tablet-and-up {
+  		top  : $spacing-medium * -2;
+  		right: $spacing-medium * -2;
+  	};
+    a {
+      display: inline-block;
+      padding: $spacing-x-small;
+      color: $gray-40;
+      font-size: $font-size-large;
+      line-height: 1;
+    }
+  }
+
+  .popup-button {
+  	margin-top: $spacing-large;
+  	margin-bottom: 0;
+  }
+
+------------------------------ */

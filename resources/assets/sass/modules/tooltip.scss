@@ -1,0 +1,39 @@
+/* ------------------------------
+  Tooltip
+
+  We are unsure how you created your tooltip,
+  or what tooltip libraries you may be using.
+
+  For your reference, this is how we defined our tooltip styles.
+------------------------------ */
+
+.tooltip {
+  display: inline-block;
+  position: relative;
+  margin-left: $spacing-x-small;
+  color: $gray-30;
+  > i {font-size: $font-size-medium;}
+  &:hover, &:focus {
+    color: $gray-40;
+    .inner {display: block;}
+  }
+  .inner {
+    @extend .center-vertical;
+    display: none;
+    left: 30px;
+    width: 165px;
+    padding: $spacing-small + $spacing-x-small;
+    background-color: $white;
+    box-shadow: $box-shadow;
+    color: $gray-50;
+  }
+  .arrow {
+    @include transform(-100%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    color: $white;
+    font-size: 25px;
+    text-shadow: -1px 0 1px rgba(0, 0, 0, 0.2);
+  }
+}

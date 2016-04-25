@@ -1,0 +1,43 @@
+/* ------------------------------
+  Status
+------------------------------ */
+
+/* ----- Text Color ------ */
+
+.text-error {
+	color: $error !important;
+}
+.text-warning {
+	color: $warning !important;
+}
+.text-success {
+	color: $success !important;
+}
+
+/* ----- Backgrounds ------ */
+
+.bg-warning {
+	background-color: lighten($warning, 40%) !important;
+}
+
+.bg-error {
+	background-color: lighten($error, 40%) !important;
+}
+
+.bg-success {
+	background-color: lighten($success, 40%) !important;
+}
+
+/* ----- Border ------ */
+
+.border-warning {
+	border-color: $warning !important;
+}
+
+.border-error {
+	border-color: $error !important;
+}
+
+.border-success {
+	border-color: $success !important;
+}
