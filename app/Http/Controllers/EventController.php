@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Http\Requests;
 use App\EventWithCount;
+use App\EventDetails;
 //use Carbon\Carbon;
 use Request;
 
@@ -40,13 +41,15 @@ class EventController extends Controller
     }
 
     public function store(){
-
         $input = Request::all();
         $input['event_status'] = 0;
-
+        // add date value in front of time value to be 2016-08-12 19:00:00
         Event::create($input);
-
         return redirect('events');
     }
 
+    public function show($id){
+      $eventDetails = new EventDetails($id);
+      return view('eventFolder.eventDetail', compact('eventDetails'));
+    }
 }

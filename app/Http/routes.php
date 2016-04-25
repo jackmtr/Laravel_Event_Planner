@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/events', 'EventController@index');
 	Route::get('/events/create', 'EventController@create');
 	Route::post('/events/create', 'EventController@store');
+  Route::get('/events/{event_id}', 'EventController@show');
 
 	Route::get('/contacts', 'ContactController@index');
 	Route::get('/contacts/create', 'ContactController@create');
