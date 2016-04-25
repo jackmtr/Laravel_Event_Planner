@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model as Model;
 
 class event extends Model
 {
+	protected $primaryKey = 'event_id';
+
     protected $fillable = [
     	'event_name',
     	'event_date',

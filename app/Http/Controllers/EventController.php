@@ -49,4 +49,11 @@ class EventController extends Controller
         return redirect('events');
     }
 
+    public function edit($id){
+
+        $event = Event::find($id);
+
+        return view('eventFolder.editEvents', compact("event"));
+    }
+
 }
