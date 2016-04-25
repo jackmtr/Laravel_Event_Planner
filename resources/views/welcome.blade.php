@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="project-outline container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="panel panel-default">
-        <div class="panel-heading">Project Outline - Last Updated: 10:09pm April 20,2016</div>
+        <div class="panel-heading">Project Outline - Last Updated: 8:00am April 25,2016</div>
 
         <div class="panel-body">
           <h3>Team Members</h3>

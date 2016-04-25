@@ -1,0 +1,40 @@
+/* ------------------------------
+  Pagination
+------------------------------ */
+
+.pagination {
+  @include clearfix;
+
+  li {
+    float: left;
+    + li {margin-left: $spacing-x-small;}
+    > a  {padding: $spacing-x-small;}
+
+    &.active a, &[disabled] a {
+      cursor: default;
+      text-decoration: none  !important;
+    }
+    &.active {a {color: $color-text-body;}}
+    &[disabled] {opacity: 0.4;}
+
+    &.ellipsis {
+      margin-left: $spacing-x-small;
+      + li {margin-left: $spacing-x-small;}
+
+      i {color: $gray-30;}
+    }
+    @include tablet-and-up {
+      + li {margin-left: $spacing-small;}
+      > a  {padding: $spacing-small;}
+      &.ellipsis {
+        margin-left: $spacing-small + $spacing-x-small;
+        + li {margin-left: $spacing-small + $spacing-x-small;}
+      }
+    };
+  }
+
+  .with-icon-left,
+  .with-icon-right {
+    i {font-weight: $font-weight-bold;}
+  }
+}

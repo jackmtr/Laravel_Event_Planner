@@ -1,0 +1,51 @@
+/* ---------------------------------
+  Project Style: Table
+--------------------------------- */
+
+.sg-table {
+  tbody {border: none;}
+  tr {
+    border: solid $gray-20;
+    border-width:  0 0 $border-thin;
+    &:hover {
+      background: none;
+      cursor: default;
+    }
+  }
+  th, td {background: none;}
+  th {
+    padding: 0 $spacing-x-large $spacing-small 0;
+    color: $gray-50;
+  }
+  td {
+    padding: $spacing-medium $spacing-large $spacing-medium 0;
+    p {
+      margin-bottom: 0;
+      + p {margin-top: $spacing-small + $spacing-x-small;}
+    }
+  }
+}
+
+.sg-table-col-xx-lg {width: 450px;}
+.sg-table-col-x-lg  {width: 330px;}
+.sg-table-col-lg    {width: 250px;}
+.sg-table-col-md    {width: 210px;}
+.sg-table-col-sm    {width: 150px;}
+
+.sg-table-note {
+  border-bottom: $border-thin solid $gray-20;
+  h4, p {
+    margin: $spacing-medium 0;
+    text-align: center;
+  }
+  h4 {color: $black;}
+}
+
+.sg-table.show-phone,
+.sg-table.show-mobile {
+  th {
+    padding: $spacing-small 0;
+    font-size: $font-size-medium;
+  }
+  td {padding: $spacing-medium 0;}
+}

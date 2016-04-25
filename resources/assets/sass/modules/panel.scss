@@ -1,0 +1,25 @@
+/* ------------------------------
+  Panel
+------------------------------ */
+
+.panel, .panel-lg {
+	background-color: $white;
+}
+
+.panel {
+	padding: $spacing-small;
+	+ .panel {margin-top: $spacing-small;}
+	@include laptop-and-up {
+		padding: $spacing-medium;
+		+ .panel {margin-top: $spacing-medium;}
+	};
+}
+
+.panel-lg {
+	padding: $spacing-medium;
+	+ .panel-lg {margin-top: $spacing-medium;}
+	@include laptop-and-up {
+		padding: $spacing-x-large;
+		+ .panel-lg {margin-top: $spacing-x-large;}
+	};
+}

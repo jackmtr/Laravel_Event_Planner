@@ -1,0 +1,63 @@
+/* ---------------------------------
+  Project Style: Side Navigation
+--------------------------------- */
+
+.sg-side-nav,
+.sg-side-nav-mobile {
+  li {
+    a {
+      display: block;
+      padding: $spacing-small ($spacing-small + $spacing-x-small);
+      background-color: $color-primary;
+      color: $white;
+      &:hover, &:focus {text-decoration: none;}
+      &:hover {background-color: $color-primary-l-10;}
+      &.active {
+        background-color: $white;
+        color: $color-primary;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+}
+
+.sg-side-nav {
+  @include laptop-and-up {margin-top: $spacing-x-large + $spacing-medium;};
+  li + li {margin-top: $spacing-small;}
+}
+
+.sg-side-nav-mobile {
+  position: relative;
+  z-index: 1 !important;
+  @include tablet-and-up {max-width: 250px;};
+
+  .dropdown-trigger {
+    max-width: 100%;
+    .button-primary {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: $spacing-small;
+      padding-right: $spacing-medium;
+      text-align: left;
+      i {
+        position: absolute;
+        top: $spacing-small + 3px;
+        right: $spacing-medium;
+      }
+    }
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 42px;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    background-color: $white;
+    border: $border-thin solid $color-primary-l-30;
+    &.active {display: block;}
+    li + li {border-top: $border-thin solid $white;}
+  }
+}

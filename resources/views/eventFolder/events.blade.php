@@ -1,43 +1,73 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>
-    <div>
-    	<a href="{{ url('/events/create') }}"> (icon) Add Event</a>
-        <h1>Active Events</h1>
-        
-		<table>
-		<tr><th>Event</th><th>Status</th><th>Date</th><th>Time</th><th>Location</th><th>Description</th><th># of Tables</th><th># Seats per Table</th></tr>
-		@if (count($openEvents))
-			@foreach($openEvents as $openEvent)
-				<tr>
-				<td>{{ $openEvent['event_name'] }}</td>
-				<td>
-					@if ( $openEvent['event_status'] == 0)
-					OPEN
-					@endif
-				</td>
-				<td>{{$openEvent['event_date']}}</td>
-				<td>{{$openEvent['event_time']}}</td>
-				<td>{{$openEvent['event_location']}}</td>
-				<td>{{$openEvent['event_description']}}</td>
-				<td>{{$openEvent['num_of_tables']}}</td>
-				<td>{{$openEvent['seats_per_table']}}</td>
-				</tr>
-
-			@endforeach
-		@else
-				<p>No Contacts Exist</p>
-		@endif
-		</table>
-
+	<div class="events">
+	    <div class="topevents"> <!-- can be generic -->
+	    	<div class="topeventnav"><!-- can be generic -->
+		    	<h2>Active Events</h2>
+		        <a href="{{ url('/events/create') }}">Add Event</a>
+	    	</div>
+	    	<div class="openevents"> <!-- can be generic -->
+		    	@foreach($eventsWithCount as $openEvent)
+          @if($openEvent['event_status'] != 2)
+		    		 <div class="singleopenevent">
+		    			<div class="singleeventleftbox">
+		    				<p>{{$openEvent['event_date']}}</p>
+		    				<p>{{$openEvent['event_name']}}</p>
+		    				<p>{{$openEvent['event_location']}}</p>
+		    			</div>
+              @if($openEvent['event_status'] == 0)
+		    			<div class="singleeventrightbox" style="background-color: #1e8f98"><!--openeventrightbox $jade -->
+			    			<div class="checkedin"><!-- text color to white for openeventrightbox -->
+			    				<p>{{$openEvent['count']}}</p>
+			    				<p>Invited</p>
+                </div>
+                <div class="duplicate">
+			    				<a href="#">Duplicate</a>
+			    			</div>
+		    			</div>
+              @elseif($openEvent['event_status'] == 1)
+              <div class="singleeventrightbox"><!--checkineventrightbox -->
+			    			<div class="checkedin">
+			    				<p>{{$openEvent['count']}}</p>
+			    				<p>Checked in</p>
+                </div>
+                <div class="duplicate">
+			    				<a href="#">Duplicate</a>
+			    			</div>
+		    			</div>
+              @endif
+		    		</div>
+            @endif
+		    	@endforeach
+	    	</div>
+	    </div>
+      <div class="topevents">
+	    	<div class="topeventnav">
+		    	<h2>Ended Events</h2>
+	    	</div>
+	    	<div class="openevents">
+		    	@foreach($eventsWithCount as $closedEvent)
+          @if($closedEvent['event_status'] == 2)
+		    		 <div class="singleopenevent"><!--singleclosedevent -->
+		    			<div class="singleeventleftbox">
+		    				<p>{{$closedEvent['event_date']}}</p>
+		    				<p>{{$closedEvent['event_name']}}</p>
+		    				<p>{{$closedEvent['event_location']}}</p>
+		    			</div>
+		    			<div class="singleeventrightbox" style="background-color: #eaeaea"><!-- closedeventrightbox -->
+			    			<div class="checkedin">
+			    				<p>{{$closedEvent['count']}}</p>
+			    				<p>Went</p>
+                </div>
+                <div class="duplicate">
+			    				<a href="#">Duplicate</a>
+			    			</div>
+		    			</div>
+		    		</div>
+            @endif
+		    	@endforeach
+	    	</div>
+	    </div>
     </div>
-    <div>
-        <h1>Ended Events</h1>
-        <table>
-		<tr><th>Event</th><th>Status</th><th>Date</th><th>Time</th><th>Location</th><th>Description</th><th># of Tables</th><th># Seats per Table</th></tr>        	
-        	
-        </table>
-    </div>
-</h1>
 @endsection

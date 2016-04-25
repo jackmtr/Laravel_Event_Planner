@@ -1,0 +1,11 @@
+/* ---------------------------------
+  Project Style: Image
+--------------------------------- */
+
+.sg-image {
+  width: 100%;
+  max-width: 700px;
+  border-radius: $radius-default;
+  border: $border-thin solid $gray-20;
+  @include tablet-and-up {width: auto;};
+}

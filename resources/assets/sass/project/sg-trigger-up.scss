@@ -1,0 +1,26 @@
+/* ---------------------------------
+  Project Style: Trigger Up
+--------------------------------- */
+
+.sg-trigger-up {
+  position: fixed;
+  bottom: $spacing-medium;
+  right: $spacing-medium;
+  width: 40px;
+  height: 40px;
+  background-color: $gray-30;
+  color: $white;
+  text-align: center;
+  &:hover, &:focus {
+    background-color: $gray-40;
+    color: $white;
+    text-decoration: none;
+  }
+  i {font-size: $font-size-x-large;}
+  span {
+    display: block;
+    margin-top: $spacing-x-small * -1;
+    font-size: $font-size-small;
+    line-height: 1;
+  }
+}
