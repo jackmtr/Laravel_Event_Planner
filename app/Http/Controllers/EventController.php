@@ -56,4 +56,9 @@ class EventController extends Controller
         return view('eventFolder.editEvents', compact("event"));
     }
 
+    public function update($id){
+        dd("aa");
+        return "abc";
+    }
+
 }

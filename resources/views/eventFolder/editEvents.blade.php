@@ -4,7 +4,7 @@
     <div class="container">
     	<h1>Create Event</h1>
 
-        {!! Form::open(array('url' => 'events/create', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => true)) !!}
+        {!! Form::open(array('url' => 'events/{{$event["event_id"]}}/edit', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => true, "method" => "PUT")) !!}
             <div class="form-group">
                 {!! Form::label('event_name', 'Event Name: ') !!}
                 {!! Form::text('event_name', $event->event_name, ['class' => 'form-control']) !!}

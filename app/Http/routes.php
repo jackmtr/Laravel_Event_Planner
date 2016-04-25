@@ -28,5 +28,5 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/events/{id}', 'GuestListController@show');
 	Route::get('/events/{id}/edit', 'EventController@edit');
-	Route::post('/events/{id}/edit', 'EventController@update');
+	Route::put('/events/{id}/edit', 'EventController@update');
 	});
