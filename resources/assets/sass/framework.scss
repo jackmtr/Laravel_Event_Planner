@@ -150,33 +150,6 @@
 			}
 		}
 	}
-
-	//display: flex;
-	//text-align: center;
-	//align-items: center;
-	//justify-content: center;
-
-
-	/*.container{
-
-		h1{
-			color: $jade;
-			font-family: 'Rajdhani', sans-serif;
-		}
-
-		.panel{
-			position: absolute;
-			top: 42%;
-			left: 33%;
-			width:650px; 
-			height: 800px;
-			margin:300px 0px;
-
-			panel-body{
-				
-			}
-		}
-	}*/
 }
 
 .events{
@@ -208,6 +181,9 @@
 			    .singleeventleftbox{
 			    	width: 60%;
 			    	margin: 1% 5%;
+			    	&:hover{
+			    		text-decoration: none;
+			    	}
 			    	p{ font-family: $font-family-secondary; font-size: $font-size-h3; color: $stone;}
 			    	p+p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $jade;}
 			    	p+p+p{ font-family: $font-family-secondary; font-size: $font-size-default;}

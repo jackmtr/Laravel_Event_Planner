@@ -1883,27 +1883,7 @@ h3 > span {
   align-items: flex-end;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
-  justify-content: center;
-  /*.container{
-
-		h1{
-			color: $jade;
-			font-family: 'Rajdhani', sans-serif;
-		}
-
-		.panel{
-			position: absolute;
-			top: 42%;
-			left: 33%;
-			width:650px; 
-			height: 800px;
-			margin:300px 0px;
-
-			panel-body{
-				
-			}
-		}
-	}*/ }
+  justify-content: center; }
   .login .flexbox {
     background-color: #fff;
     width: 40%;
@@ -1951,6 +1931,8 @@ h3 > span {
     .events .topevents .openevents .singleopenevent .singleeventleftbox {
       width: 60%;
       margin: 1% 5%; }
+      .events .topevents .openevents .singleopenevent .singleeventleftbox:hover {
+        text-decoration: none; }
       .events .topevents .openevents .singleopenevent .singleeventleftbox p {
         font-family: "ArialMT", Helvetica, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
         font-size: 12px;
