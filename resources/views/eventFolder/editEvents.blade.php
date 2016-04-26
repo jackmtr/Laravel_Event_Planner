@@ -4,7 +4,9 @@
     <div class="container">
     	<h1>Create Event</h1>
 
+
         {!! Form::open(array('action' => array('EventController@update', $event->event_id),'class' => 'form', 'novalidate' => 'novalidate', 'files' => true)) !!}
+
             <div class="form-group">
                 {!! Form::label('event_name', 'Event Name: ') !!}
                 {!! Form::text('event_name', $event->event_name, ['class' => 'form-control']) !!}
