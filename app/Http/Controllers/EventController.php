@@ -81,9 +81,5 @@ class EventController extends Controller
 
         $event->save();
         return redirect('events');
-               
-        //return redirect()->route('posts.show', $post->id);
-
     }
-
 }

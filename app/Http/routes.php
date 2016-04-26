@@ -34,4 +34,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/contacts/{id}/edit', 'ContactController@edit');
 	Route::post('/contacts/{id}/edit', 'ContactController@update');
 	
-	});
+});
