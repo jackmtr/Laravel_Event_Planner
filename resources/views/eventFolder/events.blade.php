@@ -12,7 +12,7 @@
           @if($openEvent['event_status'] != 2)
 		    		 <div class="singleopenevent">
 		    			<div class="singleeventleftbox">
-		    				<p>{{$openEvent['event_date']}}</p>
+		    				<p>{{ date('M j, Y', strtotime($openEvent['event_date'])) }}</p>
 		    				<p>{{$openEvent['event_name']}}</p>
 		    				<p>{{$openEvent['event_location']}}</p>
 		    			</div>
