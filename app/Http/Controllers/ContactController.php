@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Event;
 use App\Http\Requests;
 //use Carbon\Carbon;
 use Auth;
@@ -27,9 +28,12 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::all()->toArray();
+        $contacts = Contact::paginate(10);
+        $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
 
-    	return view('contactFolder.contacts', compact('contacts'));
+       // $contacts = Contact::all();
+
+    	return view('contactFolder.contacts', compact('contacts','events_active_open'));
     }
 
     public function create()
