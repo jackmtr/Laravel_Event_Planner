@@ -14,7 +14,7 @@
                 {!! Form::text('last_name', "", ['class' => 'form-control']) !!}
             </div>   
             <div class="form-group">
-                {!! Form::label('email', 'Email: ') !!}
+                {!! Form::label('email', 'Email: ') !!}                
                 {!! Form::text('email', "", ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">

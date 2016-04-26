@@ -22,11 +22,16 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/events/create', 'EventController@create');
 	Route::post('/events/create', 'EventController@store');
 
+	Route::get('/events/{id}', 'GuestListController@show');
+	Route::get('/events/{id}/edit', 'EventController@edit');
+	Route::post('/events/{id}/edit', 'EventController@update');
+
 	Route::get('/contacts', 'ContactController@index');
 	Route::get('/contacts/create', 'ContactController@create');
 	Route::post('/contacts/create', 'ContactController@store');
 
-	Route::get('/events/{id}', 'GuestListController@show');
-	Route::get('/events/{id}/edit', 'EventController@edit');
-	Route::put('/events/{id}/edit', 'EventController@update');
-	});
+	Route::get('/contacts/{id}', 'ContactController@show');
+	Route::get('/contacts/{id}/edit', 'ContactController@edit');
+	Route::post('/contacts/{id}/edit', 'ContactController@update');
+	
+});

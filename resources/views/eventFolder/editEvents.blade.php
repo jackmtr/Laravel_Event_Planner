@@ -2,7 +2,7 @@
 @section('content')
 <div class="edit-events">
     <div class="container">
-    	<h1>Create Event</h1>
+    	<h1>Edit Event</h1>
 
 
         {!! Form::open(array('action' => array('EventController@update', $event->event_id),'class' => 'form', 'novalidate' => 'novalidate', 'files' => true)) !!}
