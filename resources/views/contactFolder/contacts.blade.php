@@ -33,7 +33,7 @@
 
 	</table>
 	<label for="events">Select an Event: </label>
-	<select id="events">
+	<select id="events" name="events">
 		@foreach($events_active_open as $event)
 			<option value="{{$event['event_id']}}">{{$event['event_name']}}</option>
 		@endforeach
@@ -42,7 +42,7 @@
 	{{Form::close()}}
 
 	<h3>Total Contacts: {{count($contacts)}}</h3>
-	{{$contacts->links()}}
+	<div class="pagination"> {{$contacts->links()}} </div>
 
 </div>
 @endsection

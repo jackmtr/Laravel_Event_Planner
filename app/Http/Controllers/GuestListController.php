@@ -43,8 +43,12 @@ class GuestListController extends Controller
      */
     public function store(Request $request)
     {
-        $_POST[]
-        dd($request);
+       // $_POST['']
+       // $checkbox = Input::get('guest_list_submit');
+        echo("hallo from store method: ");
+        $event_selected =$request->input('events');
+
+        dd($event_selected);
 
 
     }
