@@ -15,7 +15,7 @@
 		@if (count($contacts) > 0)
 			@foreach($contacts as $contact)
 				<tr>
-					<td class='jackie'>
+					<td class='cellcheckbox'>
 						{!! Form::label("invitelist[]", " ", array('class' => 'label-checkbox')) !!}
 						{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
 						<span></span>
@@ -52,12 +52,9 @@
 @section('javascript')
 	<script>
 		$(document).ready(function(){
-			$('.jackie').on('click', 'span', function(){
-				if($(this).parent().find("input").prop("checked") == false){
-					$(this).parent().find("input").attr("checked", "checked");}
-				else{
-					$(this).parent().find("input").attr("checked", false);
-				}
+			$('.cellcheckbox').on('click', 'span', function(){
+				var checkbox = $(this).parent().find("input");
+				checkbox.prop("checked", !checkbox.prop("checked"));
 			});
 		});
 	</script>
