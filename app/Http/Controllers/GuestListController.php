@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\GuestList;
 use App\Http\Requests;
+use Auth;
 
 class GuestListController extends Controller
 {
@@ -43,14 +44,21 @@ class GuestListController extends Controller
      */
     public function store(Request $request)
     {
-       // $_POST['']
-       // $checkbox = Input::get('guest_list_submit');
-        echo("hallo from store method: ");
-        $event_selected =$request->input('events');
+        $authId = Auth::user()->user_id;
 
-        dd($event_selected);
+        $eventId = $request->events;
+        
+        //dd($authId);
+        $guestlist = $request->toArray();
 
+        $count = "";
+        foreach ($guestlist["invitelist"] as $invitee){
 
+            GuestList::create(array('rsvp' => 0, 'checked_in_by' => $authId, 'contact_id' => $invitee, 'event_id' => $eventId));
+
+        }
+
+        return "done";
     }
 
     /**

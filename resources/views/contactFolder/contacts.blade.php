@@ -9,15 +9,17 @@
 	</div>
 
 	{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
-
 	<table>
 		<tr><th>CheckBox</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Occupation</th><th>Company</th><th>Notes</th><th>Added By</th></tr>
 		
 		@if (count($contacts) > 0)
 			@foreach($contacts as $contact)
 				<tr>
-					{{--<td> {{Form::checkbox('contact[]',$contact['first_name'], $contact['email'])}}</td>--}}
-					<td><input type="checkbox" name="{{$contact['contact_id']}}" value="{{$contact['contact_id']}}" style="position:relative; width:auto; height:auto; "/></td>
+					<td class='jackie'>
+						{!! Form::label("invitelist[]", " ", array('class' => 'label-checkbox')) !!}
+						{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
+						<span></span>
+					</td>
 					<td>{{$contact['first_name']}}</td>
 					<td>{{$contact['last_name']}}</td>
 					<td>{{$contact['email']}}</td>
@@ -45,4 +47,18 @@
 	<div class="pagination"> {{$contacts->links()}} </div>
 
 </div>
+@endsection
+
+@section('javascript')
+	<script>
+		$(document).ready(function(){
+			$('.jackie').on('click', 'span', function(){
+				if($(this).parent().find("input").prop("checked") == false){
+					$(this).parent().find("input").attr("checked", "checked");}
+				else{
+					$(this).parent().find("input").attr("checked", false);
+				}
+			});
+		});
+	</script>
 @endsection
