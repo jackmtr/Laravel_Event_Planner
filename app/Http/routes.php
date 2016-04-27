@@ -31,8 +31,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/contacts/create', 'ContactController@create');
 	Route::post('/contacts/create', 'ContactController@store');
 
+
+	Route::post('/guestlist/create','GuestListController@store');
+
+
 	Route::get('/contacts/{id}', 'ContactController@show');
 	Route::get('/contacts/{id}/edit', 'ContactController@edit');
 	Route::post('/contacts/{id}/edit', 'ContactController@update');
 	
 });
+
