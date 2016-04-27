@@ -7,7 +7,8 @@ use App\Event;
 use App\Http\Requests;
 //use Carbon\Carbon;
 use Auth;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Request;
 
 class ContactController extends Controller
 {
@@ -28,10 +29,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::paginate(10);
-        $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
+        $contacts = Contact::orderBy("last_name")->paginate(10);
 
-       // $contacts = Contact::all();
+        $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
 
     	return view('contactFolder.contacts', compact('contacts','events_active_open'));
     }
@@ -41,13 +41,12 @@ class ContactController extends Controller
         return view('contactFolder.createContacts');
     }
 
-    public function store(Request $request){
+    public function store(){
 
         $authId = Auth::user()->user_id;
-        //dd($authEmail);
+
         $input = Request::all();
         $input["added_by"] = $authId;
-        //dd($input);
 
         Contact::create($input);
 
