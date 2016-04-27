@@ -6,6 +6,7 @@ use App\Contact;
 use App\Event;
 use App\Http\Requests\CreateContactRequest;
 use App\Http\Requests;
+use Request; //needed for the search function atm
 use Auth;
 
 class ContactController extends Controller
@@ -31,7 +32,7 @@ class ContactController extends Controller
 
         if(Request::all()){
             $query = Request::input('searchitem');
-            $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')->paginate(10);           
+            $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')->orWhere('last_name', 'LIKE', '%'. $query . '%')->paginate(10);          
         }
 
 
