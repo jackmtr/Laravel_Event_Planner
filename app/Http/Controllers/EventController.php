@@ -42,6 +42,8 @@ class EventController extends Controller
 
     public function store(CreateEventRequest $request){
 
+        $request["event_status"] = 0;
+
         Event::create($request->all());
 
         return redirect('events');
@@ -56,28 +58,8 @@ class EventController extends Controller
 
     public function update(CreateEventRequest $request, $id)
     {
-        //Validating data
-        /*$this->validate($request, [
-            'event_name' => 'required|max:255',
-            'event_date' => '',
-            'num_of_tables' => 'integer',
-            'seats_per_table' => 'integer',
-
-        ]);*/
-                       
-        //Save data to database
         $event = Event::find($id)->update($request->all());
-        //dd($request->input('event_name'));
-        
-        /*$event->event_name = $request->input('event_name');
-        $event->event_date = $request->input('event_date');
-        $event->event_time = $request->input('event_time');
-        $event->event_location = $request->input('event_location');
-        $event->event_description = $request->input('event_description');
-        $event->num_of_tables = $request->input('num_of_tables');
-        $event->seats_per_table = $request->input('seats_per_table');
 
-        $event->save();*/
         return redirect('events');
     }
 }

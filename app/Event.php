@@ -16,6 +16,7 @@ class event extends Model
 		'event_description',
 		'num_of_tables',
 		'seats_per_table',
+        'event_status',
     ];//allows these columns to be changed, and will ignore requests to change any other column
 
     protected $dates = ["event_date"]; //lets event_date be a carbon item
