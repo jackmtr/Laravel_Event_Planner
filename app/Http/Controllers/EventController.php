@@ -6,7 +6,8 @@ use App\Event;
 use App\Http\Requests;
 use App\EventWithCount;
 //use Carbon\Carbon;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Request;
 
 class EventController extends Controller
 {
@@ -28,7 +29,8 @@ class EventController extends Controller
     public function index()
     {
         $eventsWithCount = array();
-        foreach(Event::all() as $event){
+
+        foreach(Event::latest("event_status")->get() as $event){
           $eventWithCount = new EventWithCount($event);
           $eventsWithCount[] = $eventWithCount;
         }
@@ -40,18 +42,15 @@ class EventController extends Controller
     }
 
     public function store(){
-
-        $input = Request::all();
-        $input['event_status'] = 0;
-
-        Event::create($input);
+        //dd(Request::all());
+        Event::create(Request::all());
 
         return redirect('events');
     }
 
     public function edit($id){
 
-        $event = Event::find($id);
+        $event = Event::findOrFail($id);
 
         return view('eventFolder.editEvents', compact("event"));
     }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Event;
 use App\Http\Requests;
 //use Carbon\Carbon;
 use Auth;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Request;
 
 class ContactController extends Controller
 {
@@ -27,9 +29,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::all()->toArray();
+        $contacts = Contact::orderBy("last_name")->paginate(10);
 
-    	return view('contactFolder.contacts', compact('contacts'));
+        $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
+
+    	return view('contactFolder.contacts', compact('contacts','events_active_open'));
     }
 
     public function create()
@@ -37,13 +41,12 @@ class ContactController extends Controller
         return view('contactFolder.createContacts');
     }
 
-    public function store(Request $request){
+    public function store(){
 
         $authId = Auth::user()->user_id;
-        //dd($authEmail);
+
         $input = Request::all();
         $input["added_by"] = $authId;
-        //dd($input);
 
         Contact::create($input);
 
@@ -63,7 +66,7 @@ class ContactController extends Controller
         $this->validate($request, [
             'first_name' => 'required|max:255',
             'last_name'  => 'required|max:255',
-            'email'      => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
             /*
             'occupation',
             'company',

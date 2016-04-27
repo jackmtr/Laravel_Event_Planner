@@ -4,18 +4,18 @@
     <div class="container">
     	<h1>Create Event</h1>
 
-        {!! Form::open(array('url' => 'events/create', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => true)) !!}
+        {!! Form::open(['url' => 'events/create', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
             <div class="form-group">
                 {!! Form::label('event_name', 'Event Name: ') !!}
                 {!! Form::text('event_name', "", ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
                 {!! Form::label('event_date', 'Date: ') !!}
-                {!! Form::text('event_date', "", ['class' => 'form-control']) !!}
+                {!! Form::input('date', 'event_date', date('Y-m-d'), ['class' => 'form-control']) !!}
             </div>   
             <div class="form-group">
                 {!! Form::label('event_time', 'Time: ') !!}
-                {!! Form::text('event_time', "", ['class' => 'form-control']) !!}
+                {!! Form::input('time', 'event_time', date('h:i'), ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
                 {!! Form::label('event_location', 'Location: ') !!}
