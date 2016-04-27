@@ -29,7 +29,13 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::orderBy("last_name")->paginate(10);
+        $contacts = Contact::orderBy("last_name")->paginate(10);        
+
+        if(Request::all()){
+            $query = Request::input('searchitem');
+            $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')->paginate(10);           
+        }
+
 
         $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
 
