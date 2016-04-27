@@ -15,6 +15,7 @@ class CreateGuestListTable extends Migration
     Schema::drop('event_table_seats');
     Schema::drop('guestlists');
     Schema::create('guest_lists', function (Blueprint $table) {
+
       $table->increments('guest_list_id');
       $table->integer('additional_guests');
       $table->boolean('rsvp');
