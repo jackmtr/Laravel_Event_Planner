@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests;
 use App\EventWithCount;
-//use Carbon\Carbon;
-//use Illuminate\Http\Request;
-use Request;
+
 
 class EventController extends Controller
 {
@@ -41,9 +40,9 @@ class EventController extends Controller
         return view('eventFolder.createEvents');
     }
 
-    public function store(){
-        //dd(Request::all());
-        Event::create(Request::all());
+    public function store(CreateEventRequest $request){
+
+        Event::create($request->all());
 
         return redirect('events');
     }
@@ -55,22 +54,22 @@ class EventController extends Controller
         return view('eventFolder.editEvents', compact("event"));
     }
 
-    public function update(Request $request, $id)
+    public function update(CreateEventRequest $request, $id)
     {
         //Validating data
-        $this->validate($request, [
+        /*$this->validate($request, [
             'event_name' => 'required|max:255',
             'event_date' => '',
             'num_of_tables' => 'integer',
             'seats_per_table' => 'integer',
 
-        ]);
+        ]);*/
                        
         //Save data to database
-        $event = Event::find($id);
+        $event = Event::find($id)->update($request->all());
         //dd($request->input('event_name'));
         
-        $event->event_name = $request->input('event_name');
+        /*$event->event_name = $request->input('event_name');
         $event->event_date = $request->input('event_date');
         $event->event_time = $request->input('event_time');
         $event->event_location = $request->input('event_location');
@@ -78,7 +77,7 @@ class EventController extends Controller
         $event->num_of_tables = $request->input('num_of_tables');
         $event->seats_per_table = $request->input('seats_per_table');
 
-        $event->save();
+        $event->save();*/
         return redirect('events');
     }
 }

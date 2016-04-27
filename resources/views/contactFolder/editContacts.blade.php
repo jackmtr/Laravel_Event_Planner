@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="edit-events">
     <div class="container">
         <h1>Edit Event</h1>
@@ -33,7 +34,7 @@
             </div>   
             <div class="form-group">
                 {!! Form::label('notes', 'Notes: ') !!}
-                {!! Form::text('notes', $contact->notes, ['class' => 'form-control']) !!}
+                {!! Form::textarea('notes', $contact->notes, ['class' => 'form-control']) !!}
             </div>  
             <div class="form-group">
                 {!! Form::label('added_by', 'Added_by: ') !!}
@@ -43,6 +44,16 @@
             <div class="form-group">
                 {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
             </div> 
+
+            {!! Form::close() !!}
+
+            @if ($errors->any())
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif               
         </div>       
 </div>
 @endsection
