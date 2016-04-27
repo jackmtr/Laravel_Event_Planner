@@ -36,11 +36,13 @@ class EventController extends Controller
         return view('eventFolder.events', compact('eventsWithCount'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('eventFolder.createEvents');
     }
 
-    public function store(){
+    public function store()
+    {
         $input = Request::all();
         $input['event_status'] = 0;
         // add date value in front of time value to be 2016-08-12 19:00:00
@@ -49,14 +51,15 @@ class EventController extends Controller
     }
 
 
-    public function show($id){
+    public function show($id)
+    {
       $eventDetails = new EventDetails($id);
       return view('eventFolder.eventsDetail', compact('eventDetails'));
+    }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
         $event = Event::find($id);
-
         return view('eventFolder.editEvents', compact("event"));
     }
 
@@ -68,13 +71,10 @@ class EventController extends Controller
             'event_date' => '',
             'num_of_tables' => 'integer',
             'seats_per_table' => 'integer',
-
         ]);
-
         //Save data to database
         $event = Event::find($id);
         //dd($request->input('event_name'));
-
         $event->event_name = $request->input('event_name');
         $event->event_date = $request->input('event_date');
         $event->event_time = $request->input('event_time');
