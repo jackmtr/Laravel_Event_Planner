@@ -26,7 +26,7 @@
                 {!! Form::text('company', "", ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
-                {!! Form::label('wechat_id', 'Phone Number: ') !!}
+                {!! Form::label('wechat_id', 'Wechat Id: ') !!}
                 {!! Form::text('wechat_id', "", ['class' => 'form-control']) !!}
             </div>                  
             <div class="form-group">
@@ -35,7 +35,16 @@
             </div>                        
             <div class="form-group">
                 {!! Form::submit('Create Event', ['class' => 'btn btn-primary form-control']) !!}
-            </div>                
+            </div>     
+            {!! Form::close() !!}
+
+            @if ($errors->any())
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif         
     </div>
 </div>
 
