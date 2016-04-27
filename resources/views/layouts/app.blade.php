@@ -67,7 +67,7 @@
                     <a href="{{ url('/contacts') }}">CONTACTS</a>
                 </li>
             </ul>
-            @endif 
+            @endif
         </div>
     </nav>
 

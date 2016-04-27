@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="events">
 	<div class="topevents"> <!-- can be generic -->
 		<div class="topeventnav"><!-- can be generic -->
@@ -11,8 +12,8 @@
 			@foreach($eventsWithCount as $openEvent)
 			@if($openEvent['event_status'] != 2)
 			<div class="singleopenevent">
-				<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}">
-					<div >
+				<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}" >
+					<div>
 						<p>{{$openEvent['event_date']}}</p>
 						<p>{{$openEvent['event_name']}}</p>
 						<p>{{$openEvent['event_location']}}</p>

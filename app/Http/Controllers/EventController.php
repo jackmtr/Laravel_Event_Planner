@@ -50,6 +50,6 @@ class EventController extends Controller
 
     public function show($id){
       $eventDetails = new EventDetails($id);
-      return view('eventFolder.eventDetail', compact('eventDetails'));
+      return view('eventFolder.eventsDetail', compact('eventDetails'));
     }
 }
