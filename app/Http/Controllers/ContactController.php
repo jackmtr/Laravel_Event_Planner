@@ -26,6 +26,19 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function search(Request $request)
+    {
+        // Gets the query string from our form submission
+        $search = $request->input('search');
+        // Returns an array of articles that have the query string located somewhere within
+        // our articles titles. Paginates them so we can break up lots of search results.
+        $contacts = Contact::where('first_name', 'LIKE', '%' . $search . '%')->paginate(10);
+
+        // returns a view and passes the view the list of articles and the original query.
+        return view('contactFolder.contacts', compact('contacts', 'search'));
+    }
+
     public function index()
     {
         $contacts = Contact::paginate(10);

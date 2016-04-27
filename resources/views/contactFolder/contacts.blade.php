@@ -6,6 +6,10 @@
 	<div class="contactheadings">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}">Add Contact</a>
+		{!! Form::open(array('route' => 'queries.search’)) !!}
+		{!! Form::text('search', null, array('required','class'=>'form-control','placeholder'=>'Search for a tutorial...')) !!}
+		{!! Form::submit('Search') !!}
+		{!! Form::close() !!}
 	</div>
 
 	{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
