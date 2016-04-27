@@ -7,6 +7,11 @@
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}">Add Contact</a>
 	</div>
+	
+	{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
+		{!! Form::text("searchitem", "", ['placeholder'=>'First or Last Name']) !!}
+		{!! Form::submit("Search") !!}
+	{!! Form::close() !!}
 
 	{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 	<table>
