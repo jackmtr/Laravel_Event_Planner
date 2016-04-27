@@ -26,7 +26,7 @@ class CreateEventRequest extends Request
         return [
             'event_name' => 'required|min:3',
             'event_date' => 'date',
-            //'event_time' => '',
+            //'event_time' => '',//not sure how to validate this
             'event_location' => 'min:3',
             //'event_description' => '',
             'num_of_tables' => 'integer',
