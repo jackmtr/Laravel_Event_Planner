@@ -6,7 +6,7 @@ use App\Contact;
 use App\Http\Requests;
 //use Carbon\Carbon;
 use Auth;
-use Request;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -48,5 +48,45 @@ class ContactController extends Controller
         Contact::create($input);
 
         return redirect('contacts');
+    }
+
+    public function edit($id){
+
+        $contact = Contact::find($id);
+
+        return view('contactFolder.editContacts', compact("contact"));
+    }
+
+    public function update(Request $request, $id)
+    {
+        //Validating data
+        $this->validate($request, [
+            'first_name' => 'required|max:255',
+            'last_name'  => 'required|max:255',
+            'email'      => 'required|max:255',
+            /*
+            'occupation',
+            'company',
+            'wechat_id',
+            'notes',
+            */
+            'added_by'   => 'required',           
+        ]);
+                       
+        //Save data to database
+        $contact = Contact::find($id);
+
+        $contact->first_name = $request->input('first_name');
+        $contact->last_name = $request->input('last_name');        
+        $contact->email = $request->input('email');
+        $contact->occupation = $request->input('occupation');
+        $contact->company = $request->input('company');
+        $contact->wechat_id = $request->input('wechat_id');
+        $contact->notes = $request->input('notes');
+        $contact->added_by = $request->input('added_by');
+
+        $contact->save();
+        return redirect('contacts');                    
+
     }
 }

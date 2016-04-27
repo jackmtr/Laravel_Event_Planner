@@ -12,13 +12,13 @@
 			@foreach($eventsWithCount as $openEvent)
 			@if($openEvent['event_status'] != 2)
 			<div class="singleopenevent">
-				<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}" >
-					<div>
-						<p>{{$openEvent['event_date']}}</p>
+				<div class="singleeventleftbox">
+					<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}" >
+						<p>{{ date('M j, Y', strtotime($openEvent['event_date'])) }}</p>
 						<p>{{$openEvent['event_name']}}</p>
 						<p>{{$openEvent['event_location']}}</p>
-					</div>
-				</a>
+					</a>
+				</div>
 				@if($openEvent['event_status'] == 0)
 				<div class="singleeventrightbox" style="background-color: #1e8f98"><!--openeventrightbox $jade -->
 					<div class="checkedin"><!-- text color to white for openeventrightbox -->
