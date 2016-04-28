@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+<<<<<<< HEAD
 use App\GuestList;
 use App\Http\Requests;
 use App\EventWithCount;
@@ -10,6 +11,12 @@ use App\EventDetails;
 //use Carbon\Carbon;
 //use Illuminate\Http\Request;
 use Request;
+=======
+use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests;
+use App\EventWithCount;
+
+>>>>>>> master
 
 class EventController extends Controller
 {
@@ -44,8 +51,11 @@ class EventController extends Controller
         return view('eventFolder.createEvents');
     }
 
-    public function store(){
-        Event::create(Request::all());
+    public function store(CreateEventRequest $request){
+
+        $request["event_status"] = 0;
+
+        Event::create($request->all());
         return redirect('events');
     }
 
@@ -61,8 +71,9 @@ class EventController extends Controller
         return view('eventFolder.editEvents', compact("event"));
     }
 
-    public function update(Request $request, $id)
+    public function update(CreateEventRequest $request, $id)
     {
+<<<<<<< HEAD
         //Validating data
         $this->validate($request, [
             'event_name' => 'required|max:255',
@@ -82,6 +93,10 @@ class EventController extends Controller
         $event->seats_per_table = $request->input('seats_per_table');
 
         $event->save();
+=======
+        $event = Event::find($id)->update($request->all());
+
+>>>>>>> master
         return redirect('events');
     }
 }
