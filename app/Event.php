@@ -2,10 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model as Model;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class event extends Model
 {
+    use SoftDeletes;
+
 	protected $primaryKey = 'event_id'; //tells laravel what our primary key is
 
     protected $fillable = [
@@ -19,7 +22,7 @@ class event extends Model
         'event_status',
     ];//allows these columns to be changed, and will ignore requests to change any other column
 
-    protected $dates = ["event_date"]; //lets event_date be a carbon item
+    protected $dates = ["event_date", "deleted_at"]; //lets event_date be a carbon item
 
     protected $times = ["event_time"]; // we need to migrate db to change event_time from datetime to time
 

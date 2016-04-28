@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class GuestList extends Model
 {
 	protected $primaryKey = "guest_list_id";

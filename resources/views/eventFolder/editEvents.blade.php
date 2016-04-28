@@ -10,8 +10,15 @@
                 @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event'])
             {!! Form::close() !!}
 
-            @include('errors._list')      
+            {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id]) !!}
 
+				<div class="form-group">
+				    {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
+				</div> 
+
+            {!! Form::close() !!}
+
+            @include('errors._list') 
     </div>       
 </div>
 @endsection

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateEventsTable extends Migration
+class RemoveUniqueEmailContacts extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class UpdateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('events', function($table)
-        {            
-            $table->time('event_time')->change();
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->dropUnique('contacts_email_unique');
         });
-
     }
 
     /**
@@ -26,9 +24,8 @@ class UpdateEventsTable extends Migration
      */
     public function down()
     {
-        Schema::table('events', function($table)
-        {
-            $table->datetime('event_time')->change();
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->unique('email');
         });
     }
 }
