@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Event;
 use App\PhoneNumber;
-use App\Http\Requests\CreateContactRequest;
+use App\Http\Requests\ContactRequest;
 use App\Http\Requests;
 use Request; //needed for the search function atm
 use Auth;
@@ -46,7 +46,7 @@ class ContactController extends Controller
         return view('contactFolder.createContacts');
     }
 
-    public function store(CreateContactRequest $request){
+    public function store(ContactRequest $request){
 
         $authId = Auth::user()->user_id;
         $request["added_by"] = $authId;
@@ -61,14 +61,14 @@ class ContactController extends Controller
 
     public function edit($id){
 
-        $contact = Contact::find($id);
+        $contact = Contact::findOrFail($id);
 
         return view('contactFolder.editContacts', compact("contact"));
     }
 
-    public function update(CreateContactRequest $request, $id)
+    public function update(ContactRequest $request, $id)
     {
-        $contact = Contact::find($id)->update($request->all());
+        $contact = Contact::findOrFail($id)->update($request->all());
 
         return redirect('contacts');                    
     }

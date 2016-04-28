@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class CreateContactRequest extends Request
+class ContactRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class CreateContactRequest extends Request
      */
     public function rules()
     {
-        return [
+        /*return [
             'first_name' => 'alpha|max:50',//we will need to check if chinese letters can be accepted
             'last_name' => 'required|alpha|max:50',
             'email' => 'email', //|unique:contacts but causing issues with updating contacts and not wanting to change the email
@@ -32,6 +32,24 @@ class CreateContactRequest extends Request
             'phone_number' => 'string',//linked to the phone number creation
             'wechat_id' => 'integer|min:6',
             'notes' => 'max:255',
+        ];*/
+
+        $rules = [
+            'first_name' => 'alpha|max:50',//we will need to check if chinese letters can be accepted
+            'last_name' => 'required|alpha|max:50',
+            'email' => 'email|unique', //|unique:contacts but causing issues with updating contacts and not wanting to change the email
+            'occupation' => 'max:100',
+            'company' => 'max:100',
+            'phone_number' => 'string',//linked to the phone number creation
+            'wechat_id' => 'integer|min:6',
+            'notes' => 'max:255',
         ];
+        
+        //need to check for edit page
+        /*if ($condition){
+            $rules['email'] = 'email';
+        }*/
+
+        return $rules;
     }
 }

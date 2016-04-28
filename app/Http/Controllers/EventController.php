@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests\EventRequest;
 use App\Http\Requests;
 use App\EventWithCount;
 
@@ -40,7 +40,7 @@ class EventController extends Controller
         return view('eventFolder.createEvents');
     }
 
-    public function store(CreateEventRequest $request){
+    public function store(EventRequest $request){
 
         $request["event_status"] = 0;
 
@@ -56,9 +56,9 @@ class EventController extends Controller
         return view('eventFolder.editEvents', compact("event"));
     }
 
-    public function update(CreateEventRequest $request, $id)
+    public function update(EventRequest $request, $id)
     {
-        $event = Event::find($id)->update($request->all());
+        $event = Event::findOrFail($id)->update($request->all());
 
         return redirect('events');
     }
