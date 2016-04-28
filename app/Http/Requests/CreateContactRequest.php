@@ -29,6 +29,7 @@ class CreateContactRequest extends Request
             'email' => 'email', //|unique:contacts but causing issues with updating contacts and not wanting to change the email
             'occupation' => 'max:100',
             'company' => 'max:100',
+            'phone_number' => 'string',//linked to the phone number creation
             'wechat_id' => 'integer|min:6',
             'notes' => 'max:255',
         ];
