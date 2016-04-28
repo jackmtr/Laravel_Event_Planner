@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\GuestList;
 use App\Http\Requests;
 use Auth;
+use App\Contact;
 
 class GuestListController extends Controller
 {
@@ -104,5 +105,13 @@ class GuestListController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //id comes from guestlist
+    public function details($id){
+
+        $guest = Contact::find($id);
+
+        return view('eventFolder.guestDetails', compact("guest"));
     }
 }
