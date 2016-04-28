@@ -19,7 +19,7 @@
             </div>   
             <div class="form-group">
                 <h2>Phone: </h2>
-                <p>hey</p>
+                <p>{{$phone}}</p>
             </div>
             <div class="form-group">
                 <h2>Email: </h2>

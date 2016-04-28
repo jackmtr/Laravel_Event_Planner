@@ -7,6 +7,7 @@ use App\GuestList;
 use App\Http\Requests;
 use Auth;
 use App\Contact;
+use App\PhoneNumber;
 
 class GuestListController extends Controller
 {
@@ -111,7 +112,7 @@ class GuestListController extends Controller
     public function details($id){
 
         $guest = Contact::find($id);
-
-        return view('eventFolder.guestDetails', compact("guest"));
+        $phone = PhoneNumber::where('contact_id',$id)->firstOrFail()->phone_number;
+        return view('eventFolder.guestDetails', compact("guest","phone"));
     }
 }
