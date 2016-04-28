@@ -28,19 +28,38 @@ class ContactController extends Controller
      */
 
     public function search(Request $request)
+
     {
+       // echo('search function in contact controller');
         // Gets the query string from our form submission
-        $search = $request->input('search');
+
+        $search = $request->input('search-name');
+       // dd($search);
         // Returns an array of articles that have the query string located somewhere within
         // our articles titles. Paginates them so we can break up lots of search results.
-        $contacts = Contact::where('first_name', 'LIKE', '%' . $search . '%')->paginate(10);
 
+        $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
+
+        $contacts = Contact::where('first_name', 'LIKE', '%' . $search . '%')->orWhere('last_name','LIKE', '%' .$search. '%')->get();
+
+
+
+            return view('contactFolder.contacts', compact('contacts','events_active_open'));
+
+      // dd($contacts_list);
         // returns a view and passes the view the list of articles and the original query.
-        return view('contactFolder.contacts', compact('contacts', 'search'));
+
     }
 
     public function index()
+
     {
+       // search($request);
+        echo('index function in contact controller');
+
+       // search();
+
+
         $contacts = Contact::paginate(10);
         $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
 
