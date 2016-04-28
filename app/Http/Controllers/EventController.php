@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\GuestList;
 use App\Http\Requests\EventRequest;
 use App\Http\Requests;
 use App\EventWithCount;
@@ -66,10 +67,10 @@ class EventController extends Controller
     public function destroy($id){
 
         $event = Event::find($id);
-        //$eventStatus = Event::find($id)->event_status;
 
         if ($event->event_status < 1){
           //hard delete
+          GuestList::where('event_id', $id)->forceDelete();
           $event->forceDelete();
         }
         else{

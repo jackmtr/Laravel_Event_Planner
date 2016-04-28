@@ -55,8 +55,11 @@ class ContactController extends Controller
         $contact = Contact::create($request->all());
 
         $request["contact_id"] = $contact->contact_id; //must be after contact create so i can pull the contact_id for the forein key in phone table
-        PhoneNumber::create($request->all()); //request has the phone number already
 
+        if (strlen($request["phone_number"]) > 1){
+            PhoneNumber::create($request->all()); //request has the phone number already
+        }
+        
         return redirect('contacts');
     }
 
