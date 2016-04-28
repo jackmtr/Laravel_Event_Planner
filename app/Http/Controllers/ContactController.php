@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Event;
-use App\Http\Requests\CreateContactRequest;
+use App\PhoneNumber;
+use App\Http\Requests\ContactRequest;
 use App\Http\Requests;
 use Request; //needed for the search function atm
 use Auth;
@@ -35,7 +36,6 @@ class ContactController extends Controller
             $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')->orWhere('last_name', 'LIKE', '%'. $query . '%')->paginate(10);          
         }
 
-
         $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
 
     	return view('contactFolder.contacts', compact('contacts','events_active_open'));
@@ -46,26 +46,29 @@ class ContactController extends Controller
         return view('contactFolder.createContacts');
     }
 
-    public function store(CreateContactRequest $request){
+    public function store(ContactRequest $request){
 
         $authId = Auth::user()->user_id;
         $request["added_by"] = $authId;
 
-        Contact::create($request->all());
+        $contact = Contact::create($request->all());
+
+        $request["contact_id"] = $contact->contact_id; //must be after contact create so i can pull the contact_id for the forein key in phone table
+        PhoneNumber::create($request->all()); //request has the phone number already
 
         return redirect('contacts');
     }
 
     public function edit($id){
 
-        $contact = Contact::find($id);
+        $contact = Contact::findOrFail($id);
 
         return view('contactFolder.editContacts', compact("contact"));
     }
 
-    public function update(CreateContactRequest $request, $id)
+    public function update(ContactRequest $request, $id)
     {
-        $contact = Contact::find($id)->update($request->all());
+        $contact = Contact::findOrFail($id)->update($request->all());
 
         return redirect('contacts');                    
     }
