@@ -23,6 +23,10 @@ class AddDeletedAt extends Migration
         Schema::table('guest_lists', function($table){
             $table->softDeletes();
         });                
+
+        Schema::table('phone_numbers', function($table){
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -32,6 +36,10 @@ class AddDeletedAt extends Migration
      */
     public function down()
     {
+        Schema::table('phone_numbers', function($table){
+            $table->dropSoftDeletes();
+        });
+
         Schema::table('guest_lists', function($table){
             $table->dropSoftDeletes();
         });        
