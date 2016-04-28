@@ -66,9 +66,16 @@ class EventController extends Controller
     public function destroy($id){
 
         $event = Event::find($id);
+        //$eventStatus = Event::find($id)->event_status;
 
-        $event->delete();
-
+        if ($event->event_status < 1){
+          //hard delete
+          $event->forceDelete();
+        }
+        else{
+          //soft delete
+          $event->delete();
+        }
         return redirect('events');
     }
 }

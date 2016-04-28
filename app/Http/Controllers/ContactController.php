@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Event;
 use App\PhoneNumber;
+use App\GuestList;
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests;
 use Request; //needed for the search function atm
@@ -75,9 +76,18 @@ class ContactController extends Controller
 
     public function destroy($id){
 
-        $event = Contact::find($id);
+        //if the $id is not found in the guestlist table, this contact may be hard deleted
+        $canHardDelete = (GuestList::where('contact_id', $id)->count());
 
-        $event->delete();
+        $contact = Contact::findOrFail($id);
+
+        if($canHardDelete == 0){
+            //dd("can hard delete");
+            $contact->forceDelete();
+        }else{
+            //dd("dont hard delete");
+            $contact->delete();
+        }
 
         return redirect('contacts');
     }    
