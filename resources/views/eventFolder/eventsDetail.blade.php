@@ -1,16 +1,13 @@
 @extends('layouts.app')
 @section('content')
-
 <h3>Event Name</h3>
-<div class="eventTitle">
-  <h2>{{ $eventDetails['event_name'] }}</h2>
-  <a href="{{$eventDetails['event_id']}}/edit">show details</a>
-</div>
+<h2>{{ $event['event_name'] }}</h2>
+<a href="{{$event['event_id']}}/edit">show details</a>
 <div class="eventStatus">
   <h3>Event Status: </h3>
-  @if( $eventDetails['event_status']  == 0)
+  @if( $event['event_status']  == 0)
   <span class="statusOpenBtn">Open</span>
-  @elseif( $eventDetails['event_status'] == 1)
+  @elseif( $event['event_status'] == 1)
   <span class="statusCheckInBtn">Check In</span>
   @else
   <span class="statusCompleteBtn">Complete</span>
@@ -19,12 +16,12 @@
 <input placeholder="Look up names or contact info" />
 <div class="guestListCount">
   <div class="guestVariableA">
-    @if( $eventDetails['event_status']  == 0)
-    <h2>{{ $eventDetails['rsvpYes'] }}</h2>
+    @if( $event['event_status']  == 0)
+    <h2>{{ $rsvpYes }}</h2>
     <h3>Going</h3>
     @else
-    <h2>{{ $eventDetails['checkedIn'] }}</h2>
-    @if( $eventDetails['event_status']  == 1)
+    <h2>{{ $checkedIn }}</h2>
+    @if( $event['event_status']  == 1)
     <h3>Checked In</h3>
     @else
     <h3>Attended</h3>
@@ -32,32 +29,76 @@
     @endif
   </div>
   <div class="guestVariableB">
-    @if( $eventDetails['event_status']  == 1)
-    <h2>{{ $eventDetails['rsvpYes'] }}</h2>
+    @if( $event['event_status']  == 1)
+    <h2>{{ $rsvpYes }}</h2>
     <h3>Attending</h3>
     @else
-    <h2>{{ count($eventDetails['guestList']) }}</h2>
+    <h2>{{ count($guestList) }}</h2>
     <h3>Invited</h3>
     @endif
   </div>
 </div>
 <div class="guestList">
   <table>
-		<tr><th>Status</th><th>Table</th><th>Name</th><th>Guests</th><th>Title &amp; Company</th><th>Notes</th></tr>
-		@if (count($eventDetails['guestList']) > 0)
-			@foreach($eventDetails['guestList'] as $guest)
-				<tr>
-					<td>{{ $guest['rsvp'] }}</td>
-					<td>N/A</td>
-					<td>{{$guest['contact_id']}} Get Names</td>
-					<td>{{$guest['additional_guests']}}</td>
-					<td>{{$guest['contact_id']}} Get Title & Company</td>
-					<td>Get Notes</td>
-				</tr>
-			@endforeach
-		@else
-				<p>No Guests Exist</p>
-		@endif
-	</table>
+    <tr><th>Status</th><th>Table</th><th>Name</th><th>Guests</th><th>Title &amp; Company</th><th>Notes</th></tr>
+    {{--*/ $i = 0 /*--}}
+    @foreach($guestList as $guest)
+    <tr>
+      <td>{!! Form::select('rsvp', array(0 => 'Invited', 1 => 'Going', 2 => 'Not Going'), $guest['rsvp'] ) !!}</td>
+      <td>N/A</td>
+      <td>{{$guest['name']}}</td>
+      <td>
+        <form id='myform' method='POST' action='#'>
+          <input type='button' value='-' class='qtyminus' field='quantity{{$i}}' />
+          <input type='text' name='quantity{{$i}}'  value={{ $guest['additional_guests'] }} class='qty' />
+          <input type='button' value='+' class='qtyplus' field='quantity{{$i}}' />
+        </form>
+      </td>
+      <td>{{$guest['work']}}</td>
+      <td>!!! TBD Event Notes !!!</td>
+    </tr>
+    {{$i++}}
+    @endforeach
+  </table>
 </div>
+@endsection
+@section('javascript')
+<script>
+$(document).ready(function(){
+    // This button will increment the value
+    $('.qtyplus').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // If is not undefined
+        if (!isNaN(currentVal)) {
+            // Increment
+            $('input[name='+fieldName+']').val(currentVal + 1);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(0);
+        }
+    });
+    // This button will decrement the value till 0
+    $(".qtyminus").click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 0) {
+            // Decrement one
+            $('input[name='+fieldName+']').val(currentVal - 1);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(0);
+        }
+    });
+});
+</script>
 @endsection

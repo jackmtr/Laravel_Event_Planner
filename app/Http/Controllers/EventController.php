@@ -3,20 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-<<<<<<< HEAD
 use App\GuestList;
+use App\Contact;
+use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests;
 use App\EventWithCount;
 use App\EventDetails;
 //use Carbon\Carbon;
 //use Illuminate\Http\Request;
 use Request;
-=======
-use App\Http\Requests\CreateEventRequest;
-use App\Http\Requests;
-use App\EventWithCount;
-
->>>>>>> master
 
 class EventController extends Controller
 {
@@ -51,18 +46,39 @@ class EventController extends Controller
         return view('eventFolder.createEvents');
     }
 
-    public function store(CreateEventRequest $request){
-
+    public function store(CreateEventRequest $request)
+    {
         $request["event_status"] = 0;
-
         Event::create($request->all());
         return redirect('events');
     }
 
     public function show($id)
     {
-      $eventDetails = new EventDetails($id);
-      return view('eventFolder.eventsDetail', compact('eventDetails'));
+      $guests = GuestList::where('event_id', '=', $id); //get event guestlist
+
+      $event = Event::find($id); //get event details to pass to view
+      $eventGuests = $guests->get();
+      $guestList = array(); //guestList contact details to pass to view
+      foreach( $eventGuests as $guest)
+      {
+        $oneGuest['rsvp'] = $guest->rsvp;
+        $oneGuest['additional_guests'] = $guest->additional_guests;
+        //add guest Notes
+
+        $first_name = Contact::find($guest->contact_id)->first_name;
+        $last_name = Contact::find($guest->contact_id)->last_name;
+        $oneGuest['name'] = $first_name . " " . $last_name;
+
+        $occupation = Contact::find($guest->contact_id)->occupation;
+        $company = Contact::find($guest->contact_id)->company;
+        $oneGuest['work'] = $occupation . " " . $company;
+        $guestList[] = $oneGuest;
+      }
+      $rsvpYes = $guests->where('rsvp')->count(); //count of guestList rsvp yes to pass to view
+      $checkedIn = $guests->whereNotNull('checked_in_by')->count(); //count of guestList already checked in to pass to view
+
+      return view('eventFolder.eventsDetail', compact('event', 'guestList', 'rsvpYes','checkedIn'));
     }
 
     public function edit($id)
@@ -73,30 +89,7 @@ class EventController extends Controller
 
     public function update(CreateEventRequest $request, $id)
     {
-<<<<<<< HEAD
-        //Validating data
-        $this->validate($request, [
-            'event_name' => 'required|max:255',
-            'event_date' => '',
-            'num_of_tables' => 'integer',
-            'seats_per_table' => 'integer',
-        ]);
-        //Save data to database
-        $event = Event::find($id);
-        //dd($request->input('event_name'));
-        $event->event_name = $request->input('event_name');
-        $event->event_date = $request->input('event_date');
-        $event->event_time = $request->input('event_time');
-        $event->event_location = $request->input('event_location');
-        $event->event_description = $request->input('event_description');
-        $event->num_of_tables = $request->input('num_of_tables');
-        $event->seats_per_table = $request->input('seats_per_table');
-
-        $event->save();
-=======
         $event = Event::find($id)->update($request->all());
-
->>>>>>> master
         return redirect('events');
     }
 }
