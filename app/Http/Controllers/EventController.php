@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\GuestList;
 use App\Http\Requests;
 use App\EventWithCount;
 use App\EventDetails;

@@ -1,10 +1,10 @@
 @extends('layouts.app')
-
 @section('content')
+
 <h3>Event Name</h3>
 <div class="eventTitle">
   <h2>{{ $eventDetails['event_name'] }}</h2>
-  <a href="events/{{$eventDetails['event_id']}}/edit">show details</a>
+  <a href="{{$eventDetails['event_id']}}/edit">show details</a>
 </div>
 <div class="eventStatus">
   <h3>Event Status: </h3>
@@ -42,6 +42,22 @@
   </div>
 </div>
 <div class="guestList">
-
+  <table>
+		<tr><th>Status</th><th>Table</th><th>Name</th><th>Guests</th><th>Title &amp; Company</th><th>Notes</th></tr>
+		@if (count($eventDetails['guestList']) > 0)
+			@foreach($eventDetails['guestList'] as $guest)
+				<tr>
+					<td>{{ $guest['rsvp'] }}</td>
+					<td>N/A</td>
+					<td>{{$guest['contact_id']}} Get Names</td>
+					<td>{{$guest['additional_guests']}}</td>
+					<td>{{$guest['contact_id']}} Get Title & Company</td>
+					<td>Get Notes</td>
+				</tr>
+			@endforeach
+		@else
+				<p>No Guests Exist</p>
+		@endif
+	</table>
 </div>
 @endsection

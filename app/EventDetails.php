@@ -17,11 +17,12 @@ class EventDetails extends Model
 
   public function __construct($event_id) {
     $event = Event::find($event_id);
+    $guests = GuestList::where('event_id', '=', $event_id);
     $this->event_id = $event->event_id;
     $this->event_name = $event->event_name;
     $this->event_status = $event->event_status;
-    $this->guestList = GuestList::where('event_id', '=', $event_id);
-    $this->rsvpYes = $this->guestList->where('rsvp')->count();
-    $this->checkedIn = $this->guestList->whereNotNull('checked_in_by')->count();
+    $this->guestList = $guests->get();
+    $this->rsvpYes = $guests->where('rsvp')->count();
+    $this->checkedIn = $guests->whereNotNull('checked_in_by')->count();
   }
 }

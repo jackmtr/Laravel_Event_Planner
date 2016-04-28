@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model as Model;
 
-class event extends Model
+class Event extends Model
 {
   protected $primaryKey = 'event_id'; //tells laravel what our primary key is
 
