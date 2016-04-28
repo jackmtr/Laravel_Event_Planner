@@ -72,4 +72,13 @@ class ContactController extends Controller
 
         return redirect('contacts');                    
     }
+
+    public function destroy($id){
+
+        $event = Contact::find($id);
+
+        $event->delete();
+
+        return redirect('contacts');
+    }    
 }

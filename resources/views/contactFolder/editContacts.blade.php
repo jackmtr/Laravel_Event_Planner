@@ -11,6 +11,14 @@
 
         {!! Form::close() !!}
 
+        {!! Form::open(['method' => 'DELETE', 'url' => 'contacts/' . $contact->contact_id]) !!}
+
+			<div class="form-group">
+			    {!! Form::submit("Delete Contact", ['class' => 'btn btn-primary form-control']) !!}
+			</div> 
+
+        {!! Form::close() !!}
+
         @include('errors._list')            
         </div>       
 </div>
