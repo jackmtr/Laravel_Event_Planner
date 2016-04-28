@@ -37,11 +37,11 @@ class ContactRequest extends Request
         $rules = [
             'first_name' => 'alpha|max:50',//we will need to check if chinese letters can be accepted
             'last_name' => 'required|alpha|max:50',
-            'email' => 'email|unique', //|unique:contacts but causing issues with updating contacts and not wanting to change the email
+            'email' => 'email', //|unique:contacts but causing issues with updating contacts and not wanting to change the email
             'occupation' => 'max:100',
             'company' => 'max:100',
             'phone_number' => 'string',//linked to the phone number creation
-            'wechat_id' => 'integer|min:6',
+            'wechat_id' => 'string',//we can add better validation later
             'notes' => 'max:255',
         ];
         
