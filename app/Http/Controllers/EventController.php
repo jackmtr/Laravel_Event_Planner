@@ -91,4 +91,20 @@ class EventController extends Controller
         $event = Event::findOrFail($id)->update($request->all());
         return redirect('events');
     }
+
+    public function destroy($id){
+
+        $event = Event::find($id);
+
+        if ($event->event_status < 1){
+          //hard delete
+          GuestList::where('event_id', $id)->forceDelete();
+          $event->forceDelete();
+        }
+        else{
+          //soft delete
+          $event->delete();
+        }
+        return redirect('events');
+    }
 }
