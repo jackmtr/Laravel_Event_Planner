@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="panel panel-default">
-        <div class="panel-heading">Project Outline - Last Updated: 3:04pm April 28,2016</div>
+        <div class="panel-heading">Project Outline - Last Updated: 2:04pm April 29,2016</div>
 
         <div class="panel-body">
           <h3>Team Members</h3>
