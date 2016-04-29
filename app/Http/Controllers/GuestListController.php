@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Event;
 use App\GuestList;
-use App\Http\Requests;
 use Auth;
 
 class GuestListController extends Controller
@@ -45,14 +43,12 @@ class GuestListController extends Controller
     public function store(Request $request)
     {
         $authId = Auth::user()->user_id;
-
         $eventId = $request->events;
-        
         $guestlist = $request->toArray();
 
         foreach ($guestlist["invitelist"] as $invitee){
 
-            GuestList::create(array('rsvp' => 0, 'checked_in_by' => $authId, 'contact_id' => $invitee, 'event_id' => $eventId));
+            GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
         }
 
         return redirect()->action('EventController@show', $eventId);
@@ -100,12 +96,11 @@ class GuestListController extends Controller
      */
     public function destroy($id)
     {
-        //couldnt test this code out since no view, so adjust accordinaly
-        $eventId = GuestList::find($id)->event_id;
-        $eventStatus = Event::find($eventId)->event_status;
+        $guestList = GuestList::findOrFail($id);
+        $eventStatus = $guestList->event->event_status;
 
         if($eventStatus == 0){
-            GuestList::find($id)->forceDelete();
+            $guestList->forceDelete();
         }else{
             alert("sorry, you can't delete a guest from a checkedin/completed event!");
         }
