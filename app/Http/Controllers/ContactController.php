@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Event;
+use App\PhoneNumber;
+use App\Http\Requests\ContactRequest;
 use App\Http\Requests;
-//use Carbon\Carbon;
+use Request; //needed for the search function atm
 use Auth;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -40,9 +41,7 @@ class ContactController extends Controller
 
         $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
 
-        $contacts = Contact::where('first_name', 'LIKE', '%' . $search . '%')->orWhere('last_name','LIKE', '%' .$search. '%')->get();
-
-
+        $contacts = Contact::where('first_name', 'LIKE', '%' . $search . '%')->orWhere('last_name','LIKE', '%' .$search. '%')->paginate(10);
 
             return view('contactFolder.contacts', compact('contacts','events_active_open'));
 
@@ -54,16 +53,15 @@ class ContactController extends Controller
     public function index()
 
     {
-       // search($request);
-        echo('index function in contact controller');
 
-       // search();
+        $contacts = Contact::orderBy("last_name")->paginate(10);        
 
+        if(Request::all()){
+            $query = Request::input('searchitem');
+            $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')->orWhere('last_name', 'LIKE', '%'. $query . '%')->paginate(10);          
+        }
 
-        $contacts = Contact::paginate(10);
         $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
-
-       // $contacts = Contact::all();
 
     	return view('contactFolder.contacts', compact('contacts','events_active_open'));
     }
@@ -73,56 +71,30 @@ class ContactController extends Controller
         return view('contactFolder.createContacts');
     }
 
-    public function store(Request $request){
+    public function store(ContactRequest $request){
 
         $authId = Auth::user()->user_id;
-        //dd($authEmail);
-        $input = Request::all();
-        $input["added_by"] = $authId;
-        //dd($input);
+        $request["added_by"] = $authId;
 
-        Contact::create($input);
+        $contact = Contact::create($request->all());
+
+        $request["contact_id"] = $contact->contact_id; //must be after contact create so i can pull the contact_id for the forein key in phone table
+        PhoneNumber::create($request->all()); //request has the phone number already
 
         return redirect('contacts');
     }
 
     public function edit($id){
 
-        $contact = Contact::find($id);
+        $contact = Contact::findOrFail($id);
 
         return view('contactFolder.editContacts', compact("contact"));
     }
 
-    public function update(Request $request, $id)
+    public function update(ContactRequest $request, $id)
     {
-        //Validating data
-        $this->validate($request, [
-            'first_name' => 'required|max:255',
-            'last_name'  => 'required|max:255',
-            'email'      => 'required|max:255',
-            /*
-            'occupation',
-            'company',
-            'wechat_id',
-            'notes',
-            */
-            'added_by'   => 'required',           
-        ]);
-                       
-        //Save data to database
-        $contact = Contact::find($id);
+        $contact = Contact::findOrFail($id)->update($request->all());
 
-        $contact->first_name = $request->input('first_name');
-        $contact->last_name = $request->input('last_name');        
-        $contact->email = $request->input('email');
-        $contact->occupation = $request->input('occupation');
-        $contact->company = $request->input('company');
-        $contact->wechat_id = $request->input('wechat_id');
-        $contact->notes = $request->input('notes');
-        $contact->added_by = $request->input('added_by');
-
-        $contact->save();
         return redirect('contacts');                    
-
     }
 }

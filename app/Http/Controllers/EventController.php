@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Http\Requests\EventRequest;
 use App\Http\Requests;
 use App\EventWithCount;
-//use Carbon\Carbon;
-use Illuminate\Http\Request;
+
 
 class EventController extends Controller
 {
@@ -28,7 +28,8 @@ class EventController extends Controller
     public function index()
     {
         $eventsWithCount = array();
-        foreach(Event::all() as $event){
+
+        foreach(Event::latest("event_status")->get() as $event){
           $eventWithCount = new EventWithCount($event);
           $eventsWithCount[] = $eventWithCount;
         }
@@ -39,47 +40,26 @@ class EventController extends Controller
         return view('eventFolder.createEvents');
     }
 
-    public function store(){
+    public function store(EventRequest $request){
 
-        $input = Request::all();
-        $input['event_status'] = 0;
+        $request["event_status"] = 0;
 
-        Event::create($input);
+        Event::create($request->all());
 
         return redirect('events');
     }
 
     public function edit($id){
 
-        $event = Event::find($id);
+        $event = Event::findOrFail($id);
 
         return view('eventFolder.editEvents', compact("event"));
     }
 
-    public function update(Request $request, $id)
+    public function update(EventRequest $request, $id)
     {
-        //Validating data
-        $this->validate($request, [
-            'event_name' => 'required|max:255',
-            'event_date' => '',
-            'num_of_tables' => 'integer',
-            'seats_per_table' => 'integer',
+        $event = Event::findOrFail($id)->update($request->all());
 
-        ]);
-                       
-        //Save data to database
-        $event = Event::find($id);
-        //dd($request->input('event_name'));
-        
-        $event->event_name = $request->input('event_name');
-        $event->event_date = $request->input('event_date');
-        $event->event_time = $request->input('event_time');
-        $event->event_location = $request->input('event_location');
-        $event->event_description = $request->input('event_description');
-        $event->num_of_tables = $request->input('num_of_tables');
-        $event->seats_per_table = $request->input('seats_per_table');
-
-        $event->save();
         return redirect('events');
     }
 }
