@@ -97,11 +97,11 @@ class ContactController extends Controller
         $contact = Contact::findOrFail($id);
 
         if($canHardDelete == 0){
-            //dd("can hard delete");
+            //can hard delete
             PhoneNumber::where('contact_id', $id)->forceDelete();
             $contact->forceDelete();
         }else{
-            //dd("dont hard delete");
+            //dont hard delete
             PhoneNumber::where('contact_id', $id)->delete();
             $contact->delete();
         }
