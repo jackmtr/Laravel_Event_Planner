@@ -44,7 +44,7 @@
 </div>
 @endsection
 
-@section('javascript')
+@section('js')
 
 <!-- <script type="{{asset('js/app.js')}}"></script> -->
 <script type="text/javascript">
@@ -70,4 +70,5 @@
 });
 
 </script>
+
 @endsection
