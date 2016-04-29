@@ -5,7 +5,7 @@
 
 	<div class="contactheadings">
 		<h2>Contacts</h2>
-		<a href="{{ url('/contacts/create') }}">Add Contact</a>
+		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
 	</div>
 	
 	{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}

@@ -5,7 +5,7 @@
 	    <div class="topevents"> <!-- can be generic -->
 	    	<div class="topeventnav"><!-- can be generic -->
 		    	<h2>Active Events</h2>
-		        <a href="{{ url('/events/create') }}">Add Event</a>
+		        <a href="{{ url('/events/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Event</a>
 	    	</div>
 	    	<div class="openevents"> <!-- can be generic -->
 		    	@foreach($eventsWithCount as $openEvent)

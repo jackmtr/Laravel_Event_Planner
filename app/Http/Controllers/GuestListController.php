@@ -113,6 +113,8 @@ class GuestListController extends Controller
 
         $guest = Contact::find($id);
         $phone = PhoneNumber::where('contact_id',$id)->firstOrFail()->phone_number;
+
+        //return $guest->contact_id;
         return view('eventFolder.guestDetails', compact("guest","phone"));
     }
 }
