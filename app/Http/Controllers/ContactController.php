@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Event;
 use App\PhoneNumber;
-use App\Http\Requests\CreateContactRequest;
+use App\GuestList;
+use App\Http\Requests\ContactRequest;
 use App\Http\Requests;
 use Request; //needed for the search function atm
 use Auth;
@@ -46,7 +47,7 @@ class ContactController extends Controller
         return view('contactFolder.createContacts');
     }
 
-    public function store(CreateContactRequest $request){
+    public function store(ContactRequest $request){
 
         $authId = Auth::user()->user_id;
         $request["added_by"] = $authId;
@@ -54,22 +55,45 @@ class ContactController extends Controller
         $contact = Contact::create($request->all());
 
         $request["contact_id"] = $contact->contact_id; //must be after contact create so i can pull the contact_id for the forein key in phone table
-        PhoneNumber::create($request->all()); //request has the phone number already
 
+        if (strlen($request["phone_number"]) > 1){
+            PhoneNumber::create($request->all()); //request has the phone number already
+        }
+        
         return redirect('contacts');
     }
 
     public function edit($id){
 
-        $contact = Contact::find($id);
+        $contact = Contact::findOrFail($id);
 
         return view('contactFolder.editContacts', compact("contact"));
     }
 
-    public function update(CreateContactRequest $request, $id)
+    public function update(ContactRequest $request, $id)
     {
-        $contact = Contact::find($id)->update($request->all());
+        $contact = Contact::findOrFail($id)->update($request->all());
 
         return redirect('contacts');                    
     }
+
+    public function destroy($id){
+
+        //if the $id is not found in the guestlist table, this contact may be hard deleted
+        $canHardDelete = (GuestList::where('contact_id', $id)->count());
+
+        $contact = Contact::findOrFail($id);
+
+        if($canHardDelete == 0){
+            //dd("can hard delete");
+            PhoneNumber::where('contact_id', $id)->forceDelete();
+            $contact->forceDelete();
+        }else{
+            //dd("dont hard delete");
+            PhoneNumber::where('contact_id', $id)->delete();
+            $contact->delete();
+        }
+
+        return redirect('contacts');
+    }    
 }
