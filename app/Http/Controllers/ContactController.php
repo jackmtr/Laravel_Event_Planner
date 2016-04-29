@@ -27,16 +27,21 @@ class ContactController extends Controller
      */
     public function index() //shows all contacts
     {
-        $contacts = Contact::orderBy("last_name")->paginate(10);//by default contact list will be organized by last name. A->Z        
+        $sortby = "last_name";
 
-        if(Request::all()){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
+        if(Request::input('sortby')){
+          $sortby = Request::input('sortby');
+        }
+
+        $contacts = Contact::orderBy($sortby)->paginate(10)->appends(['sortby' => $sortby]);
+
+        if(Request::input('searchitem')){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
             $query = Request::input('searchitem'); //look for only the input called searchitem
             $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')
                 ->orWhere('last_name', 'LIKE', '%'. $query . '%')
                 ->orWhere('email', 'LIKE', '%' . $query . '%')->paginate(10);
                 //search by first/last/and email
         }
-
         foreach($contacts as $contact){
 
             $anyPhone = $contact->phoneNumber()->first();
@@ -46,7 +51,7 @@ class ContactController extends Controller
             }else{
                 $contact->display_phoneNumber = "";
             }
-        }//for every contact, look for any number.  if finds one, put into a attribute called display_phoneNumber.  Put it empty if there's no number.
+        } //for every contact, look for any number.  if finds one, put into a attribute called display_phoneNumber.  Put it empty if there's no number.
 
         $events_active_open = Event::where('event_status', '<', 2)->orderBy('event_status')->get();
 
@@ -71,7 +76,7 @@ class ContactController extends Controller
         if (strlen($request["phone_number"]) > 1){
             PhoneNumber::create($request->all()); //request has the phone number already
         }
-        
+
         return redirect('contacts');
     }
 
@@ -86,7 +91,7 @@ class ContactController extends Controller
     {
         $contact = Contact::findOrFail($id)->update($request->all());
 
-        return redirect('contacts');                    
+        return redirect('contacts');
     }
 
     public function destroy($id){
@@ -106,5 +111,5 @@ class ContactController extends Controller
             $contact->delete();
         }
         return redirect('contacts');
-    }    
+    }
 }

@@ -7,26 +7,40 @@
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}">Add Contact</a>
 	</div>
-	
+
 	{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 		{!! Form::text("searchitem", "", ['placeholder'=>'First or Last Name']) !!}
 		{!! Form::submit("Search") !!}
 	{!! Form::close() !!}
 
-	{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 	<table>
 		<tr>
 			<th>CheckBox</th>
-			<th>First Name</th>
-			<th>Last Name</th>
+			<th>
+				{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
+					{!! Form::hidden("sortby", "first_name") !!}
+					{!! Form::submit("First Name") !!}
+				{!! Form::close() !!}
+			</th>
+			<th>
+				{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
+					{!! Form::hidden("sortby", "last_name") !!}
+					{!! Form::submit("Last Name") !!}
+				{!! Form::close() !!}
+			</th>
 			<th>Email</th>
 			<th>Phone Number</th>
 			<th>Occupation</th>
-			<th>Company</th>
+			<th>
+				{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
+					{!! Form::hidden("sortby", "company") !!}
+					{!! Form::submit("Company") !!}
+				{!! Form::close() !!}
+			</th>
 			<th>Notes</th>
 			<th>Added By</th>
 		</tr>
-		
+		{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 		@if (count($contacts) > 0)
 			@foreach($contacts as $contact)
 				<tr>
