@@ -40,7 +40,7 @@ class Contact extends Model
 	*
 	* @return \Illuminate\Database\Eloquent\Relations\HasMany
 	*/
-	public function phoneNumbers(){
+	public function phoneNumber(){
 		return $this->hasMany('App\PhoneNumber');
 	}
 
