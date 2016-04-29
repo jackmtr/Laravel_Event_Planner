@@ -3,15 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use App\GuestList;
-use App\Contact;
 use App\Http\Requests\EventRequest;
-use App\Http\Requests;
 use App\EventWithCount;
 use App\EventDetails;
-//use Carbon\Carbon;
-//use Illuminate\Http\Request;
-use Request;
 
 class EventController extends Controller
 {
@@ -34,6 +28,8 @@ class EventController extends Controller
     {
         $eventsWithCount = array();
 
+        //EventWithCount logic could be move here, should it be? model or controller?
+        //if eventstatus 0, event->guestLists->count, else event->guestLists->where checkedInBy not null->count
         foreach(Event::latest("event_status")->get() as $event){
           $eventWithCount = new EventWithCount($event);
           $eventsWithCount[] = $eventWithCount;
@@ -47,35 +43,37 @@ class EventController extends Controller
     }
 
     public function store(EventRequest $request){
-        $request["event_status"] = 0;
+
+        $request["event_status"] = 0; //better way to do this?
         Event::create($request->all());
         return redirect('events');
     }
 
     public function show($id)
     {
-      $guests = GuestList::where('event_id', '=', $id); //get event guestlist
+      $event = Event::findOrFail($id); //get event details to pass to view      
+      $guests = $event->guestList()->get();
 
-      $event = Event::find($id); //get event details to pass to view
-      $eventGuests = $guests->get();
       $guestList = array(); //guestList contact details to pass to view
-      foreach( $eventGuests as $guest)
+
+      foreach( $guests as $guest)
       {
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
-        //add guest Notes
-
-        $first_name = Contact::find($guest->contact_id)->first_name;
-        $last_name = Contact::find($guest->contact_id)->last_name;
+        $oneGuest['note'] = "coming soon";
+        $first_name = $guest->contact()->withTrashed()->first()->first_name;
+        $last_name = $guest->contact()->withTrashed()->first()->last_name;
         $oneGuest['name'] = $first_name . " " . $last_name;
 
-        $occupation = Contact::find($guest->contact_id)->occupation;
-        $company = Contact::find($guest->contact_id)->company;
+        $occupation = $guest->contact()->withTrashed()->first()->occupation;
+        $company = $guest->contact()->withTrashed()->first()->company;
         $oneGuest['work'] = $occupation . " " . $company;
+
         $guestList[] = $oneGuest;
       }
-      $rsvpYes = $guests->where('rsvp')->count(); //count of guestList rsvp yes to pass to view
-      $checkedIn = $guests->whereNotNull('checked_in_by')->count(); //count of guestList already checked in to pass to view
+
+      $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
+      $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
 
       return view('eventFolder.eventsDetail', compact('event', 'guestList', 'rsvpYes','checkedIn','index'));
@@ -95,16 +93,16 @@ class EventController extends Controller
 
     public function destroy($id){
 
-        $event = Event::find($id);
+        $event = Event::findOrFail($id);
 
         if ($event->event_status < 1){
-          //hard delete
-          GuestList::where('event_id', $id)->forceDelete();
+          
+          $event->guestList()->forceDelete();//hard delete  
           $event->forceDelete();
         }
         else{
-          //soft delete
-          $event->delete();
+          
+          $event->delete();//soft delete
         }
         return redirect('events');
     }

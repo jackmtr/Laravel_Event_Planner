@@ -24,4 +24,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+    * A user may add many contacts.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function contact(){
+        return $this->hasMany('App\Contact');
+    }      
+
+    /**
+    * A user may add many guests.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function guestList(){
+        return $this->hasMany('App\GuestList');
+    }     
 }

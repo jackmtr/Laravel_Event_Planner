@@ -10,31 +10,51 @@
 
 
 	</div>
-	
+
 	{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 	{!! Form::text("searchitem", "", ['placeholder'=>'First or Last Name']) !!}
 	{!! Form::submit("Search") !!}
 	{!! Form::close() !!}
 
-	{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 	<table>
-		<tr><th>CheckBox</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone Number</th><th>Occupation</th><th>Company</th>
-			<th>Notes</th><th>Added By</th></tr>
+		<tr>
+			<th>CheckBox</th>
+			<th>
+				{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
+					{!! Form::hidden("sortby", "first_name") !!}
+					{!! Form::submit("First Name") !!}
+				{!! Form::close() !!}
+			</th>
+			<th>
+				{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
+					{!! Form::hidden("sortby", "last_name") !!}
+					{!! Form::submit("Last Name") !!}
+				{!! Form::close() !!}
+			</th>
+			<th>Email</th>
+			<th>Phone Number</th>
+			<th>Occupation</th>
+			<th>
+				{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
+					{!! Form::hidden("sortby", "company") !!}
+					{!! Form::submit("Company") !!}
+				{!! Form::close() !!}
+			</th>
+			<th>Notes</th>
+			<th>Added By</th>
+		</tr>
+		{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 
-		
 		@if (count($contacts) > 0)
-			<?php $s=1; ?>
+
 			@foreach($contacts as $contact)
-				<tr>	{{--<td> {{Form::checkbox('contact[]',$contact['first_name'], $contact['email'])}}</td>--}}
-						{{--<td><input type="checkbox" id="slav_<?php echo $s; ?>" name="{{$contact['contact_id']}}"--}}
-						{{--value="{{$contact['contact_id']}}" style="position:relative; width:auto; height:auto; "/></td>--}}
-						{{--<td><label for="slav_<?php echo $s; ?>">{{$contact['first_name']}}</label></td>--}}
+				<tr>
 					<td class='cellcheckbox'>
 						{!! Form::label("invitelist[]", " ", array('class' => 'label-checkbox')) !!}
 						{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
-						{{--<span></span>--}}
+						<span></span>
 					</td>
-					{{--<td>{{$contact['first_name']}}</td>--}}
+					<td>{{$contact['first_name']}}</td>
 					<td>{{$contact['last_name']}}</td>
 					<td>{{$contact['email']}}</td>
 					<td>{{$contact['display_phoneNumber']}}</td>
@@ -43,7 +63,6 @@
 					<td>{{$contact['notes']}}</td>
 					<td>{{$contact['added_by']}}</td>
 				</tr>
-			<?php $s++; ?>
 			@endforeach
 		@else
 				<p>No Contacts Exist</p>

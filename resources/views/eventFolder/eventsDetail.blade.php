@@ -55,7 +55,7 @@
         </form>
       </td>
       <td>{{$guest['work']}}</td>
-      <td>!!! TBD Event Notes !!!</td>
+      <td>{{$guest['note']}}</td>
     </tr>
     <!--{{$index++}}-->
     @endforeach
