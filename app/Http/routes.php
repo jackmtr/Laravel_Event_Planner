@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::patch('/events/{id}/edit', 'EventController@update');//standard post edit
 
 	Route::resource('events', 'EventController');//DOES EVERYTHING ABOVE
+	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
+	Route::post('/events', 'EventController@duplication');//must i change the route?
 
 	//Route::get('/contacts', 'ContactController@index');//standard read all
 	//Route::get('/contacts/create', 'ContactController@create');//standard create page

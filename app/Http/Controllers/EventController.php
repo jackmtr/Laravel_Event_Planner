@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\GuestList;
 use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
+use Request;
 
 class EventController extends Controller
 {
@@ -105,5 +107,26 @@ class EventController extends Controller
           $event->delete();//soft delete
         }
         return redirect('events');
+    }
+
+    public function duplicate($id){
+      $event = Event::find($id);
+      $guestList = $event->guestList()->get();
+
+      return view('eventFolder.duplicateEvent', compact('event', 'guestList'));
+    }
+
+    public function duplication(EventRequest $request){
+
+      $request["event_status"] = 0; //better way to do this?
+      $event = Event::create($request->all());//still need way to let forms default to today
+      $eventId = $event->event_id;
+
+      foreach($request->toArray()['invitelist'] as $invitee)
+      {
+        GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId]);
+      }
+
+     return redirect()->action('EventController@show', $eventId);
     }
 }

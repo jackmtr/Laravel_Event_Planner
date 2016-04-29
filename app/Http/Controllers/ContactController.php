@@ -29,7 +29,7 @@ class ContactController extends Controller
     {
         $contacts = Contact::orderBy("last_name")->paginate(10);//by default contact list will be organized by last name. A->Z        
 
-        if(Request::all()){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
+        if(Request::input('searchitem')){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
             $query = Request::input('searchitem'); //look for only the input called searchitem
             $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')
                 ->orWhere('last_name', 'LIKE', '%'. $query . '%')
