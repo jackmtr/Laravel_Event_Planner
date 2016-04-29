@@ -52,7 +52,6 @@ class EventController extends Controller
     public function show($id)
     {
       $event = Event::findOrFail($id); //get event details to pass to view      
-
       $guests = $event->guestList()->get();
 
       $guestList = array(); //guestList contact details to pass to view
@@ -61,17 +60,19 @@ class EventController extends Controller
       {
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
-        //add guest Notes
+        $oneGuest['note'] = "coming soon";
         $first_name = $guest->contact()->withTrashed()->first()->first_name;
         $last_name = $guest->contact()->withTrashed()->first()->last_name;
         $oneGuest['name'] = $first_name . " " . $last_name;
+
         $occupation = $guest->contact()->withTrashed()->first()->occupation;
         $company = $guest->contact()->withTrashed()->first()->company;
         $oneGuest['work'] = $occupation . " " . $company;
+
         $guestList[] = $oneGuest;
       }
 
-      $rsvpYes = count($guests->where('rsvp', 0)); //count of guestList rsvp yes to pass to view
+      $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
 

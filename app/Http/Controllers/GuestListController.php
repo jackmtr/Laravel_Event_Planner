@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Event;
 use App\GuestList;
-use App\Http\Requests;
 use Auth;
 
 class GuestListController extends Controller
@@ -50,7 +48,7 @@ class GuestListController extends Controller
 
         foreach ($guestlist["invitelist"] as $invitee){
 
-            GuestList::create(array('rsvp' => 0, 'checked_in_by' => $authId, 'contact_id' => $invitee, 'event_id' => $eventId));
+            GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
         }
 
         return redirect()->action('EventController@show', $eventId);
