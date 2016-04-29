@@ -45,9 +45,7 @@ class GuestListController extends Controller
     public function store(Request $request)
     {
         $authId = Auth::user()->user_id;
-
         $eventId = $request->events;
-        
         $guestlist = $request->toArray();
 
         foreach ($guestlist["invitelist"] as $invitee){
@@ -100,12 +98,11 @@ class GuestListController extends Controller
      */
     public function destroy($id)
     {
-        //couldnt test this code out since no view, so adjust accordinaly
-        $eventId = GuestList::find($id)->event_id;
-        $eventStatus = Event::find($eventId)->event_status;
+        $guestList = GuestList::findOrFail($id);
+        $eventStatus = $guestList->event->event_status;
 
         if($eventStatus == 0){
-            GuestList::find($id)->forceDelete();
+            $guestList->forceDelete();
         }else{
             alert("sorry, you can't delete a guest from a checkedin/completed event!");
         }
