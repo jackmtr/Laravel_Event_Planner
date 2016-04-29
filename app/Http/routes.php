@@ -18,12 +18,12 @@ Route::get('/', function () {
 Route::auth();
 
 Route::group(['middleware' => 'auth'], function () {
-	
+
 	//**BASIC REST PRACTICES**
 	//Route::get('/events', 'EventController@index');//standard read all
 	//Route::get('/events/create', 'EventController@create');//standard create page
 	//Route::get('/events/{id}', 'GuestListController@show');//standard read one
-	//Route::post('/events', 'EventController@store');//standard post creation page	
+	//Route::post('/events', 'EventController@store');//standard post creation page
 	//Route::get('/events/{id}/edit', 'EventController@edit');//standard show edit form
 	//Route::patch('/events/{id}/edit', 'EventController@update');//standard post edit
 
@@ -38,13 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('contacts', 'ContactController');
 
-
 	Route::post('/guestlist/create','GuestListController@store');
-
 	//Route::resource('queries', 'ContactController');
 	Route::get('/contacts/search','ContactController@search');
-
-
-	
 });
-
