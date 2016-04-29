@@ -41,7 +41,7 @@
 <div class="guestList">
   <table>
     <tr><th>Status</th><th>Table</th><th>Name</th><th>Guests</th><th>Title &amp; Company</th><th>Notes</th></tr>
-    {{--*/ $i = 0 /*--}}
+    
     @foreach($guestList as $guest)
     <tr>
       <td>{!! Form::select('rsvp', array(0 => 'Invited', 1 => 'Going', 2 => 'Not Going'), $guest['rsvp'] ) !!}</td>
@@ -49,15 +49,15 @@
       <td>{{$guest['name']}}</td>
       <td>
         <form id='myform' method='POST' action='#'>
-          <input type='button' value='-' class='qtyminus' field='quantity{{$i}}' />
-          <input type='text' name='quantity{{$i}}'  value={{ $guest['additional_guests'] }} class='qty' />
-          <input type='button' value='+' class='qtyplus' field='quantity{{$i}}' />
+          <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
+          <input type='text' name='quantity{{$index}}'  value={{ $guest['additional_guests'] }} class='qty' />
+          <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
         </form>
       </td>
       <td>{{$guest['work']}}</td>
       <td>!!! TBD Event Notes !!!</td>
     </tr>
-    {{$i++}}
+    <!--{{$index++}}-->
     @endforeach
   </table>
 </div>

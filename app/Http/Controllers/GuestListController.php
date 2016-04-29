@@ -34,7 +34,6 @@ class GuestListController extends Controller
     public function create()
     {
         //
-
     }
 
     /**
@@ -49,17 +48,14 @@ class GuestListController extends Controller
 
         $eventId = $request->events;
         
-        //dd($authId);
         $guestlist = $request->toArray();
 
-        $count = "";
         foreach ($guestlist["invitelist"] as $invitee){
 
             GuestList::create(array('rsvp' => 0, 'checked_in_by' => $authId, 'contact_id' => $invitee, 'event_id' => $eventId));
-
         }
 
-        return "done";
+        return redirect()->action('EventController@show', $eventId);
     }
 
     /**
