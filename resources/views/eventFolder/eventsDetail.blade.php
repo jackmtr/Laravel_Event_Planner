@@ -38,6 +38,21 @@
     @endif
   </div>
 </div>
+
+<div id="invitePrevious">
+  {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}  
+    
+    <label for="events">Invite from a Previous Event: </label>
+    <select id="events" name="events">
+      @foreach($events as $event)
+        <option value="{{$event['event_id']}}">{{$event['event_name']}}</option>
+      @endforeach
+    </select>
+    <input type="submit" name="guest_list_submit" value="Invite">
+
+  {{Form::close()}}
+</div>
+
 <div class="guestList">
   <table>
     <tr><th>Status</th><th>Table</th><th>Name</th><th>Guests</th><th>Title &amp; Company</th><th>Notes</th></tr>

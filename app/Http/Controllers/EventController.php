@@ -7,6 +7,7 @@ use App\GuestList;
 use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
+use Request; 
 
 class EventController extends Controller
 {
@@ -52,6 +53,13 @@ class EventController extends Controller
 
     public function show($id)
     {
+
+      if(Request::input('events')){
+        dd("hi");
+      }      
+
+      $events = Event::all();
+
       $event = Event::findOrFail($id); //get event details to pass to view      
       $guests = $event->guestList()->get();
 
@@ -77,7 +85,7 @@ class EventController extends Controller
       $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
 
-      return view('eventFolder.eventsDetail', compact('event', 'guestList', 'rsvpYes','checkedIn','index'));
+      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
     }
 
     public function edit($id)
