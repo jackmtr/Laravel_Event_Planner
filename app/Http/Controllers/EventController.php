@@ -28,7 +28,6 @@ class EventController extends Controller
      */
     public function index()
     {
-        //dd('asdasd');
         $eventsWithCount = array();
 
         //EventWithCount logic could be move here, should it be? model or controller?
@@ -54,15 +53,21 @@ class EventController extends Controller
 
     public function show($id)
     {
-
-      if(Request::input('events')){
-        dd("hi");
-      }      
-
       $events = Event::all();
-
-      $event = Event::findOrFail($id); //get event details to pass to view      
+      $event = Event::findOrFail($id); //get event details to pass to view   
       $guests = $event->guestList()->get();
+
+      //used to invite previous guests from another event to this event.
+      if(Request::input('events')){
+        $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
+
+        foreach ($previousGuestList as $previousGuest) {
+          if($previousGuest->contact['contact_id'] > 0){
+            //$inviteList[] = $li->contact['contact_id'];
+            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $event->event_id]);
+          }
+        }
+      }      
 
       $guestList = array(); //guestList contact details to pass to view
 

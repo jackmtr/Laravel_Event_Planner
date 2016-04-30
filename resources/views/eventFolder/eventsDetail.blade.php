@@ -42,7 +42,7 @@
 <div id="invitePrevious">
   {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}  
     
-    <label for="events">Invite from a Previous Event: </label>
+    <label for="events">Invite Guests from a Previous Event: </label>
     <select id="events" name="events">
       @foreach($events as $event)
         <option value="{{$event['event_id']}}">{{$event['event_name']}}</option>
