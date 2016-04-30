@@ -54,11 +54,6 @@ class EventController extends Controller
 
     public function show($id)
     {
-
-      if(Request::input('events')){
-        dd("hi");
-      }      
-
       $events = Event::all();
 
       $event = Event::findOrFail($id); //get event details to pass to view      
