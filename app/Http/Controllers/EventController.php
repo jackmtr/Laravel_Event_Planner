@@ -28,6 +28,7 @@ class EventController extends Controller
      */
     public function index()
     {
+        //dd('asdasd');
         $eventsWithCount = array();
 
         //EventWithCount logic could be move here, should it be? model or controller?

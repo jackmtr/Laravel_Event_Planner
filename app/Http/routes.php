@@ -30,7 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('events', 'EventController');//DOES EVERYTHING ABOVE
 	Route::post('/events/{id}', 'EventController@show');
 	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
-	Route::post('/events', 'EventController@duplication');//must i change the route?
+
+	Route::post('/events/{id}/duplicate', 'EventController@duplication');//must i change the route?
 	
 
 	//Route::get('/contacts', 'ContactController@index');//standard read all

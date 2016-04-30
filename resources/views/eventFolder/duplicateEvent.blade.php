@@ -6,7 +6,7 @@
     <div class="container">
     	<h2>Edit Event {!! $event->event_name !!}</h2>
 
-            {!! Form::model($event, ['method' => 'POST', 'action' => 'EventController@duplication','class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+            {!! Form::model($event, ['method' => 'POST', 'action' => ['EventController@duplication', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
             	<div>
             		<h2>Invite List</h2>
 	            		@forelse($guestList as $guest)
