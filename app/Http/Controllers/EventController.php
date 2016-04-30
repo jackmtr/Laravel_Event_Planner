@@ -7,7 +7,6 @@ use App\GuestList;
 use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
-use Request;
 
 class EventController extends Controller
 {
