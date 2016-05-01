@@ -9,7 +9,8 @@
           <span><a href="{{$event['event_id']}}/edit">show details</a></span>
         </h2>
         
-        <input placeholder="[ ? ]Look up names or contact info" />
+        <input type="text" name="s" class="contact-searchbar search rounded" placeholder="[ ? ]Look up names or contact info" />
+
         <div id="invitePrevious">
           {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}  
             

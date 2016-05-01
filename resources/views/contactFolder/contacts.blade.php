@@ -4,7 +4,7 @@
 <div class="contacts container">
 	<div class="subnav">
 		<h2>Contacts</h2>
-		<a href="{{ url('/contacts/create') }}">Add Contact</a>
+		<a href="{{ url('/contacts/create') }}">[ + ] Add Contact</a>
 	</div>
 
 	{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}

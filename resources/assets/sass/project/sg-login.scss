@@ -1,0 +1,51 @@
+/* ---------------------------------
+  Project Style: Login
+--------------------------------- */
+
+.login{
+	background-image: url("/images/LoginIstuary.png");
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+
+	.flexbox{
+		background-color: $white;
+		width: 25%;
+		height: 400px;
+		text-align:center;
+		min-width: 600px;
+		h2{
+			font-size: $font-size-h1;
+			margin: 25px;
+			color: $jade;
+		}
+		form{
+			.input{
+				margin: 35px;
+				label{
+					font-size: $font-size-h1;
+				}
+			}
+			input{
+				width: 500px;
+				height: 30px;
+				margin: 0px;
+				text-align: center;
+			}
+			.submit{
+				background-color: $jade;
+			}
+		}
+	}
+
+	.login-submit{
+		color: $white;
+	    padding:30px;
+	    background:$jade; 
+	    font-size: $font-size-h1;
+	    line-height: 0px;
+	    cursor:pointer;
+	    -webkit-border-radius: 10px;
+	    border-radius: 10px; 		
+	}
+}
