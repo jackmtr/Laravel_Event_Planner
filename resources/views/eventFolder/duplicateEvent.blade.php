@@ -2,13 +2,12 @@
 
 @section('content')
 
-<div class="edit-events">
-    <div class="container">
-    	<h2>Edit Event {!! $event->event_name !!}</h2>
-
-            {!! Form::model($event, ['method' => 'POST', 'action' => ['EventController@duplication', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
-            	<div>
-            		<h2>Invite List</h2>
+<div class="edit-events container">
+	<h2>Edit Event {!! $event->event_name !!}</h2>
+        {!! Form::model($event, ['method' => 'POST', 'action' => ['EventController@duplication', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+	        <div class="subnav">
+	        	<div>
+	        		<h2>Invite List</h2>
 	            		@forelse($guestList as $guest)
 	            			<div class="cellcheckbox">
 		            			{!! Form::label('invitelist[]', $guest['first_name'] . " " . $guest['last_name'], array('class' => 'label-checkbox')) !!}
@@ -18,16 +17,14 @@
 	            		@empty
 	            			<p>There are currently no guests to bring over.</p>
 	            		@endforelse
-            	</div>
-            	<br/>
-            	<div>
-            		@include('eventFolder._eventForm', ['submitButtonText' => 'Duplicate Event'])
-            	</div>
-
-            {!! Form::close() !!}
-
-            @include('errors._list') 
-    </div>       
+	        	</div>
+	        	<br/>
+	        	<div>
+	        		@include('eventFolder._eventForm', ['submitButtonText' => 'Duplicate Event'])
+	        	</div>
+			</div> 
+        {!! Form::close() !!}
+        @include('errors._list') 
 </div>
 
 @endsection

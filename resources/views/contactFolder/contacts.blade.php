@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="contacts">
-
-	<div class="contactheadings">
+<div class="contacts container">
+	<div class="subnav">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}">Add Contact</a>
 	</div>

@@ -1,0 +1,25 @@
+/* ---------------------------------
+  Project Style: Sub-Nav
+--------------------------------- */
+
+.subnav{
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	h2, a{
+		font-size: $font-size-larger;
+	}
+	.leftside{
+		a{
+			text-decoration: underline;
+		}
+	}
+	.rightside{
+		margin: 15px;
+		.guestListCount{
+			display: flex;
+			text-align: center;
+			justify-content: space-between;
+		}
+	}
+}

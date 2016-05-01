@@ -7,15 +7,6 @@
 	flex-direction: column;
 }
 
-.subnav{
-	margin-top: 10px;
-	display: flex;
-	justify-content: space-between;
-	h2, a{
-		font-size: $font-size-larger;
-	}
-}
-
 
 .bottom-event-color{
 	background-color: $color-bg-footer;

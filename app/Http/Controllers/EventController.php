@@ -54,7 +54,7 @@ class EventController extends Controller
     public function show($id)
     {
       $events = Event::all();
-      $event = Event::findOrFail($id); //get event details to pass to view   
+      $event = Event::findOrFail($id); //get event details to pass to view  
       $guests = $event->guestList()->get();
 
       //used to invite previous guests from another event to this event.
@@ -90,7 +90,7 @@ class EventController extends Controller
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
-
+      //dd($event);
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
     }
 

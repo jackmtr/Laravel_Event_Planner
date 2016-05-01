@@ -1683,17 +1683,6 @@ tr.active a {
   -ms-flex-direction: column;
   flex-direction: column; }
 
-.subnav {
-  margin-top: 10px;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between; }
-  .subnav h2, .subnav a {
-    font-size: 18px; }
-
 .bottom-event-color {
   background-color: #ececec; }
   .bottom-event-color .event-box {
@@ -1769,5 +1758,40 @@ tr.active a {
 @media (max-width: 700px) {
   .event-box span {
     display: none; } }
+
+/* ---------------------------------
+  Project Style: Sub-Nav
+--------------------------------- */
+.subnav {
+  margin-top: 10px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+  .subnav h2, .subnav a {
+    font-size: 18px; }
+  .subnav .leftside a {
+    text-decoration: underline; }
+  .subnav .rightside {
+    margin: 15px; }
+    .subnav .rightside .guestListCount {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      text-align: center;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between; }
+
+/* ---------------------------------
+  Project Style: Guestlist
+--------------------------------- */
+.openmode {
+  background-color: #bed883; }
+
+.invited {
+  background-color: #d8c383; }
 
 /*# sourceMappingURL=framework.css.map */
