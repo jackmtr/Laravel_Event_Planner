@@ -68,6 +68,8 @@ $color-secondary-d-30 : darken($color-secondary, 20%);
 // Background Colors
 $color-bg-body   : $white;
 $color-bg-header : $jade;
+$color-bg-navbar  : $jade;//
+$color-bg-navbar-menu : $gray-20;
 $color-bg-main   : $gray-10;
 $color-bg-footer : $gray-20;
 
@@ -82,3 +84,5 @@ $color-text-heading-h3 : $stone;
 $color-text-heading-h4 : $gray-40;
 $color-link            : $color-primary;
 $color-link-hover      : $color-primary-l-10;
+$color-navbar          : $white;//
+$color-navbar-menu     : $stone;//

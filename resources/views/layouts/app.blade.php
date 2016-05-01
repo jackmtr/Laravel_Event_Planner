@@ -11,38 +11,45 @@
 <body><!--id="app-layout" -->
 
     <nav class="navbar"> <!-- navbar-default navbar-static-top clearfix-->
-        <div class="container">
+        <div class="container navbar-main"> 
 
-            <div> <!--class="navbar-header navbar-left"-->
-                <a class="navbar-logo" href="{{ url('/') }}"> <!--class="navbar-brand" -->
-                    Istuary Event Management & CRM
-                </a>
+            <div class="navbar-logo navbar-top-left" > <!--class="navbar-header navbar-left"-->
+                    <a href="{{ url('/') }}"> <!--class="navbar-brand" -->
+                        Istuary Event Management & CRM
+                    </a>
             </div>
 
-            <div> <!-- class="collapse navbar-collapse" id="app-navbar-collapse"-->
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-menu"> <!--class="nav navbar-nav navbar-right"-->
-                        <li> <!--class="dropdown"-->
-                            <p>
-                                Active users: 1
-                            </p>
+            <div class="navbar-active-users navbar-top-middle">
+                <p>
+                    Active users: 1
+                </p>
+            </div>
 
-                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false">Logout {{ Auth::user()->name }}</a>
-                        </li>
+            <div class="navbar-auth navbar-auth"> <!-- class="collapse navbar-collapse" id="app-navbar-collapse"-->
+                <!-- Right Side Of Navbar -->
+                <ul> <!--class="nav navbar-nav navbar-right"-->
+                    <li>
+                        <a href="#">Register New Event Coordinator</a>
+                    </li>
+                    <li> <!--class="dropdown"-->
+                        <a href="{{ url('/logout') }}" role="button" aria-expanded="false">[  ]Logout {{ Auth::user()->name }}</a>
+                    </li>
                 </ul>
             </div>
         </div>
 
         <!-- Left Side Of Navbar -->
-        <div> <!--class="subnav"-->
-            <ul class="navbar-menu"> <!-- class="second-navbar"-->
-                <li>
-                    <a href="{{ url('/events/') }}">EVENTS</a>
-                </li>
-                <li>
-                    <a href="{{ url('/contacts') }}">CONTACTS</a>
-                </li>
-            </ul>
+        <div class="navbar-menu"> <!--class="subnav"-->
+            <div class="container">
+                <ul> <!-- class="second-navbar"-->
+                    <li>
+                        <a href="{{ url('/events/') }}">EVENTS</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/contacts') }}">CONTACTS</a>
+                    </li>
+                </ul>
+            <div>
         </div>
     </nav>
 
