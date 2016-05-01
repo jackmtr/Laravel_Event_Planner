@@ -55,7 +55,7 @@ class EventController extends Controller
     {
       $events = Event::all();
       $event = Event::findOrFail($id); //get event details to pass to view   
-      $guests = $event->guestList()->get();
+      
 
       //used to invite previous guests from another event to this event.
       if(Request::input('events')){
@@ -68,7 +68,7 @@ class EventController extends Controller
           }
         }
       }      
-
+      $guests = $event->guestList()->get();
       $guestList = array(); //guestList contact details to pass to view
 
       foreach( $guests as $guest)
