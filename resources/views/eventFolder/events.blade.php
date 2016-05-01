@@ -13,11 +13,13 @@
 			@if($openEvent['event_status'] != 2)
 			<div class="singleopenevent">
 				<div class="singleeventleftbox">
+
 					<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}" >
 						<p>{{ date('M j, Y', strtotime($openEvent['event_date'])) }}</p>
 						<p>{{$openEvent['event_name']}}</p>
 						<p>{{$openEvent['event_location']}}</p>
 					</a>
+
 				</div>
 				@if($openEvent['event_status'] == 0)
 				<div class="singleeventrightbox" style="background-color: #1e8f98"><!--openeventrightbox $jade -->
@@ -26,7 +28,7 @@
 						<p>Invited</p>
 					</div>
 					<div class="duplicate">
-						<a href="#">Duplicate</a>
+						<a href="/events/{{$openEvent['event_id']}}/duplicate">Duplicate</a>
 					</div>
 				</div>
 				@elseif($openEvent['event_status'] == 1)
@@ -36,7 +38,7 @@
 						<p>Checked in</p>
 					</div>
 					<div class="duplicate">
-						<a href="#">Duplicate</a>
+						<a href="/events/{{$openEvent['event_id']}}/duplicate">Duplicate</a>
 					</div>
 				</div>
 				@endif
@@ -54,9 +56,11 @@
 			@if($closedEvent['event_status'] == 2)
 			<div class="singleopenevent"><!--singleclosedevent -->
 				<div class="singleeventleftbox">
-					<p>{{$closedEvent['event_date']}}</p>
-					<p>{{$closedEvent['event_name']}}</p>
-					<p>{{$closedEvent['event_location']}}</p>
+					<a class="singleeventleftbox" href="/events/{{$closedEvent['event_id']}}" >
+						<p>{{$closedEvent['event_date']}}</p>
+						<p>{{$closedEvent['event_name']}}</p>
+						<p>{{$closedEvent['event_location']}}</p>
+					</a>
 				</div>
 				<div class="singleeventrightbox" style="background-color: #eaeaea"><!-- closedeventrightbox -->
 					<div class="checkedin">
@@ -64,7 +68,7 @@
 						<p>Went</p>
 					</div>
 					<div class="duplicate">
-						<a href="#">Duplicate</a>
+						<a href="/events/{{$closedEvent['event_id']}}/duplicate">Duplicate</a>
 					</div>
 				</div>
 			</div>

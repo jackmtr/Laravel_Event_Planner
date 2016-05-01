@@ -38,6 +38,7 @@
     @endif
   </div>
 </div>
+
 <div class="guestList">
   <table>
     <tr><th>Status</th><th>Table</th><th>Name</th><th>Guests</th><th>Title &amp; Company</th><th>Notes</th></tr>
