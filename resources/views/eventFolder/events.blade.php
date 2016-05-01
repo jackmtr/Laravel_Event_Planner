@@ -56,11 +56,11 @@
 			@if($closedEvent['event_status'] == 2)
 			<div class="singleopenevent"><!--singleclosedevent -->
 				<div class="singleeventleftbox">
-					<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}" >
+					<a class="singleeventleftbox" href="/events/{{$closedEvent['event_id']}}" >
 						<p>{{$closedEvent['event_date']}}</p>
 						<p>{{$closedEvent['event_name']}}</p>
 						<p>{{$closedEvent['event_location']}}</p>
-					</a>					
+					</a>
 				</div>
 				<div class="singleeventrightbox" style="background-color: #eaeaea"><!-- closedeventrightbox -->
 					<div class="checkedin">
@@ -68,7 +68,7 @@
 						<p>Went</p>
 					</div>
 					<div class="duplicate">
-						<a href="/events/{{$openEvent['event_id']}}/duplicate">Duplicate</a>
+						<a href="/events/{{$closedEvent['event_id']}}/duplicate">Duplicate</a>
 					</div>
 				</div>
 			</div>
