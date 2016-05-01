@@ -6,13 +6,13 @@
     <div class="container">
     	<h2>Edit Event {!! $event->event_name !!}</h2>
 
-            {!! Form::model($event, ['method' => 'POST', 'action' => 'EventController@duplication','class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+            {!! Form::model($event, ['method' => 'POST', 'action' => ['EventController@duplication', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
             	<div>
             		<h2>Invite List</h2>
 	            		@forelse($guestList as $guest)
 	            			<div class="cellcheckbox">
-		            			{!! Form::label('invitelist[]', $guest->contact['first_name'] . " " . $guest->contact['last_name'], array('class' => 'label-checkbox')) !!}
-		            			{!! Form::checkbox('invitelist[]', $guest->contact['contact_id'], ['id' => 'invitecheckbox'.$guest["guest_list_id"]]) !!}
+		            			{!! Form::label('invitelist[]', $guest['first_name'] . " " . $guest['last_name'], array('class' => 'label-checkbox')) !!}
+		            			{!! Form::checkbox('invitelist[]', $guest['contact_id'], array('id' => 'invitecheckbox'. $guest["contact_id"])) !!}
 	            			<span></span>
 	            			</div>
 	            		@empty

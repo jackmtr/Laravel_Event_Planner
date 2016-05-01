@@ -4,19 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Istuary Event CRM</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" type="text/css" href="/css/framework.css">
     <link href='https://fonts.googleapis.com/css?family=Rajdhani:600' rel='stylesheet' type='text/css'>
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
     <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="/css/framework.css"/>
     <!--{{-- <link href="{{ elixir('css/framework.css') }}" rel="stylesheet"> --}}-->
 
-    <style>
+    <!--<style>
         body {
             font-family: 'Lato';
         }
@@ -24,7 +24,8 @@
         .fa-btn {
             margin-right: 6px;
         }
-    </style>
+    </style>-->
+
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top clearfix">
@@ -46,7 +47,9 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                     @else
                         <li class="dropdown">
-                            <p>Active users: 1</p>
+                            <p>
+                                Active users: 1
+                            </p>
 
                             <a href="{{ url('/logout') }}" role="button" aria-expanded="false">Logout {{ Auth::user()->name }}</a>
                         </li>

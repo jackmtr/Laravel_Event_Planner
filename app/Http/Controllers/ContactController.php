@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Event;
+use App\GuestList;
+use App\PhoneNumber;
 use App\Http\Requests\ContactRequest;
 use Request; //needed for the search function atm
 use Auth;
@@ -34,6 +36,7 @@ class ContactController extends Controller
         }
 
         $contacts = Contact::orderBy($sortby)->paginate(10)->appends(['sortby' => $sortby]);
+
         if(Request::input('searchitem')){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
             $query = Request::input('searchitem'); //look for only the input called searchitem
             $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')
