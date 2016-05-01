@@ -7,7 +7,7 @@ use App\GuestList;
 use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
-use Request; 
+use Request;
 
 class EventController extends Controller
 {
@@ -33,7 +33,13 @@ class EventController extends Controller
         //EventWithCount logic could be move here, should it be? model or controller?
         //if eventstatus 0, event->guestLists->count, else event->guestLists->where checkedInBy not null->count
         foreach(Event::latest("event_status")->get() as $event){
-          $eventWithCount = new EventWithCount($event);
+          $guests = $event->guestList()->get();
+          if($event->event_status == 0){
+            $count = count($guests); //invited
+          } else {
+            $count = count($guests->where('checked_in_by', null)); //going or went
+          }      
+          $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
         }
         return view('eventFolder.events', compact('eventsWithCount'));
@@ -56,7 +62,6 @@ class EventController extends Controller
       $events = Event::all();
       $event = Event::findOrFail($id); //get event details to pass to view   
       
-
       //used to invite previous guests from another event to this event.
       if(Request::input('events')){
         $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
@@ -111,12 +116,12 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
 
         if ($event->event_status < 1){
-          
-          $event->guestList()->forceDelete();//hard delete  
+
+          $event->guestList()->forceDelete();//hard delete
           $event->forceDelete();
         }
         else{
-          
+
           $event->delete();//soft delete
         }
         return redirect('events');
