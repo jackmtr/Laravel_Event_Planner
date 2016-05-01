@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width; maximum-scale=1; minimum-scale=1;" />
     <title>Istuary Event CRM</title>
     <link rel="stylesheet" type="text/css" href="/css/framework.css"/>
     <link href='https://fonts.googleapis.com/css?family=Rajdhani:600' rel='stylesheet' type='text/css'>
@@ -15,7 +16,7 @@
 
             <div class="navbar-logo navbar-top-left" > <!--class="navbar-header navbar-left"-->
                     <a href="{{ url('/') }}"> <!--class="navbar-brand" -->
-                        Istuary Event Management & CRM
+                        Istuary Event Manage<span>ment & CRM</span>
                     </a>
             </div>
 
@@ -29,10 +30,10 @@
                 <!-- Right Side Of Navbar -->
                 <ul> <!--class="nav navbar-nav navbar-right"-->
                     <li>
-                        <a href="#">Register New Event Coordinator</a>
+                        <a href="#">Register <span>New Event Coordinator</span></a>
                     </li>
                     <li> <!--class="dropdown"-->
-                        <a href="{{ url('/logout') }}" role="button" aria-expanded="false">[  ]Logout {{ Auth::user()->name }}</a>
+                        <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span>[ - ]</span>Logout <span>{{ Auth::user()->name }}</span></a>
                     </li>
                 </ul>
             </div>

@@ -2,27 +2,27 @@
 
 @section('content')
 
-<div class="events">
-	<div class="topevents"> <!-- can be generic -->
-		<div class="topeventnav"><!-- can be generic -->
-			<h2>Active Events</h2>
-			<a href="{{ url('/events/create') }}">Add Event</a>
-		</div>
-		<div class="openevents"> <!-- can be generic -->
+<div class="event"> <!--used to flex down column-->
+	<div class="top-event-color"> <!--used to bg-color outside container-->
+		<div class="container">
+			<div class="subnav">
+				<h2>Active Events</h2>
+				<a href="{{ url('/events/create') }}">[ + ] Add Event</a>
+			</div>
 			@foreach($eventsWithCount as $openEvent)
 			@if($openEvent['event_status'] != 2)
-			<div class="singleopenevent">
-				<div class="singleeventleftbox">
-
-					<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}" >
+			<div class="event-box col col-md-12 col-lg-6 section-business-col">
+				<div class="box-left-side">
+					<a href="/events/{{$openEvent['event_id']}}" >
 						<p>{{ date('M j, Y', strtotime($openEvent['event_date'])) }}</p>
 						<p>{{$openEvent['event_name']}}</p>
-						<p>{{$openEvent['event_location']}}</p>
+						<p><span>{{$openEvent['event_location']}}</span></p>
 					</a>
 
 				</div>
+
 				@if($openEvent['event_status'] == 0)
-				<div class="singleeventrightbox" style="background-color: #1e8f98"><!--openeventrightbox $jade -->
+				<div class="box-right-side" style="background-color: #1e8f98"><!--openeventrightbox $jade -->
 					<div class="checkedin"><!-- text color to white for openeventrightbox -->
 						<p>{{$openEvent['count']}}</p>
 						<p>Invited</p>
@@ -32,7 +32,7 @@
 					</div>
 				</div>
 				@elseif($openEvent['event_status'] == 1)
-				<div class="singleeventrightbox"><!--checkineventrightbox -->
+				<div class="box-right-side"><!--checkineventrightbox -->
 					<div class="checkedin">
 						<p>{{$openEvent['count']}}</p>
 						<p>Checked in</p>
@@ -47,22 +47,23 @@
 			@endforeach
 		</div>
 	</div>
-	<div class="topevents">
-		<div class="topeventnav">
-			<h2>Ended Events</h2>
-		</div>
-		<div class="openevents">
+
+	<div class="bottom-event-color">
+		<div class="container">
+			<div class="subnav">
+				<h2>Ended Events</h2>
+			</div>
 			@foreach($eventsWithCount as $closedEvent)
 			@if($closedEvent['event_status'] == 2)
-			<div class="singleopenevent"><!--singleclosedevent -->
-				<div class="singleeventleftbox">
-					<a class="singleeventleftbox" href="/events/{{$openEvent['event_id']}}" >
+			<div class="event-box col col-md-12 col-lg-6 section-business-col"><!--singleclosedevent -->
+				<div class="box-left-side">
+					<a href="/events/{{$openEvent['event_id']}}" >
 						<p>{{$closedEvent['event_date']}}</p>
 						<p>{{$closedEvent['event_name']}}</p>
-						<p>{{$closedEvent['event_location']}}</p>
+						<p><span>{{$closedEvent['event_location']}}</span></p>
 					</a>					
 				</div>
-				<div class="singleeventrightbox" style="background-color: #eaeaea"><!-- closedeventrightbox -->
+				<div class="box-right-side" style="background-color: #eaeaea"><!-- closedeventrightbox -->
 					<div class="checkedin">
 						<p>{{$closedEvent['count']}}</p>
 						<p>Went</p>

@@ -202,7 +202,8 @@ body {
   color: #332f2a;
   font-family: "ArialMT", Helvetica, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
   font-size: 14px;
-  line-height: 1.6; }
+  line-height: 1.6;
+  padding-top: 110px; }
 
 main {
   padding: 30px 0 50px;
@@ -884,7 +885,7 @@ button.with-icon-right i, a.with-icon-right i {
 ------------------------------ */
 .footer-copyright {
   padding: 20px 0;
-  background-color: #eaeaea;
+  background-color: #ececec;
   text-align: center; }
 
 /* ------------------------------
@@ -1618,6 +1619,7 @@ tr.active a {
     .navbar .navbar-main p, .navbar .navbar-main a {
       color: #fff; }
     .navbar .navbar-main .navbar-logo {
+      min-width: 300px;
       -webkit-flex-grow: 3;
       -ms-flex-positive: 3;
       flex-grow: 3;
@@ -1648,7 +1650,8 @@ tr.active a {
       -webkit-justify-content: flex-start;
       -ms-flex-pack: start;
       justify-content: flex-start;
-      overflow: hidden; }
+      overflow: hidden;
+      height: 40px; }
       .navbar .navbar-menu ul li a {
         font-size: 16px;
         color: #5f5f5f;
@@ -1662,15 +1665,109 @@ tr.active a {
           text-decoration: none;
           border-bottom: solid 3px #1e8f98; }
 
-/*
-navbar -> the entire navbar, which the subbar{
-  navbar-main -> green top nav{
-    navbar-logo -> left side
-    navbar-active-users -> middle 
-    navbar-auth -> right side (register and login/logout)
-  }
-  navbar-menu -> contact and event tabs
-}
-*/
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) {
+  .navbar span {
+    display: none; }
+  .navbar-active-users {
+    display: none; } }
+
+/* ---------------------------------
+  Project Style: Event-box
+--------------------------------- */
+.event {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+
+.subnav {
+  margin-top: 10px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+  .subnav h2, .subnav a {
+    font-size: 18px; }
+
+.bottom-event-color {
+  background-color: #ececec; }
+  .bottom-event-color .event-box {
+    border: black solid 1px; }
+  .bottom-event-color .box-right-side {
+    border-left: black solid 1px; }
+
+.event-box {
+  min-width: 400px;
+  width: 48%;
+  height: 85px;
+  margin: 1%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  justifly-content: space-between;
+  background-color: #eaeaea; }
+  .event-box .box-left-side {
+    width: 76%;
+    margin: 1% 5%; }
+    .event-box .box-left-side a:hover {
+      text-decoration: none; }
+    .event-box .box-left-side p {
+      font-family: "ArialMT", Helvetica, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
+      font-size: 12px;
+      color: #5f5f5f;
+      margin: 0; }
+    .event-box .box-left-side p + p {
+      font-family: "Rajdhani-Semibold", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
+      font-size: 24px;
+      color: #1e8f98;
+      margin: 0; }
+    .event-box .box-left-side p + p + p {
+      font-family: "ArialMT", Helvetica, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
+      font-size: 14px;
+      margin: 0; }
+  .event-box .box-right-side {
+    background-color: #bed883;
+    width: 20%;
+    text-align: center;
+    position: relative; }
+    .event-box .box-right-side .checkedin {
+      margin: 5%; }
+      .event-box .box-right-side .checkedin p {
+        font-family: "Rajdhani-Semibold", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
+        font-size: 24px;
+        color: #5f5f5f;
+        margin: 0; }
+      .event-box .box-right-side .checkedin p + p {
+        font-size: 13px;
+        margin: 0; }
+    .event-box .box-right-side .duplicate {
+      position: absolute;
+      bottom: 0;
+      height: 20px;
+      width: 100%;
+      background-color: #9b9b9b;
+      font-size: 12px; }
+      .event-box .box-right-side .duplicate a {
+        display: block;
+        color: #fff; }
+        .event-box .box-right-side .duplicate a:hover {
+          text-decoration: none; }
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) {
+  .event-box {
+    width: 90%; }
+  .box-right-side {
+    min-width: 150px; } }
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 700px) {
+  .event-box span {
+    display: none; } }
 
 /*# sourceMappingURL=framework.css.map */

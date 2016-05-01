@@ -1,0 +1,94 @@
+/* ---------------------------------
+  Project Style: Event-box
+--------------------------------- */
+
+.event{
+	display: flex;
+	flex-direction: column;
+}
+
+.subnav{
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	h2, a{
+		font-size: $font-size-larger;
+	}
+}
+
+
+.bottom-event-color{
+	background-color: $color-bg-footer;
+	.event-box{
+		border: black solid 1px;
+	}
+	.box-right-side{
+		border-left: black solid 1px;
+	}
+}
+
+.event-box{
+	min-width: 400px;
+    width: 48%;
+    height: 85px;
+    margin: 1%;
+    display: flex;
+    justifly-content: space-between;
+    background-color: $light-grey;
+    .box-left-side{
+    	width: 76%;
+    	margin: 1% 5%;
+    	//display: flex;
+    	//flex-direction: column;
+    	//justify-content:flex-start;
+    	a{
+	     	&:hover{
+	    		text-decoration: none;
+	    	}   	
+    	}
+
+    	p{ font-family: $font-family-secondary; font-size: $font-size-h3; color: $stone; margin:0;}
+    	p+p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $jade; margin:0;}
+    	p+p+p{ font-family: $font-family-secondary; font-size: $font-size-default; margin:0;}
+    }
+    .box-right-side{
+		background-color: $lime;
+    	width: 20%;
+    	text-align: center;
+    	position: relative;
+    	.checkedin{
+    		margin: 5%;
+	    	p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $stone; margin:0;}
+	    	p+p{ font-size: $font-size-smallish; margin:0;}			    	
+    	}
+    	.duplicate{
+    		position: absolute;
+    		bottom: 0;
+    		height: 20px;
+    		width: 100%;
+    		background-color: $gray-50;
+    		font-size: $font-size-small;
+    		a{
+    			display: block;
+    			color: $white;
+    			&:hover{text-decoration:none;}
+    		}
+    	}    
+    } 
+}
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) { 
+	.event-box{
+	width: 90%;
+	}
+	.box-right-side{
+		min-width: 150px;
+	}
+}   
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 700px) { 
+	.event-box span{
+		display:none;
+	}
+}   

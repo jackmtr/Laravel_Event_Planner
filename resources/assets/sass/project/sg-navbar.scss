@@ -29,6 +29,7 @@
     p, a{color: $color-navbar;}
 
     .navbar-logo{
+      min-width: 300px;
       flex-grow: 3;
       font-size: $font-size-xx-large;
     }
@@ -60,6 +61,7 @@
       display:flex;
       justify-content: flex-start;
       overflow: hidden; //somehow kept buttons in box
+      height: 40px;      
 
 
       li{
@@ -84,55 +86,14 @@
   }
 }
 
-
-
-
-
-
-
-
-
-//.navbar {
-//  @include clearfix;
-//  position: fixed;
-//  top: 0;
-//  left: 0;
-//  z-index: 1;
-//  width: 100%;
-//  height: 100px;
-//  padding: $spacing-medium 0;
-//  background-color: $color-bg-navbar;
-//  text-transform: uppercase;
-//}
-
-//.navbar-logo {
-//  color: $white !important;
-//  font-size: $font-size-h2;
-//  font-weight: $font-weight-light;
-//}//
-
-//.navbar-menu {
-//  @include clearfix;
-//  float: right;
-//  li {
-//    float: left;
-//    + li {margin-left: $spacing-medium;}
-//    a {
-//      display: block;
-//      padding: 0 ($spacing-small);
-//      color :$white;
-//      font-weight: $font-weight-light;
-//      line-height: 60px;
-//    }
-//  }
-//}
-/*
-navbar -> the entire navbar, which the subbar{
-  navbar-main -> green top nav{
-    navbar-logo -> left side
-    navbar-active-users -> middle 
-    navbar-auth -> right side (register and login/logout)
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) { 
+  .navbar{
+    span{
+      display:none;
+    }
   }
-  navbar-menu -> contact and event tabs
-}
-*/
+  .navbar-active-users{
+    display: none;
+  }
+}  
