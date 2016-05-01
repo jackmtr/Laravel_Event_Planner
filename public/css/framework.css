@@ -1763,7 +1763,7 @@ tr.active a {
   Project Style: Sub-Nav
 --------------------------------- */
 .subnav {
-  margin-top: 10px;
+  margin: 10px auto 10px;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -1862,5 +1862,120 @@ tr.active a {
     line-height: 0px;
     cursor: pointer;
     border-radius: 10px; }
+
+/* ---------------------------------
+  Project Style: Paginate
+--------------------------------- */
+.pagination {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
+/* ------------------------------
+  Project Style: Base Element
+------------------------------ */
+h3 > span {
+  color: #332f2a;
+  font-size: 14px; }
+
+.search-event {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 15px; }
+
+.contact-nav-bar {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.edit-events {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.eevents {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+  .eevents div {
+    margin: 0 25px; }
+
+/* ---------------------------------
+  Project Style: Table
+--------------------------------- */
+.sg-table tbody {
+  border: none; }
+
+.sg-table tr {
+  border: solid #eaeaea;
+  border-width: 0 0 1px; }
+  .sg-table tr:hover {
+    background: none;
+    cursor: default; }
+
+.sg-table th, .sg-table td {
+  background: none; }
+
+.sg-table th {
+  padding: 0 50px 10px 0;
+  color: #9b9b9b; }
+
+.sg-table td {
+  padding: 20px 30px 20px 0; }
+  .sg-table td p {
+    margin-bottom: 0; }
+    .sg-table td p + p {
+      margin-top: 15px; }
+
+.sg-table-col-xx-lg {
+  width: 450px; }
+
+.sg-table-col-x-lg {
+  width: 330px; }
+
+.sg-table-col-lg {
+  width: 250px; }
+
+.sg-table-col-md {
+  width: 210px; }
+
+.sg-table-col-sm {
+  width: 150px; }
+
+.sg-table-note {
+  border-bottom: 1px solid #eaeaea; }
+  .sg-table-note h4, .sg-table-note p {
+    margin: 20px 0;
+    text-align: center; }
+  .sg-table-note h4 {
+    color: #252525; }
+
+.sg-table.show-phone th,
+.sg-table.show-mobile th {
+  padding: 10px 0;
+  font-size: 16px; }
+
+.sg-table.show-phone td,
+.sg-table.show-mobile td {
+  padding: 20px 0; }
 
 /*# sourceMappingURL=framework.css.map */

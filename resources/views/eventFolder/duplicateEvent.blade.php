@@ -4,8 +4,12 @@
 
 <div class="edit-events container">
 	<h2>Edit Event {!! $event->event_name !!}</h2>
+	<div>
         {!! Form::model($event, ['method' => 'POST', 'action' => ['EventController@duplication', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
-	        <div class="subnav">
+	        <div class="eevents">
+	        	<div>
+	        		@include('eventFolder._eventForm', ['submitButtonText' => 'Duplicate Event'])
+	        	</div>	        
 	        	<div>
 	        		<h2>Invite List</h2>
 	            		@forelse($guestList as $guest)
@@ -18,13 +22,11 @@
 	            			<p>There are currently no guests to bring over.</p>
 	            		@endforelse
 	        	</div>
-	        	<br/>
-	        	<div>
-	        		@include('eventFolder._eventForm', ['submitButtonText' => 'Duplicate Event'])
-	        	</div>
+
 			</div> 
         {!! Form::close() !!}
         @include('errors._list') 
+      </div>
 </div>
 
 @endsection
