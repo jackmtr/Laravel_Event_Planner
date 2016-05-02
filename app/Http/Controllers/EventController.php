@@ -30,7 +30,6 @@ class EventController extends Controller
     {
         $eventsWithCount = array();
 
-        //EventWithCount logic could be move here, should it be? model or controller?
         //if eventstatus 0, event->guestLists->count, else event->guestLists->where checkedInBy not null->count
         foreach(Event::latest("event_status")->get() as $event){
           $guests = $event->guestList()->get();
@@ -61,14 +60,12 @@ class EventController extends Controller
     {
       $events = Event::all();
       $event = Event::findOrFail($id); //get event details to pass to view   
-      
       //used to invite previous guests from another event to this event.
       if(Request::input('events')){
         $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
 
         foreach ($previousGuestList as $previousGuest) {
           if($previousGuest->contact['contact_id'] > 0){
-            //$inviteList[] = $li->contact['contact_id'];
             GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $event->event_id]);
           }
         }
@@ -95,7 +92,7 @@ class EventController extends Controller
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
-
+      //dd($event);
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
     }
 
