@@ -7,7 +7,7 @@ use App\GuestList;
 use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
-use Request; 
+use Request;
 
 class EventController extends Controller
 {
@@ -28,13 +28,17 @@ class EventController extends Controller
      */
     public function index()
     {
-        //dd('asdasd');
         $eventsWithCount = array();
 
-        //EventWithCount logic could be move here, should it be? model or controller?
         //if eventstatus 0, event->guestLists->count, else event->guestLists->where checkedInBy not null->count
         foreach(Event::latest("event_status")->get() as $event){
-          $eventWithCount = new EventWithCount($event);
+          $guests = $event->guestList()->get();
+          if($event->event_status == 0){
+            $count = count($guests); //invited
+          } else {
+            $count = count($guests->where('checked_in_by', null)); //going or went
+          }      
+          $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
         }
         return view('eventFolder.events', compact('eventsWithCount'));
@@ -55,10 +59,18 @@ class EventController extends Controller
     public function show($id)
     {
       $events = Event::all();
+      $event = Event::findOrFail($id); //get event details to pass to view   
+      //used to invite previous guests from another event to this event.
+      if(Request::input('events')){
+        $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
 
-      $event = Event::findOrFail($id); //get event details to pass to view      
+        foreach ($previousGuestList as $previousGuest) {
+          if($previousGuest->contact['contact_id'] > 0){
+            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $event->event_id]);
+          }
+        }
+      }      
       $guests = $event->guestList()->get();
-
       $guestList = array(); //guestList contact details to pass to view
 
       foreach( $guests as $guest)
@@ -80,7 +92,7 @@ class EventController extends Controller
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
-
+      //dd($event);
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
     }
 
@@ -101,12 +113,12 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
 
         if ($event->event_status < 1){
-          
-          $event->guestList()->forceDelete();//hard delete  
+
+          $event->guestList()->forceDelete();//hard delete
           $event->forceDelete();
         }
         else{
-          
+
           $event->delete();//soft delete
         }
         return redirect('events');

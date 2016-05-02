@@ -68,17 +68,30 @@ $color-secondary-d-30 : darken($color-secondary, 20%);
 // Background Colors
 $color-bg-body   : $white;
 $color-bg-header : $jade;
+$color-bg-navbar  : $jade;//
+$color-bg-navbar-menu : $gray-20;
 $color-bg-main   : $gray-10;
-$color-bg-footer : $gray-20;
+$color-bg-footer : $gray-10;
 
 // Border Colors
 $color-border : $gray-20;
 
 // Text
 $color-text-body       : $near-black;
-$color-text-heading-h1 : $white;
+$color-text-heading-h1 : $stone;
 $color-text-heading-h2 : $stone;
 $color-text-heading-h3 : $stone;
 $color-text-heading-h4 : $gray-40;
 $color-link            : $color-primary;
 $color-link-hover      : $color-primary-l-10;
+$color-navbar          : $white;//
+$color-navbar-menu     : $stone;//
+
+// Button bg
+$color-bg-open : $lime;
+$color-bg-checkin : $lime;
+$color-bg-completed :$lime;
+$color-bg-invited : $tan;
+
+//Button colors
+$color-open: $stone;
