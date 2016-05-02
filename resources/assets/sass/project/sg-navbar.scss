@@ -1,0 +1,99 @@
+/* ------------------------------
+  Project Style: Navbar
+------------------------------ */
+
+.navbar{
+  @include clearfix;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: $color-bg-navbar;
+  color: $color-navbar;
+
+  a{
+    color: $color-text-heading-h1;
+    &:hover{
+      text-decoration: none;
+    }
+  }  
+  
+
+  .navbar-main{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+
+    p, a{color: $color-navbar;}
+
+    .navbar-logo{
+      min-width: 300px;
+      flex-grow: 3;
+      font-size: $font-size-xx-large;
+    }
+
+    .navbar-active-users{
+      flex-grow: 1;
+    }
+
+    .navbar-auth{
+      text-align: right;
+      flex-grow: 1;
+      font-size: $font-size-default;
+      p{
+        color: $gray-20;
+        /* need to download ArialMT for color */
+      }
+      li:nth-child(2){
+        text-decoration: underline;
+      }
+    }
+
+  }
+  .navbar-menu{
+
+    background-color: $color-bg-navbar-menu;
+    a{color: $color-navbar-menu;}
+
+    ul{
+      display:flex;
+      justify-content: flex-start;
+      overflow: hidden; //somehow kept buttons in box
+      height: 40px;      
+
+
+      li{
+      //float: left;
+        a {
+          font-size: $font-size-h2;
+          color: $color-text-heading-h2;
+          display: block; //makes the entire block clickable
+          padding: 8px 16px; //should make responsive
+          width: 150px; //button width
+          text-align: center; //centers the text in buttons
+          height: 37px; //makes text fit border better
+
+          &:hover {
+            color: $color-primary;
+            text-decoration: none;
+            border-bottom: solid 3px $color-primary;
+          }
+        }      
+      }
+    }    
+  }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) { 
+  .navbar{
+    span{
+      display:none;
+    }
+  }
+  .navbar-active-users{
+    display: none;
+  }
+}  

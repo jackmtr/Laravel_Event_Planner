@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Event;
-use App\PhoneNumber;
 use App\GuestList;
+use App\PhoneNumber;
 use App\Http\Requests\ContactRequest;
-use App\Http\Requests;
 use Request; //needed for the search function atm
 use Auth;
 
@@ -28,16 +27,35 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() //shows all contacts
     {
-        $contacts = Contact::orderBy("last_name")->paginate(10);        
+        $sortby = "last_name";
 
-        if(Request::all()){
-            $query = Request::input('searchitem');
-            $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')->orWhere('last_name', 'LIKE', '%'. $query . '%')->paginate(10);          
+        if(Request::input('sortby')){
+          $sortby = Request::input('sortby');
         }
 
-        $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
+        $contacts = Contact::orderBy($sortby)->paginate(10)->appends(['sortby' => $sortby]);
+
+        if(Request::input('searchitem')){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
+            $query = Request::input('searchitem'); //look for only the input called searchitem
+            $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')
+                ->orWhere('last_name', 'LIKE', '%'. $query . '%')
+                ->orWhere('email', 'LIKE', '%' . $query . '%')->paginate(10);
+                //search by first/last/and email
+        }
+        foreach($contacts as $contact){
+
+            $anyPhone = $contact->phoneNumber()->first();
+
+            if ($anyPhone){
+                $contact->display_phoneNumber = $anyPhone->phone_number;
+            }else{
+                $contact->display_phoneNumber = "";
+            }
+        } //for every contact, look for any number.  if finds one, put into a attribute called display_phoneNumber.  Put it empty if there's no number.
+
+        $events_active_open = Event::where('event_status', '<', 2)->orderBy('event_status')->get();
 
     	return view('contactFolder.contacts', compact('contacts','events_active_open'));
     }
@@ -50,7 +68,8 @@ class ContactController extends Controller
     public function store(ContactRequest $request){
 
         $authId = Auth::user()->user_id;
-        $request["added_by"] = $authId;
+
+        $request["added_by"] = $authId;//might be a better way to do this
 
         $contact = Contact::create($request->all());
 
@@ -59,7 +78,7 @@ class ContactController extends Controller
         if (strlen($request["phone_number"]) > 1){
             PhoneNumber::create($request->all()); //request has the phone number already
         }
-        
+
         return redirect('contacts');
     }
 
@@ -74,26 +93,25 @@ class ContactController extends Controller
     {
         $contact = Contact::findOrFail($id)->update($request->all());
 
-        return redirect('contacts');                    
+        return redirect('contacts');
     }
 
     public function destroy($id){
 
         //if the $id is not found in the guestlist table, this contact may be hard deleted
-        $canHardDelete = (GuestList::where('contact_id', $id)->count());
-
         $contact = Contact::findOrFail($id);
 
-        if($canHardDelete == 0){
-            //dd("can hard delete");
-            PhoneNumber::where('contact_id', $id)->forceDelete();
+        $contactInGuestLists = count($contact->guestlist);
+
+        if($contactInGuestLists == 0){
+            //can hard delete
+            $contact->phoneNumber()->forceDelete();
             $contact->forceDelete();
         }else{
-            //dd("dont hard delete");
-            PhoneNumber::where('contact_id', $id)->delete();
+            //dont hard delete
+            $contact->phoneNumber()->delete();
             $contact->delete();
         }
-
         return redirect('contacts');
-    }    
+    }
 }
