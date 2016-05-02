@@ -6,9 +6,58 @@
         <h3>Event Name</h3>
         <h2>
           {{ $event['event_name'] }}
-          <span><a href="{{$event['event_id']}}/edit">show details</a></span>
+          <span><a class="showDetails" href="#">show details</a></span> <!--href="{{$event['event_id']}}/edit"-->
         </h2>
         
+        <div id="showDetails" class="rightside" hidden>
+        <div class="eventStatus" style="float: left;">
+          {!! Form::label('event_status', 'Event Status:' )!!}
+          {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
+        
+          <!--<h3>Event Status: 
+            @if( $event['event_status'] == 0)
+              <span class="statusOpenBtn">Open</span>
+            @elseif( $event['event_status'] == 1)
+              <span class="statusCheckInBtn">Check In</span>
+            @else
+              <span class="statusCompleteBtn">Complete</span>
+            @endif
+          </h3>-->
+        </div>
+        <div class="guestListCount">
+          <div class="guestVariableA" style="float: left;">
+            @if( $event['event_status']  == 0)
+              <h3>Going</h3>
+              <h2>{{ $rsvpYes }}</h2>
+              
+            @else              
+              @if( $event['event_status']  == 1)
+                <h3>Checked In</h3>
+              @else
+                <h3>Attended</h3>
+              @endif
+              <h2>{{ $checkedIn }}</h2>
+            @endif
+          </div>
+            <div class="guestVariableB" style="float: left;">
+              @if( $event['event_status']  == 1)                
+                <h3>Attending</h3>
+                <h2>{{ $rsvpYes }}</h2>
+              @else                
+                <h3>Invited</h3>
+                <h2>{{ count($guestList) }}</h2>
+              @endif
+            </div>
+            <div style="float: left;">
+              
+
+                @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
+
+              
+            </div>
+          </div>        
+        </div>
+
         <input type="text" name="s" class="contact-searchbar search rounded" placeholder="[ ? ]Look up names or contact info" />
 
         <div id="invitePrevious">
@@ -25,46 +74,7 @@
         </div>    
       </div>
 
-      <div class="rightside">
-        <div class="eventStatus">
-          {!! Form::label('event_status', 'Event Status:' )!!}
-          {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
-        
-          <!--<h3>Event Status: 
-            @if( $event['event_status'] == 0)
-              <span class="statusOpenBtn">Open</span>
-            @elseif( $event['event_status'] == 1)
-              <span class="statusCheckInBtn">Check In</span>
-            @else
-              <span class="statusCompleteBtn">Complete</span>
-            @endif
-          </h3>-->
-        </div>
-        <div class="guestListCount">
-          <div class="guestVariableA">
-            @if( $event['event_status']  == 0)
-              <h2>{{ $rsvpYes }}</h2>
-              <h3>Going</h3>
-            @else
-              <h2>{{ $checkedIn }}</h2>
-              @if( $event['event_status']  == 1)
-                <h3>Checked In</h3>
-              @else
-                <h3>Attended</h3>
-              @endif
-            @endif
-          </div>
-          <div class="guestVariableB">
-            @if( $event['event_status']  == 1)
-              <h2>{{ $rsvpYes }}</h2>
-              <h3>Attending</h3>
-            @else
-              <h2>{{ count($guestList) }}</h2>
-              <h3>Invited</h3>
-            @endif
-          </div>
-        </div>        
-      </div>
+      
     </div>
 
     <div class="guestList">
@@ -134,6 +144,11 @@
                 // Otherwise put a 0 there
                 $('input[name='+fieldName+']').val(0);
             }
+        });
+
+        // This function shows contact's details.        
+        $(".showDetails").click(function(e) {                  
+            document.getElementById("showDetails").style.display = 'inline';                                
         });
     });
     </script>
