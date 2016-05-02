@@ -9,13 +9,11 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">    
 </head>
 
-<body><!--id="app-layout" -->
-
-    <nav class="navbar"> <!-- navbar-default navbar-static-top clearfix-->
+<body>
+    <nav class="navbar">
         <div class="container navbar-main"> 
-
-            <div class="navbar-logo navbar-top-left" > <!--class="navbar-header navbar-left"-->
-                    <a href="{{ url('/') }}"> <!--class="navbar-brand" -->
+            <div class="navbar-logo navbar-top-left">
+                    <a href="{{ url('/') }}">
                         Istuary Event Manage<span>ment & CRM</span>
                     </a>
             </div>
@@ -26,23 +24,26 @@
                 </p>
             </div>
 
-            <div class="navbar-auth navbar-auth"> <!-- class="collapse navbar-collapse" id="app-navbar-collapse"-->
-                <!-- Right Side Of Navbar -->
-                <ul> <!--class="nav navbar-nav navbar-right"-->
+            <div class="navbar-auth navbar-auth">
+                <ul>
                     <li>
                         <a href="#">Register <span>New Event Coordinator</span></a>
                     </li>
-                    <li> <!--class="dropdown"-->
-                        <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span>[ - ]</span>Logout <span>{{ Auth::user()->name }}</span></a>
-                    </li>
+                    @if (Auth::guest())
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span>[ - ]</span>Logout <span>{{ Auth::user()->name }}</span></a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
 
         <!-- Left Side Of Navbar -->
-        <div class="navbar-menu"> <!--class="subnav"-->
+        <div class="navbar-menu">
             <div class="container">
-                <ul> <!-- class="second-navbar"-->
+                <ul>
                     <li>
                         <a href="{{ url('/events/') }}">EVENTS</a>
                     </li>
@@ -55,8 +56,6 @@
     </nav>
 
     @yield('content')
-
-    
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
