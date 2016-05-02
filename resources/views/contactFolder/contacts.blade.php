@@ -4,11 +4,8 @@
 <div class="contacts container">
 	<div class="subnav">
 		<h2>Contacts</h2>
-<<<<<<< HEAD
+
 		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
-=======
-		<a href="{{ url('/contacts/create') }}">[ + ] Add Contact</a>
->>>>>>> 663845e7c845869ed0d2368355ee6193ffd235cd
 	</div>
 
 	<div class="contact-nav-bar">

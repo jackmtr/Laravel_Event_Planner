@@ -6,7 +6,7 @@
     <title>Istuary Event CRM</title>
     <link rel="stylesheet" type="text/css" href="/css/framework.css"/>
     <link href='https://fonts.googleapis.com/css?family=Rajdhani:600' rel='stylesheet' type='text/css'>
-<<<<<<< HEAD
+
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>-->
@@ -23,9 +23,8 @@
             margin-right: 6px;
         }
     </style>
-=======
+
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">    
->>>>>>> 663845e7c845869ed0d2368355ee6193ffd235cd
 </head>
 
 <body>
@@ -76,10 +75,6 @@
 
     @yield('content')
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 663845e7c845869ed0d2368355ee6193ffd235cd
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

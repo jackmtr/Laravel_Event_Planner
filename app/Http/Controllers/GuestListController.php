@@ -124,6 +124,6 @@ class GuestListController extends Controller
 
 
         //return $guest->contact_id;
-        return view('eventFolder.guestDetails', compact("guest","phone"));
+        return view('eventFolder.guestDetails', compact("guest","phone", "number"));
     }
 }

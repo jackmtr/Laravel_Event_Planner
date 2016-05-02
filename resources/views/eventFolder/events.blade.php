@@ -71,8 +71,6 @@
 	    </div>
     </div>
 
-<<<<<<< HEAD
-=======
 <div class="event"> <!--used to flex down column-->
 	<div class="top-event-color"> <!--used to bg-color outside container-->
 		<div class="container">
@@ -150,4 +148,3 @@
 	</div>
 </div>
 @endsection
->>>>>>> 663845e7c845869ed0d2368355ee6193ffd235cd
