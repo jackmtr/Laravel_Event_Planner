@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::get('/guestlist/{id}/details','GuestListController@details');
+	Route::post('/guestlist/{id}/details','GuestListController@details');
 	Route::post('/guestlist/create','GuestListController@store');
 
 

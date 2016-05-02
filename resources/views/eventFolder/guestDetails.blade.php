@@ -52,7 +52,7 @@
     var add_button      = $(".add_field_button"); //Add button ID
     var data            = $("#newPhone");         //new phone input id
     var newPhone        = data.val();
-    var action          = 'details({$id})';
+    var action          = '{{URL::action("GuestListController@details")}}';
     
     var x = 1; //initlal text box count
     $(add_button).click(function(e)
@@ -73,14 +73,7 @@
                     e.preventDefault(); $(this).parent('div').remove(); x--;
                 }) //end of remove field 
 // ​
-//                 var label = $("<label>").text(newCategory);
-//                 $("<input data-val='true' data-val-required='The IsSelected field is required.' id='Categories_" + categoryCount + "__IsSelected' name='Categories[" + categoryCount + "].IsSelected' type='checkbox' value='true'>").appendTo(list);
-//                 $("<input name='Categories[" + categoryCount + "].IsSelected' type='hidden' value='false'>").appendTo(list);
-//                 $("<input id='Categories_" + categoryCount + "__Name' name='Categories[" + categoryCount + "].Name' type='hidden' value='" + newCategory + "'>").appendTo(list);
-//                 $("<label for='Categories_" + categoryCount + "__IsSelected'>" + newCategory + "</label>").appendTo(list);
-//                 categoryCount++;
-//                 $(data).val('');
-//                 $(".newCategory").hide();
+                
             } else {
                 alert('error');
             }
@@ -91,7 +84,7 @@
 
 function SendData() {
    $.ajax({
-        url: "save.php",
+        url: "{{URL::action('GuestListController@details', $number->phone_number_id)}}",
         type: "post",
         data: "{{$phone}}"+$('.chat_in').val(),
         dataType: 'json', 

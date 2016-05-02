@@ -118,10 +118,19 @@ class GuestListController extends Controller
     }
 
     //id comes from guestlist
-    public function details($id){
+    public function details(Request $request, $id){
 
         $guest = Contact::find($id);
         $phone = PhoneNumber::where('contact_id',$id)->firstOrFail()->phone_number;
+
+        $data = $request->all();
+        if($request->ajax())
+        {
+            $id = Request::input('id');
+            $number = PhoneNumber::where('id', $id)->first();
+            $number->update();
+        }
+
 
         //return $guest->contact_id;
         return view('eventFolder.guestDetails', compact("guest","phone"));
