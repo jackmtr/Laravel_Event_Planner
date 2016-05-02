@@ -74,7 +74,8 @@
           <th>Table</th>
           <th>Name</th>
           <th>Guests</th>
-          <th>Title &amp; Company</th><th>Notes</th>
+          <th class="responsive-remove">Title &amp; Company</th>
+          <th class="responsive-remove">Notes</th>
         </tr>
         
         @foreach($guestList as $guest)
@@ -85,12 +86,12 @@
           <td>
             <form id='myform' method='POST' action='#'>
               <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
-              <input type='text' name='quantity{{$index}}'  value={{ $guest['additional_guests'] }} class='qty' />
+              <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
               <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
             </form>
           </td>
-          <td>{{$guest['work']}}</td>
-          <td>{{$guest['note']}}</td>
+          <td class="responsive-remove">{{$guest['work']}}</td>
+          <td class="responsive-remove">{{$guest['note']}}</td>
         </tr>
         <!--{{$index++}}-->
         @endforeach

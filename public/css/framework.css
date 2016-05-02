@@ -1978,4 +1978,22 @@ h3 > span {
 .sg-table.show-mobile td {
   padding: 20px 0; }
 
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) {
+  .responsive-remove {
+    display: none; } }
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) {
+  .responsive-remove {
+    display: none; } }
+
+/* Portrait and Landscape */
+@media (max-width: 800px) {
+  .responsive-minimum {
+    display: none; } }
+
+.qty {
+  width: 45px; }
+
 /*# sourceMappingURL=framework.css.map */

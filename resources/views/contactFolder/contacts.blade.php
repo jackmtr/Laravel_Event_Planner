@@ -28,17 +28,17 @@
 						{!! Form::submit("Last Name") !!}
 					{!! Form::close() !!}
 				</th>
-				<th>Email</th>
-				<th>Phone Number</th>
-				<th>Occupation</th>
+				<th class="responsive-minimum">Email</th>
+				<th class="responsive-minimum">Phone Number</th>
+				<th class="responsive-remove">Occupation</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "company") !!}
 						{!! Form::submit("Company") !!}
 					{!! Form::close() !!}
 				</th>
-				<th>Notes</th>
-				<th>Added By</th>
+				<th class="responsive-remove">Notes</th>
+				<th class="responsive-remove">Added By</th>
 			</tr>
 			{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 			
@@ -62,12 +62,12 @@
 						</td>
 						<td>{{$contact['first_name']}}</td>
 						<td>{{$contact['last_name']}}</td>
-						<td>{{$contact['email']}}</td>
-						<td>{{$contact['display_phoneNumber']}}</td>
-						<td>{{$contact['occupation']}}</td>
+						<td class="responsive-minimum">{{$contact['email']}}</td>
+						<td class="responsive-minimum">{{$contact['display_phoneNumber']}}</td>
+						<td class="responsive-remove">{{$contact['occupation']}}</td>
 						<td>{{$contact['company']}}</td>
-						<td>{{$contact['notes']}}</td>
-						<td>{{$contact['added_by']}}</td>
+						<td class="responsive-remove">{{$contact['notes']}}</td>
+						<td class="responsive-remove">{{$contact['added_by']}}</td>
 					</tr>
 				@endforeach
 			@else
