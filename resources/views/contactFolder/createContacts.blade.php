@@ -34,7 +34,6 @@
 			</div>
 		</div>
 
-
 		<button type="button" name="button" class="button-default" ng-click="popup2 = true;">Popup without Close</button>
 		<div class="popup ng-hide" style="display: block;" ng-show="popup2">
 			<div class="popup-mask">
@@ -52,28 +51,5 @@
 			</div>
 		</div>
 	</div>
-	
-    <button type="button" name="button" class="button-default" ng-click="popup1=true">Popup with Confirmation</button>
-<div class="popup" style="display: block;" ng-show="popup1">
-	<div class="popup-mask">
-		<div class="panel">
-			<div class="panel-inner">
-				<div class="popup-cancel">
-					<a href="#" ng-click="popup1=false;"><i class="fa fa-fw fa-times"></i></a>
-				</div>
-				<h2>Thank you for your feedback!</h2>
-				<p>
-					You’ll be the first to know once the new update arrives. How exciting!
-				</p>
-				<p class="popup-button">
-					<button type="button" name="button" class="button-primary" ng-click="popup1=false;">Cool. Take me back to home page</button>
-				</p>
-			</div>
-		</div>
-	</div>
 </div>
-</div>
-
-
-
 @endsection
