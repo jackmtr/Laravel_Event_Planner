@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Event;
 use App\GuestList;
-use App\Http\Controllers\PhoneNumber;
 use App\PhoneNumber;
 use App\Http\Requests\ContactRequest;
 use Request; //needed for the search function atm
