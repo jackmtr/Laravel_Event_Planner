@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div class="guestList">
+    <div class="guestList" ng-app="">
       <table class="sg-table">
         <tr>
           <th>Status</th>
@@ -79,7 +79,7 @@
         </tr>
         
         @foreach($guestList as $guest)
-        <tr>
+        <tr ng-click="popup{{$guest['guest_list_id']}}=true">
           <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
           <td>N/A</td>
           <td>{{$guest['name']}}</td>
@@ -94,6 +94,22 @@
           <td class="responsive-remove">{{$guest['note']}}</td>
         </tr>
         <!--{{$index++}}-->
+        <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
+          <div class="popup-mask">
+            <div class="panel">
+              <div class="panel-inner">
+                <div class="popup-cancel">
+                  <a href="#" ng-click="popup{{$guest['guest_list_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+                </div>
+
+                  <div class="edit-events container">
+                    <p>{{$guest['name']}}</p>
+                  </div>                
+
+              </div>
+            </div>
+          </div>
+        </div>        
         @endforeach
       </table>
     </div>

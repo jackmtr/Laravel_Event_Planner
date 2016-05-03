@@ -75,6 +75,7 @@ class EventController extends Controller
 
       foreach( $guests as $guest)
       {
+        $oneGuest['guest_list_id'] = $guest->guest_list_id;
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
         $oneGuest['note'] = "coming soon";
