@@ -2,28 +2,27 @@
 @section('content')
   <div class="container">
     <div class="subnav">
+
       <div class="leftside">
         <h3>Event Name</h3>
         <h2>
           {{ $event['event_name'] }}
-          <span><a href="{{$event['event_id']}}/edit">show details</a></span>
-        </h2>
-        
-        <input type="text" name="s" class="contact-searchbar search rounded" placeholder="[ ? ]Look up names or contact info" />
-
-        <div id="invitePrevious">
-          {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}  
-            
-            <label for="events">Invite Guests from a Previous Event: </label>
-            <select id="events" name="events" />
-              @foreach($events as $pastEvent)
-                <option value="{{$pastEvent['event_id']}}">{{$pastEvent['event_name']}}</option>
-              @endforeach
-            </select>
-            <input type="submit" name="guest_list_submit" value="Invite">
-          {{Form::close()}}
-        </div>    
+          <span><a href="#" class="showDetails">show details</a></span>
+        </h2>  
       </div>
+
+      <div id="showDetails" class="middleside popup-form" hidden>
+        <h2>Edit Event {!! $event->event_name !!}</h2>
+        {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+            @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event'])
+        {!! Form::close() !!}
+
+        {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
+        {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
+        {!! Form::close() !!}
+
+        @include('errors._list')   
+      </div>      
 
       <div class="rightside">
         <div class="eventStatus">
@@ -65,6 +64,23 @@
           </div>
         </div>        
       </div>
+    </div>
+
+    <div class="subnav">
+      <div>
+        <input type="text" name="s" class="contact-searchbar search rounded" placeholder="[ ? ]Look up names or contact info" />
+      </div>
+      <div id="invitePrevious">
+        {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}  
+          <label for="events">Invite Guests from a Previous Event: </label>
+          <select id="events" name="events" />
+            @foreach($events as $pastEvent)
+              <option value="{{$pastEvent['event_id']}}">{{$pastEvent['event_name']}}</option>
+            @endforeach
+          </select>
+          <input type="submit" name="guest_list_submit" value="Invite">
+        {{Form::close()}}
+      </div>  
     </div>
 
     <div class="guestList">
@@ -134,6 +150,19 @@
                 // Otherwise put a 0 there
                 $('input[name='+fieldName+']').val(0);
             }
+        });
+                // This function shows and hides contact's details .
+        $i = 0;        
+        $(".showDetails1").click(function(e) {
+          if(($i++)%2 == 0 ){               
+            document.getElementById("showDetails").style.display = 'inline';                     
+          }else{
+            document.getElementById("showDetails").style.display = 'none';
+          }                
+        });
+
+        $(".showDetails").click(function(e){
+          $("#showDetails").slideToggle("fast");
         });
     });
     </script>
