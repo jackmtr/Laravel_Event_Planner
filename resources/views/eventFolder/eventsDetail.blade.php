@@ -146,9 +146,14 @@
             }
         });
 
-        // This function shows contact's details.        
-        $(".showDetails").click(function(e) {                  
-            document.getElementById("showDetails").style.display = 'inline';                                
+        // This function shows and hides contact's details .
+        $i = 0;        
+        $(".showDetails").click(function(e) {
+          if(($i++)%2 == 0 ){               
+            document.getElementById("showDetails").style.display = 'inline';                     
+          }else{
+            document.getElementById("showDetails").style.display = 'none';
+          }                
         });
     });
     </script>
