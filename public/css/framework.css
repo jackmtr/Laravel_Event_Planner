@@ -1047,7 +1047,7 @@ button.with-icon-right i, a.with-icon-right i {
   text-align: right !important; }
 
 /* ----- Positioning ---- */
-.center-all {
+.center-all, .popup .panel {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1302,75 +1302,70 @@ button.with-icon-right i, a.with-icon-right i {
   Popup
 
   We are unsure how you created your popup, or what popup libraries you may be using. For your reference, this is how we defined our popup styles.
-
-  .popup {
-  	display: none;
-  	position: fixed;
-  	top: 0;
-  	left: 0;
-  	z-index: 10;
-  	width: 100%;
-  	height: 100%;
-  	.panel {
-  		width: 90%;
-  		overflow-y: scroll;
-      max-width: 300px;
-      max-height: 400px;
-  		padding: $spacing-large $spacing-small;
-  		box-shadow: $box-shadow;
-      text-align: center;
-  		@extend .center-all;
-  		@include tablet-and-up {
-  			max-width: 700px;
-  			padding: $spacing-x-large;
-  		};
-  		h2 {
-  			font-size: $font-size-h3;
-  			@include tablet-and-up {font-size: $font-size-h2;};
-  		}
-  		%button-base {margin-bottom: 0;}
-  	}
-    .panel-inner {
-      position: relative;
-      .button      {margin-top: $spacing-large;}
-      .link-cancel {margin-top: $spacing-medium;}
-    }
-  }
-
-  .popup-mask {
-  	content: "";
-  	position: absolute;
-  	top:0;
-  	left:0;
-  	width: 100%;
-  	height: 100%;
-  	background-color: rgba($gray-40, 0.7);
-  	cursor: default !important;
-  }
-
-  .popup-cancel {
-    position: absolute;
-  	top  : $spacing-small * -3 + 2;
-  	right: $spacing-small * -1;
-  	@include tablet-and-up {
-  		top  : $spacing-medium * -2;
-  		right: $spacing-medium * -2;
-  	};
-    a {
-      display: inline-block;
-      padding: $spacing-x-small;
-      color: $gray-40;
-      font-size: $font-size-large;
-      line-height: 1;
-    }
-  }
-
-  .popup-button {
-  	margin-top: $spacing-large;
-  	margin-bottom: 0;
-  }
-
 ------------------------------ */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%; }
+  .popup .panel {
+    width: 90%;
+    overflow-y: scroll;
+    max-width: 300px;
+    max-height: 400px;
+    padding: 30px 10px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+    text-align: center; }
+    @media screen and (min-width: 768px) {
+      .popup .panel {
+        max-width: 700px;
+        padding: 50px; } }
+    .popup .panel h2 {
+      font-size: 12px; }
+      @media screen and (min-width: 768px) {
+        .popup .panel h2 {
+          font-size: 16px; } }
+    .popup .panel .button-default, .popup .panel select, .popup .panel .button-primary {
+      margin-bottom: 0; }
+  .popup .panel-inner {
+    position: relative; }
+    .popup .panel-inner .button {
+      margin-top: 30px; }
+    .popup .panel-inner .link-cancel {
+      margin-top: 20px; }
+
+.popup-mask {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(216, 216, 216, 0.7);
+  cursor: default !important; }
+
+.popup-cancel {
+  position: absolute;
+  top: -28px;
+  right: -10px; }
+  @media screen and (min-width: 768px) {
+    .popup-cancel {
+      top: -40px;
+      right: -40px; } }
+  .popup-cancel a {
+    display: inline-block;
+    padding: 5px;
+    color: #d8d8d8;
+    font-size: 21px;
+    line-height: 1; }
+
+.popup-button {
+  margin-top: 30px;
+  margin-bottom: 0; }
+
 /* ------------------------------
   Status
 ------------------------------ */
@@ -1875,6 +1870,10 @@ tr.active a {
   justify-content: center; }
 
 /* ------------------------------
+  Project Style: Variables
+------------------------------ */
+/* ------ Font Family ------ */
+/* ------------------------------
   Project Style: Base Element
 ------------------------------ */
 h3 > span {
@@ -1918,6 +1917,152 @@ h3 > span {
   display: flex; }
   .eevents div {
     margin: 0 25px; }
+
+/* ------------------------------
+  Project Style: Container
+------------------------------ */
+@media screen and (min-width: 1024px) {
+  .sg-container {
+    padding-bottom: 100px; } }
+
+.sg-container-1col h1 {
+  margin-top: 50px; }
+
+/* ---------------------------------
+  Project Style: Image
+--------------------------------- */
+.sg-image {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 100px;
+  border: 1px solid #eaeaea; }
+  @media screen and (min-width: 768px) {
+    .sg-image {
+      width: auto; } }
+
+/* ---------------------------------
+  Project Style: Notes
+--------------------------------- */
+.sg-notes-designers, .sg-notes-developers, .sg-notes-important {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border: 1px solid;
+  width: 100%; }
+  .sg-notes-designers p, .sg-notes-developers p, .sg-notes-important p {
+    margin: 0; }
+  @media screen and (min-width: 1024px) {
+    .sg-notes-designers, .sg-notes-developers, .sg-notes-important {
+      width: 700px; } }
+
+.sg-notes-designers {
+  border-color: #f5a623; }
+
+.sg-notes-developers {
+  border-color: #ececec; }
+
+.sg-notes-important {
+  border-color: #dd4627; }
+  .sg-notes-important:before, .sg-notes-important:after {
+    content: "";
+    display: table; }
+  .sg-notes-important:after {
+    clear: both; }
+  .sg-notes-important i {
+    float: left;
+    margin-top: 10px;
+    color: #dd4627;
+    font-size: 21px; }
+  .sg-notes-important p {
+    padding-left: 30px; }
+
+/* ---------------------------------
+  Project Style: Side Navigation
+--------------------------------- */
+.sg-side-nav li a,
+.sg-side-nav-mobile li a {
+  display: block;
+  padding: 10px 15px;
+  background-color: #1e8f98;
+  color: #fff; }
+  .sg-side-nav li a:hover, .sg-side-nav li a:focus,
+  .sg-side-nav-mobile li a:hover,
+  .sg-side-nav-mobile li a:focus {
+    text-decoration: none; }
+  .sg-side-nav li a:hover,
+  .sg-side-nav-mobile li a:hover {
+    background-color: #22a3ad; }
+  .sg-side-nav li a.active,
+  .sg-side-nav-mobile li a.active {
+    background-color: #fff;
+    color: #1e8f98;
+    font-weight: 700; }
+
+@media screen and (min-width: 1024px) {
+  .sg-side-nav {
+    margin-top: 70px; } }
+
+.sg-side-nav li + li {
+  margin-top: 10px; }
+
+.sg-side-nav-mobile {
+  position: relative;
+  z-index: 1 !important; }
+  @media screen and (min-width: 768px) {
+    .sg-side-nav-mobile {
+      max-width: 250px; } }
+  .sg-side-nav-mobile .dropdown-trigger {
+    max-width: 100%; }
+    .sg-side-nav-mobile .dropdown-trigger .button-primary {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 10px;
+      padding-right: 20px;
+      text-align: left; }
+      .sg-side-nav-mobile .dropdown-trigger .button-primary i {
+        position: absolute;
+        top: 13px;
+        right: 20px; }
+  .sg-side-nav-mobile .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 42px;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #adeaef; }
+    .sg-side-nav-mobile .dropdown-content.active {
+      display: block; }
+    .sg-side-nav-mobile .dropdown-content li + li {
+      border-top: 1px solid #fff; }
+
+/* ---------------------------------
+  Project Style: Spacer
+--------------------------------- */
+.sg-spacer-xx-lg {
+  margin-bottom: 50px !important; }
+  @media screen and (min-width: 1024px) {
+    .sg-spacer-xx-lg {
+      margin-bottom: 80px !important; } }
+
+.sg-spacer-x-lg {
+  margin-bottom: 30px !important; }
+  @media screen and (min-width: 1024px) {
+    .sg-spacer-x-lg {
+      margin-bottom: 50px !important; } }
+
+.sg-spacer-lg {
+  margin-bottom: 20px !important; }
+  @media screen and (min-width: 1024px) {
+    .sg-spacer-lg {
+      margin-bottom: 30px !important; } }
+
+.sg-spacer-md {
+  margin-bottom: 15px !important; }
+  @media screen and (min-width: 1024px) {
+    .sg-spacer-md {
+      margin-bottom: 20px !important; } }
 
 /* ---------------------------------
   Project Style: Table
@@ -1995,5 +2140,29 @@ h3 > span {
 
 .qty {
   width: 45px; }
+
+/* ---------------------------------
+  Project Style: Trigger Up
+--------------------------------- */
+.sg-trigger-up {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background-color: #a0a0a0;
+  color: #fff;
+  text-align: center; }
+  .sg-trigger-up:hover, .sg-trigger-up:focus {
+    background-color: #d8d8d8;
+    color: #fff;
+    text-decoration: none; }
+  .sg-trigger-up i {
+    font-size: 21px; }
+  .sg-trigger-up span {
+    display: block;
+    margin-top: -5px;
+    font-size: 12px;
+    line-height: 1; }
 
 /*# sourceMappingURL=framework.css.map */

@@ -10,11 +10,7 @@
         {!! Form::close() !!}
 
         {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id]) !!}
-
-			<div class="form-group">
-			    {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
-			</div> 
-
+		{!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
         {!! Form::close() !!}
 
         @include('errors._list')   
