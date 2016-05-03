@@ -21,7 +21,8 @@ class Event extends Model
     'seats_per_table',
     'event_status',
   ];//allows these columns to be changed, and will ignore requests to change any other column
-
+    //INSERT INTO events (event_name, event_date, event_time, event_location, event_description, num_of_tables, seats_per_table, event_status) VALUES ('Canada Day 2015', '2015-06-03', '', '555 Saymour street','over 1 million people are watching on TV',5,8,2);
+    
   //eventually set a query scope to most closest to Carbon::now()
 
   protected $dates = ["event_date", "deleted_at"]; //lets event_date be a carbon item
