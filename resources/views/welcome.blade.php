@@ -14,7 +14,7 @@
             <li>Hassan Hosseinpour</li>
             <li>Jackie Cheng</li>
             <li>Rosalia Matzumiya</li>
-            <li>Slav Dujakoviz</li>
+            <li>Slav Dujakovic</li>
           </ul>
           <h3>Resources</h3>
           <ul>

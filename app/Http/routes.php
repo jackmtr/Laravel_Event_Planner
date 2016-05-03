@@ -40,5 +40,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::post('/guestlist/create','GuestListController@store');
 	//Route::resource('queries', 'ContactController');
-	Route::get('/contacts/search','ContactController@search');
+	//Route::get('/contacts/search','ContactController@search');
+
+	Route::group(['middleware' => 'cors'], function () {
+		Route::get('search', 'ContactController@search');
+	});
+
+	//practice ajax route for get request
+
+
+
 });

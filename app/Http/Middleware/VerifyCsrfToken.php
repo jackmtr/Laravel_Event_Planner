@@ -13,5 +13,6 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         //
+       'http://localhost:8000/search'
     ];
 }
