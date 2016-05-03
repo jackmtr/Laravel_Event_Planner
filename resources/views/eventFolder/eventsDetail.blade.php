@@ -81,7 +81,7 @@
         @foreach($guestList as $guest)
         <tr>
           <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
-          <td>N/A</td>
+          <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
           <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
           <td>
             <form id='myform' method='POST' action='#'>
@@ -90,8 +90,8 @@
               <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
             </form>
           </td>
-          <td class="responsive-remove">{{$guest['work']}}</td>
-          <td class="responsive-remove">{{$guest['note']}}</td>
+          <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+          <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
         </tr>
         <!--{{$index++}}-->        
         @endforeach
