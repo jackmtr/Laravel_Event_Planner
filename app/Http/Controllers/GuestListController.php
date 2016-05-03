@@ -109,21 +109,51 @@ class GuestListController extends Controller
     }
 
     //id comes from guestlist
-    public function details(Request $request, $id){
+    public function details($id){
+
+            
 
         $guest = Contact::find($id);
-        $phone = PhoneNumber::where('contact_id',$id)->firstOrFail()->phone_number;
+        $phones = $guest->phoneNumber()->get();
 
-        $data = $request->all();
-        if($request->ajax())
-        {
-            $id = Request::input('id');
-            $number = PhoneNumber::where('id', $id)->first();
-            $number->update();
-        }
 
 
         //return $guest->contact_id;
-        return view('eventFolder.guestDetails', compact("guest","phone", "number"));
+        return view('eventFolder.guestDetails', compact("guest","phones"));
     }
+
+    public function addPhone(Request $request, $contactid)
+    {
+        $guest = Contact::find($contactid);
+        $newNumbers = Request::all();
+        $oldNumbers = $guest->phoneNumber()->get();
+
+        foreach ($oldNumbers as $number) {
+            //if(count )
+
+                //get the count of oldnumber and compare it to new numbers 
+                //cycle thorugh  new number and longer oen adn override it
+                //if count != null create 
+                //update
+
+        }
+
+        if($request->() )
+        {
+             $phoneid = Request::input('phone_number_id');
+            if($phoneid != null)
+            {
+                $number = PhoneNumber::where('phone_number_id', $phoneid)->first();
+                $number->update();
+            }
+            else 
+            {
+                PhoneNumber::create($request->all());
+
+            }
+        }
+
+        return redirect('guestlist/'.$contactid.'/details');
+    }
+
 }

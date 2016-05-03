@@ -3,7 +3,6 @@
 <div class="guest-details">
     <div class="container">
         <h1>Guest Details</h1>
-
             <div class="form-group">
                 <h2>Name: {{$guest['first_name'] . " " . $guest['last_name']}}</h2>
             </div>
@@ -13,16 +12,19 @@
             <div class="form-group">
                 <h2>Company: {{$guest['company'] }}</h2>     
             </div>   
-              
+            {!! Form::open(['action' => ['GuestListController@addPhone', $guest->contact_id], 'novalidate' => 'novalidate', 'files' => true]) !!}    
             <div class="form-group">
 
                 <div class="input_fields_wrap"> 
+                 @foreach($phones as $phone)
                     <div>
-                        <input type="text" name="mytext[]" value="{{$phone}}" class="chat_in"><a href="#" class="add_field_button"> <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                        <input type="text" name="mytext[]" value="{{$phone->phone_number}}" class="chat_in"><a href="#" class="add_field_button"> <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                     </div>
+                 @endforeach
                 </div>
             </div>
-        
+              <input type="submit" name="update" value="Update">
+        {{Form::close()}}
             <div class="form-group">
                 <h2>Email: {{$guest['email'] }}</h2>  
                
@@ -52,7 +54,7 @@
     var add_button      = $(".add_field_button"); //Add button ID
     var data            = $("#newPhone");         //new phone input id
     var newPhone        = data.val();
-    var action          = '{{URL::action("GuestListController@details")}}';
+    var action          = 'addPhone';
     
     var x = 1; //initlal text box count
     $(add_button).click(function(e)
@@ -81,44 +83,6 @@
     });//end of on click
     
 }); 
-
-function SendData() {
-   $.ajax({
-        url: "{{URL::action('GuestListController@details', $number->phone_number_id)}}",
-        type: "post",
-        data: "{{$phone}}"+$('.chat_in').val(),
-        dataType: 'json', 
-        success: function(){   
-            alert("Sent");
-        },
-        error:function(){
-            alert("failure");
-
-        }
-    });
-
-
-}   
-
-
-
-$('.chat_in').keypress(function(e) {
-    if(e.keyCode == 13) {
-        alert('You pressed enter!');
-        SendData();
-    }
-
-
-
-    });
-
-
-$('#bt').click(function() {
-SendData();
-
-
- });
-
 
 
 
