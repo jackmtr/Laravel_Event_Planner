@@ -9,6 +9,7 @@ use App\PhoneNumber;
 use App\Http\Requests\ContactRequest;
 use Request; //needed for the search function atm
 use Auth;
+use App\Http\Controllers\Link;
 
 class ContactController extends Controller
 {
@@ -62,7 +63,8 @@ class ContactController extends Controller
 
     public function create()
     {
-        return view('contactFolder.createContacts');
+        $data = Link::paginate(10);
+        return view('contactFolder.createContacts', compact('data'));
     }
 
     public function store(ContactRequest $request){

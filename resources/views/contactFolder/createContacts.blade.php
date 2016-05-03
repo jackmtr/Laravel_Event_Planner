@@ -52,4 +52,46 @@
 		</div>
 	</div>
 </div>
+
+<script src="/js/jquery.jscroll.js'"></script>
+
+
+
+<div class="scroller">
+    <ul>
+    @foreach($data as $link)
+        <li data-url="{{url('link/'.$link->slug)}}">
+            <a>
+                <img alt="" src="{{$link->preview}}">
+                <div><span>{{$link->title}}</span></div>
+            </a>
+        </li>
+    @endforeach
+    </ul>
+    {{$data->links()}}
+</div>
+ 
+<script>
+    $(document).ready(function(){
+ 
+        //hides the default paginator
+        $('ul.pagination:visible:first').hide();
+ 
+        //init jscroll and tell it a few key configuration details
+        //nextSelector - this will look for the automatically created {{$data->links()}}
+        //contentSelector - this is the element wrapper which is cloned and appended with new paginated data
+        $('div.scroller').jscroll({
+            debug: true,
+            autoTrigger: true,
+            nextSelector: '.pagination li.active + li a',
+            contentSelector: 'div.scroller',
+            callback: function() {
+ 
+                //again hide the paginator from view
+                $('ul.pagination:visible:first').hide();
+ 
+            }
+        });
+    });
+</script>
 @endsection

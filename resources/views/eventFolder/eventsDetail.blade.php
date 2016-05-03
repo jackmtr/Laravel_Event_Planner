@@ -83,35 +83,39 @@
       </div>  
     </div>
 
-    <div class="guestList">
-      <table class="sg-table">
-        <tr>
-          <th>Status</th>
-          <th>Table</th>
-          <th>Name</th>
-          <th>Guests</th>
-          <th class="responsive-remove">Title &amp; Company</th>
-          <th class="responsive-remove">Notes</th>
-        </tr>
-        
-        @foreach($guestList as $guest)
-        <tr>
-          <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
-          <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
-          <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
-          <td>
-            <form id='myform' method='POST' action='#'>
-              <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
-              <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
-              <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
-            </form>
-          </td>
-          <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-          <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-        </tr>
-        <!--{{$index++}}-->        
-        @endforeach
-      </table>
+    <div>
+      <div class="guestList scroll">
+        <table class="sg-table">
+          <tr>
+            <th>Status</th>
+             <th>Table</th>
+            <th>Name</th>
+            <th>Guests</th>
+            <th class="responsive-remove">Title &amp; Company</th>
+            <th class="responsive-remove">Notes</th>
+          </tr>
+          
+          @foreach($guestList as $guest)
+          <tr>
+            <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
+            <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
+            <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
+            <td>
+              <form id='myform' method='POST' action='#'>
+                <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
+                <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
+                <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
+              </form>
+            </td>
+            <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+            <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+          </tr>
+          <!--{{$index++}}-->        
+          @endforeach
+
+        </table>
+
+    </div>
 
     @foreach($guestList as $guest)
             <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
@@ -121,16 +125,12 @@
                     <div class="popup-cancel">
                       <a href="#" ng-click="popup{{$guest['guest_list_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
                     </div>
-
                     <div class="edit-events container">
-
                       <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
-            
                       {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
                         @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
                       {!! Form::close() !!}        
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -140,6 +140,10 @@
     </div>
     @endsection
     @section('javascript')
+
+    <script src="/js/jquery.jscroll.js'"></script>
+
+
     <script>
     $(document).ready(function(){
         // This button will increment the value
@@ -187,8 +191,28 @@
         });
 
         $(".showDetails").click(function(e){
-          $("#showDetails").slideToggle("fast");
+          $("#showDetails").slideToggle("slow");
         });
+
+    
+
+    $(function() {
+        $('.scroll').jscroll({
+
+            
+
+            autoTrigger: true,
+            nextSelector: '.pagination li.active + li a', 
+            contentSelector: 'div.scroll',
+            callback: function() {
+                $('ul.pagination:visible:first').hide();
+            }
+        });
+    });
+
+
+
+
     });
     </script>
   </div>
