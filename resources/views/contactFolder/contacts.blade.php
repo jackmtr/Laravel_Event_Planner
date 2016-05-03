@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="contacts container">
+<div class="contacts container" ng-app="">
 	<div class="subnav">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}">[ + ] Add Contact</a>
@@ -44,7 +44,7 @@
 				</thead>
 				{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 				
-				<!--<div class="search-event">
+				<div class="search-event">
 					<label for="events">Select an Event: </label>
 					<select id="events" name="events">
 						@foreach($events_active_open as $event)
@@ -52,7 +52,7 @@
 						@endforeach
 					</select>
 					<input type="submit" name="guest_list_submit" value="Invite" />	
-				</div>-->
+				</div>
 				<tbody>
 				@if (count($contacts) > 0)
 					@foreach($contacts as $contact)
@@ -63,7 +63,7 @@
 								{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
 								<span></span>
 							</td>
-							<td>{{$contact['first_name']}}</td>
+							<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['first_name']}}</td>
 							<td>{{$contact['last_name']}}</td>
 							<td class="responsive-minimum">{{$contact['email']}}</td>
 							<td class="responsive-minimum">{{$contact['display_phoneNumber']}}</td>
@@ -86,7 +86,27 @@
 
 		{{Form::close()}}
 	</div>
+	@foreach($contacts as $contact)
+            <div class="popup ng-hide" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
+              <div class="popup-mask">
+                <div class="panel">
+                  <div class="panel-inner">
+                    <div class="popup-cancel">
+                      <a href="#" ng-click="popup{{$contact['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+                    </div>
+                    <div class="edit-events container">
+                      <h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
+                      {!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+                        @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
+                      {!! Form::close() !!}        
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    @endforeach
 </div>
+
 @endsection
 
 @section('javascript')

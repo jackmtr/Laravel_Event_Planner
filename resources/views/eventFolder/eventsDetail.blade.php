@@ -84,7 +84,7 @@
     </div>
 
     <div>
-      <div class="guestList scroll">
+      <div class="guestList scroll" style="height: 400px; overflow-y: scroll; max-height: 600px; ">
         <table class="sg-table">
           <tr>
             <th>Status</th>
@@ -139,11 +139,8 @@
 
     </div>
     @endsection
+
     @section('javascript')
-
-    <script src="/js/jquery.jscroll.js'"></script>
-
-
     <script>
     $(document).ready(function(){
         // This button will increment the value
@@ -194,12 +191,9 @@
           $("#showDetails").slideToggle("slow");
         });
 
-    
-
+  
     $(function() {
         $('.scroll').jscroll({
-
-            
 
             autoTrigger: true,
             nextSelector: '.pagination li.active + li a', 
@@ -209,9 +203,6 @@
             }
         });
     });
-
-
-
 
     });
     </script>
