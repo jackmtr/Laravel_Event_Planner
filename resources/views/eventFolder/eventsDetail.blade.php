@@ -2,62 +2,30 @@
 @section('content')
   <div class="container">
     <div class="subnav">
+
       <div class="leftside">
         <h3>Event Name</h3>
         <h2>
           {{ $event['event_name'] }}
-          <span><a class="showDetails" href="#">show details</a></span> <!--href="{{$event['event_id']}}/edit"-->
+          <span><a href="#" class="showDetails">show details</a></span>
         </h2>
-        
-        <div id="showDetails" class="rightside" hidden>
-        <div class="eventStatus" style="float: left;">
-          {!! Form::label('event_status', 'Event Status:' )!!}
-          {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
-        
-          <!--<h3>Event Status: 
-            @if( $event['event_status'] == 0)
-              <span class="statusOpenBtn">Open</span>
-            @elseif( $event['event_status'] == 1)
-              <span class="statusCheckInBtn">Check In</span>
-            @else
-              <span class="statusCompleteBtn">Complete</span>
-            @endif
-          </h3>-->
+
+        <div id="showDetails" hidden>
+          <div class="edit-events container">
+            <h2>Edit Event {!! $event->event_name !!}</h2>
+
+                  {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+                      @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event'])
+                  {!! Form::close() !!}
+
+                  {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id]) !!}
+                  {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
+                  {!! Form::close() !!}
+
+                  @include('errors._list')   
+          </div>                  
         </div>
-        <div class="guestListCount">
-          <div class="guestVariableA" style="float: left;">
-            @if( $event['event_status']  == 0)
-              <h3>Going</h3>
-              <h2>{{ $rsvpYes }}</h2>
-              
-            @else              
-              @if( $event['event_status']  == 1)
-                <h3>Checked In</h3>
-              @else
-                <h3>Attended</h3>
-              @endif
-              <h2>{{ $checkedIn }}</h2>
-            @endif
-          </div>
-            <div class="guestVariableB" style="float: left;">
-              @if( $event['event_status']  == 1)                
-                <h3>Attending</h3>
-                <h2>{{ $rsvpYes }}</h2>
-              @else                
-                <h3>Invited</h3>
-                <h2>{{ count($guestList) }}</h2>
-              @endif
-            </div>
-            <div style="float: left;">
-              
-
-                @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
-
-              
-            </div>
-          </div>        
-        </div>
-
+        
         <input type="text" name="s" class="contact-searchbar search rounded" placeholder="[ ? ]Look up names or contact info" />
 
         <div id="invitePrevious">
@@ -74,7 +42,46 @@
         </div>    
       </div>
 
-      
+      <div class="rightside">
+        <div class="eventStatus">
+          {!! Form::label('event_status', 'Event Status:' )!!}
+          {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
+        
+          <!--<h3>Event Status: 
+            @if( $event['event_status'] == 0)
+              <span class="statusOpenBtn">Open</span>
+            @elseif( $event['event_status'] == 1)
+              <span class="statusCheckInBtn">Check In</span>
+            @else
+              <span class="statusCompleteBtn">Complete</span>
+            @endif
+          </h3>-->
+        </div>
+        <div class="guestListCount">
+          <div class="guestVariableA">
+            @if( $event['event_status']  == 0)
+              <h2>{{ $rsvpYes }}</h2>
+              <h3>Going</h3>
+            @else
+              <h2>{{ $checkedIn }}</h2>
+              @if( $event['event_status']  == 1)
+                <h3>Checked In</h3>
+              @else
+                <h3>Attended</h3>
+              @endif
+            @endif
+          </div>
+          <div class="guestVariableB">
+            @if( $event['event_status']  == 1)
+              <h2>{{ $rsvpYes }}</h2>
+              <h3>Attending</h3>
+            @else
+              <h2>{{ count($guestList) }}</h2>
+              <h3>Invited</h3>
+            @endif
+          </div>
+        </div>        
+      </div>
     </div>
 
     <div class="guestList">
@@ -145,15 +152,18 @@
                 $('input[name='+fieldName+']').val(0);
             }
         });
-
-        // This function shows and hides contact's details .
+                // This function shows and hides contact's details .
         $i = 0;        
-        $(".showDetails").click(function(e) {
+        $(".showDetails1").click(function(e) {
           if(($i++)%2 == 0 ){               
             document.getElementById("showDetails").style.display = 'inline';                     
           }else{
             document.getElementById("showDetails").style.display = 'none';
           }                
+        });
+
+        $(".showDetails").click(function(e){
+          $("#showDetails").slideToggle("fast");
         });
     });
     </script>
