@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-  <div class="container">
+  <div class="container" ng-app="">
     <div class="subnav">
       <div class="leftside">
         <h3>Event Name</h3>
@@ -79,10 +79,10 @@
         </tr>
         
         @foreach($guestList as $guest)
-        <tr ng-click="popup{{$guest['guest_list_id']}}=true">
+        <tr>
           <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
           <td>N/A</td>
-          <td>{{$guest['name']}}</td>
+          <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
           <td>
             <form id='myform' method='POST' action='#'>
               <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
@@ -93,25 +93,34 @@
           <td class="responsive-remove">{{$guest['work']}}</td>
           <td class="responsive-remove">{{$guest['note']}}</td>
         </tr>
-        <!--{{$index++}}-->
-        <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
-          <div class="popup-mask">
-            <div class="panel">
-              <div class="panel-inner">
-                <div class="popup-cancel">
-                  <a href="#" ng-click="popup{{$guest['guest_list_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
-                </div>
-
-                  <div class="edit-events container">
-                    <p>{{$guest['name']}}</p>
-                  </div>                
-
-              </div>
-            </div>
-          </div>
-        </div>        
+        <!--{{$index++}}-->        
         @endforeach
       </table>
+
+    @foreach($guestList as $guest)
+            <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
+              <div class="popup-mask">
+                <div class="panel">
+                  <div class="panel-inner">
+                    <div class="popup-cancel">
+                      <a href="#" ng-click="popup{{$guest['guest_list_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+                    </div>
+
+                    <div class="edit-events container">
+
+                      <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
+            
+                      {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+                        @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
+                      {!! Form::close() !!}        
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+    @endforeach
+
     </div>
     @endsection
     @section('javascript')

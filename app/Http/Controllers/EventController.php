@@ -86,6 +86,8 @@ class EventController extends Controller
         $occupation = $guest->contact()->withTrashed()->first()->occupation;
         $company = $guest->contact()->withTrashed()->first()->company;
         $oneGuest['work'] = $occupation . " " . $company;
+        $oneGuest['contact'] = $guest->contact()->first();
+        //dd($oneGuest['contact']);
 
         $guestList[] = $oneGuest;
       }
@@ -93,7 +95,7 @@ class EventController extends Controller
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
-      //dd($event);
+
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
     }
 
