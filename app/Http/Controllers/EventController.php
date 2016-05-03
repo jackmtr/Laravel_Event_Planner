@@ -93,7 +93,11 @@ class EventController extends Controller
       }
 
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
-      $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
+      $checkedIn =count($guests) - count($guests->where('checked_in_by', 0)); //count of guestList already checked in to pass to view
+      
+      //dd($guests);
+      //dd($checkedIn);
+
       $index = 0;
 
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
