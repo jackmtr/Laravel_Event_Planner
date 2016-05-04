@@ -63,7 +63,7 @@
 
   <div class="subnav">
     <div>
-      <input type="text" name="s" class="contact-searchbar search rounded" placeholder="[ ? ]Look up names or contact info" />
+      <input type="text" name="s" class="contact-searchbar search rounded" placeholder="Look up names or contact info" /><button><i class="fa fa-search" aria-hidden="true"></i></button>
     </div>
     <div id="invitePrevious">
       {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}
@@ -95,9 +95,9 @@
                   <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
                   <td>
                     <form id='myform' method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
-                      <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
+                      <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
+                      <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
+                      <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
                     </form>
                   </td>
                   <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
@@ -110,15 +110,16 @@
             @if( $event['event_status']  == 1)<!--CheckedIn-->
                 @foreach($guestList as $guest)
                   @if($guest['rsvp'] == 1)
+                    @if($guest['checked_in_by'] == null){{--*/ $checkStatus = 0 /*--}}@else{{--*/ $checkStatus = 1 /*--}}@endif
                     <tr>
-                      <td>{!! Form::select('rsvp', [0 => 'Check In', 1 => 'Checked In'], $guest['rsvp'], ['class' => 'checkin'] ) !!}</td>
+                      <td>{!! Form::select('rsvp', [0 => 'Not Checked In', 1 => 'Checked In'], $checkStatus, ['class' => 'checkin', 'id' => $guest['guest_list_id'] ] ) !!}</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
                       <td>
                         <form id='myform' method='POST' action='#'>
-                          <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
-                          <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
-                          <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
+                          <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
+                          <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
+                          <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
                         </form>
                       </td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
@@ -237,19 +238,34 @@ $(document).ready(function(){
     var data = $(this).children(":selected").html();
     if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
       var action = '/guestlist/update';
-      var guestid = this.id;
-      var request = { theGuest : guestid , theRsvp : data };
+      var request = { theGuest : this.id , theRsvp : data };
+    } else if(data == "Not Checked In" || data == "Checked In"){
+      var action = '/guestlist/checkin';
+      var request = { theGuest : this.id, theCheckin : data };
     } else {
       var action = '/events/togglestatus';
-      var eventid = {{$event['event_id']}};
-      var request = { theEvent : eventid , theStatus : data };
+      var request = { theEvent : {{$event['event_id']}} , theStatus : data };
     }
     $.post(action, request, function (response) {
-      if (response == "Guest Removed" || response == "Status Changed") {
-        location.reload();
-        $('#ajax').html(response);
-      } else {
+      if (response) {
         $('#ajax').html(response); // flash Success message
+        location.reload();
+      } else {
+        $('#ajax').html(response);
+      }
+    });
+  });
+
+  $(".qtybtn").click(function(){
+    var data = $(this).siblings(".qty").val();
+    var action = '/guestlist/addguests';
+    var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
+    $.post(action, request, function (response) {
+      if (response) {
+        $('#ajax').html(response); // flash Success message
+        location.reload();
+      } else {
+        $('#ajax').html(response);
       }
     });
   });

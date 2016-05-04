@@ -21,12 +21,12 @@
                         Istuary Event Manage<span>ment & CRM</span>
                     </a>
             </div>
-
+<!--
             <div class="navbar-active-users navbar-top-middle">
                 <p>
                     Active users: 1
                 </p>
-            </div>
+            </div> -->
 
             <div class="navbar-auth navbar-auth">
                 <ul>
@@ -37,7 +37,7 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span>[ - ]</span>Logout <span>{{ Auth::user()->name }}</span></a>
+                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span><i class="fa fa-user" aria-hidden="true"></i> </span>Logout <span>{{ Auth::user()->name }}</span></a>
                         </li>
                     @endif
                 </ul>
