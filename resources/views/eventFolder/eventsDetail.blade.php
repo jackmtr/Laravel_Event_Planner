@@ -165,12 +165,22 @@
   <br/>
 @endforeach
 -->
+
+<!--good one
 @for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
   <div class="form-group">
       {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
       {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control']) !!}
   </div>
 @endfor
+-->
+@for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
+  <div class="form-group">
+    {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
+    {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+  </div>  
+@endfor
+
 
 <!-- new phone inputs come here -->
 <div class="new-phone-numbers"></div>
@@ -207,7 +217,7 @@
     <script>
     $(document).ready(function(){
 
-        var index = 100;
+        var index = 0;
         // This button will increment the value
         $('.qtyplus').click(function(e){
             // Stop acting like a button
@@ -248,7 +258,7 @@
         });
 
         $(".add_phone").click(function(e){
-            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phone_number" + index +"' type='text' value='' id='phone_number" + index + "'></div>");
+            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'></div>");
             index++;
         });
     });
