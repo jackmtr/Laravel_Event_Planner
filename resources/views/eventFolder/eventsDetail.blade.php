@@ -190,16 +190,22 @@ $(document).ready(function(){
 
   // This function changes the rsvp status
   $("select").change(function () {
-    var action = '/guestlist/update';
-    var guestid = this.id;
-    var rsvp = $(this).children(":selected").html();
-
-    $.post(action, { theGuest : guestid, theRsvp : rsvp }, function (response) {
-      if (response != "Guest Removed") {
-        $('#ajax').html(response); // flash Success message
-      } else {
+    var data = $(this).children(":selected").html();
+    if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
+      var action = '/guestlist/update';
+      var guestid = this.id;
+      var request = { theGuest : guestid , theRsvp : data };
+    } else {
+      var action = '/events/togglestatus';
+      var eventid = {{$event['event_id']}};
+      var request = { theEvent : eventid , theStatus : data };
+    }
+    $.post(action, request, function (response) {
+      if (response == "Guest Removed" || response == "Status Changed") {
         location.reload();
-        $('#ajax').html(response); // flash Error message
+        $('#ajax').html(response);
+      } else {
+        $('#ajax').html(response); // flash Success message
       }
     });
   });

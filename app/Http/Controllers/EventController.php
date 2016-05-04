@@ -155,4 +155,21 @@ class EventController extends Controller
 
      return redirect()->action('EventController@show', $eventId);
     }
+
+    public function toggleStatus(Request $request){
+      $event = Event::findOrFail(Request::input('theEvent'));
+      $status = Request::input('theStatus');
+      $message = "Status Changed";
+      if ($status == "OPEN") {
+        $event->event_status = 0;
+      } elseif ($status == "CHECK-IN") {
+        $event->event_status = 1;
+      } elseif ($status == "COMPLETED") {
+        $event->event_status = 2;
+      } else {
+        $message = "Error";
+      }
+      $event->save();
+      return $message;
+    }
 }
