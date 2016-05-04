@@ -28,8 +28,8 @@
         <div class="eventStatus">
           {!! Form::label('event_status', 'Event Status:' )!!}
           {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
-        
-          <!--<h3>Event Status: 
+        <!-- 
+          <h3>Event Status: 
             @if( $event['event_status'] == 0)
               <span class="statusOpenBtn">Open</span>
             @elseif( $event['event_status'] == 1)
@@ -37,7 +37,7 @@
             @else
               <span class="statusCompleteBtn">Complete</span>
             @endif
-          </h3>-->
+          </h3> -->
         </div>
         <div class="guestListCount">
           <div class="guestVariableA">
