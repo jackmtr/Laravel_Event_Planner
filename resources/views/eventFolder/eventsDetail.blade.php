@@ -117,7 +117,7 @@
                 @foreach($guestList as $guest)
                   @if($guest['rsvp'] == 1)                  
                     <tr>
-                      <td>{!! Form::select('rsvp', [0 => 'Check In', 1 => 'Checked In'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
+                      <td>{!! Form::select('rsvp', [0 => 'Check In', 1 => 'Checked In'], $guest['rsvp'], ['class' => 'checkin'] ) !!}</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
                       <td>
@@ -136,7 +136,15 @@
               @else <!--$event['event_status']  == 2 -->
                 @foreach($guestList as $guest)
                   <tr>
-                    <td>{!! Form::select('rsvp', [0 => 'Check In', 1 => 'Checked In'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
+                    @if($guest['checked_in_by'] != null)
+                      <td>Attended</td>
+                    @else
+                        @if($guest['rsvp']==1)
+                          <td>No Show</td>
+                        @else
+                          <td>Did Not Attend</td>
+                        @endif
+                    @endif
                     <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
                     <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>                   
                     <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
