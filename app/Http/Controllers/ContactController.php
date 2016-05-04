@@ -92,6 +92,7 @@ class ContactController extends Controller
     public function update(ContactRequest $request, $id)
     {
         dd($request);
+        
         $contact = Contact::findOrFail($id)->update($request->all());
         $phones = $contact->phoneNumber()->get();
 
