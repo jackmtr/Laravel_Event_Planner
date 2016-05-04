@@ -37,7 +37,7 @@ class EventController extends Controller
             $count = count($guests); //invited
           } else {
             $count = count($guests->where('checked_in_by', null)); //going or went
-          }      
+          }
           $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
         }
@@ -59,7 +59,7 @@ class EventController extends Controller
     public function show($id)
     {
       $events = Event::all();
-      $event = Event::findOrFail($id); //get event details to pass to view   
+      $event = Event::findOrFail($id); //get event details to pass to view
       //used to invite previous guests from another event to this event.
       if(Request::input('events')){
         $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
@@ -69,7 +69,7 @@ class EventController extends Controller
             GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $event->event_id]);
           }
         }
-      }      
+      }
       $guests = $event->guestList()->get();
       $guestList = array(); //guestList contact details to pass to view
 
