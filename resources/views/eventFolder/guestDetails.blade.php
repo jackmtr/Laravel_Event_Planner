@@ -16,11 +16,19 @@
             <div class="form-group">
 
                 <div class="input_fields_wrap"> 
+                <a href="#" class="add_field_button"> <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                @if(count($phones) == 0)
+                    <div>
+                        <input type="text" name="phone[]" class="chat_in">
+                    </div>
+                @endif 
                  @foreach($phones as $phone)
                     <div>
-                        <input type="text" name="mytext[]" value="{{$phone->phone_number}}" class="chat_in"><a href="#" class="add_field_button"> <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                        <input type="text" name="phone[]" value="{{$phone->phone_number}}" class="chat_in">
                     </div>
                  @endforeach
+                 
+
                 </div>
             </div>
               <input type="submit" name="update" value="Update">
@@ -68,7 +76,7 @@
                 if(x < max_fields)
                 { 
                     x++; //text box increment
-                    $(wrapper).append('<div><input type="text" name="mytext[]" class="chat_in"/><a href="#" class="remove_field"> <i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>'); //add input box
+                    $(wrapper).append('<div><input type="text" name="phone[]" class="chat_in"/><a href="#" class="remove_field"> <i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>'); //add input box
                 } //max input box allowed     
                 $(wrapper).on("click",".remove_field", function(e)
                 { //user click on remove text

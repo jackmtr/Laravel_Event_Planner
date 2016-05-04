@@ -108,6 +108,14 @@ class GuestListController extends Controller
         }
     }
 
+    // public function update(ContactRequest $request, $id)
+    // {
+    //     $contact = Contact::findOrFail($id)->update($request->all());
+    //     $phones = $contact->phoneNumber()->get();
+
+    //     return redirect('contacts');
+    // }
+
     //id comes from guestlist
     public function details($id){
 
@@ -115,6 +123,11 @@ class GuestListController extends Controller
 
         $guest = Contact::find($id);
         $phones = $guest->phoneNumber()->get();
+
+        foreach($phones as $phone)
+        {
+            //dd($phone->phone_number);
+        }
 
 
 
@@ -125,33 +138,27 @@ class GuestListController extends Controller
     public function addPhone(Request $request, $contactid)
     {
         $guest = Contact::find($contactid);
-        $newNumbers = Request::all();
-        $oldNumbers = $guest->phoneNumber()->get();
+        $allNumbers = $request->all();
+        $newNumbers = $allNumbers['phone'];
+        //dd($newNumbers);
 
-        foreach ($oldNumbers as $number) {
-            //if(count )
 
-                //get the count of oldnumber and compare it to new numbers 
-                //cycle thorugh  new number and longer oen adn override it
-                //if count != null create 
-                //update
+        $affectedRows = $guest->phoneNumber()->get();
 
-        }
-
-        if($request->() )
+        foreach($affectedRows as $row)
         {
-             $phoneid = Request::input('phone_number_id');
-            if($phoneid != null)
-            {
-                $number = PhoneNumber::where('phone_number_id', $phoneid)->first();
-                $number->update();
-            }
-            else 
-            {
-                PhoneNumber::create($request->all());
 
+            $row->delete();
+        }
+
+        foreach ($newNumbers as $number) 
+        {
+            if($number != "")
+            {
+                PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$contactid));
             }
         }
+
 
         return redirect('guestlist/'.$contactid.'/details');
     }
