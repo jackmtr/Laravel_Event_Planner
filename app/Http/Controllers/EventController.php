@@ -36,7 +36,7 @@ class EventController extends Controller
           if($event->event_status == 0){
             $count = count($guests); //invited
           } else {
-            $count = count($guests->where('checked_in_by', null)); //going or went
+            $count = count($guests) - count($guests->where('checked_in_by', null)); //going or went
           }
           $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
@@ -78,6 +78,7 @@ class EventController extends Controller
         $oneGuest['guest_list_id'] = $guest->guest_list_id;
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
+        $oneGuest['checked_in_by'] = $guest->checked_in_by;
         $oneGuest['note'] = "coming soon";
         $first_name = $guest->contact()->withTrashed()->first()->first_name;
         $last_name = $guest->contact()->withTrashed()->first()->last_name;
@@ -87,13 +88,18 @@ class EventController extends Controller
         $company = $guest->contact()->withTrashed()->first()->company;
         $oneGuest['work'] = $occupation . " " . $company;
         $oneGuest['contact'] = $guest->contact()->first();
+
         //dd($oneGuest['contact']);
 
         $guestList[] = $oneGuest;
       }
 
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
-      $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
+      $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
+
+      //dd($guests);
+      //dd($checkedIn);
+
       $index = 0;
 
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));

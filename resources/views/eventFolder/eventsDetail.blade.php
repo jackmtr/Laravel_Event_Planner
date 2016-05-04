@@ -32,28 +32,30 @@
         {!! Form::label('event_status', 'Event Status:' )!!}
         {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
       </div>
-      <div class="guestListCount">
-        <div class="guestVariableA">
-          @if( $event['event_status']  == 0)
-          <h2>{{ $rsvpYes }}</h2>
-          <h3>Going</h3>
-          @else
-          <h2>{{ $checkedIn }}</h2>
-          @if( $event['event_status']  == 1)
-          <h3>Checked In</h3>
-          @else
-          <h3>Attended</h3>
-          @endif
-          @endif
-        </div>
-        <div class="guestVariableB">
-          @if( $event['event_status']  == 1)
-          <h2>{{ $rsvpYes }}</h2>
-          <h3>Attending</h3>
-          @else
-          <h2>{{ count($guestList) }}</h2>
-          <h3>Invited</h3>
-          @endif
+        <div class="guestListCount">
+          <div class="guestVariableA">
+            @if( $event['event_status']  == 0)
+              <h2>{{ $rsvpYes }}</h2>
+              <h3>Going</h3>
+            @else
+              <h2>{{ $checkedIn }}</h2>
+              @if( $event['event_status']  == 1)
+                <h3>Checked In</h3>
+              @else
+                <h3>Attended</h3>
+              @endif
+            @endif
+          </div>
+
+          <div class="guestVariableB">
+            @if( $event['event_status']  == 1)
+              <h2>{{ $rsvpYes }}</h2>
+              <h3>Attending</h3>
+            @else
+              <h2>{{ count($guestList) }}</h2>
+              <h3>Invited</h3>
+            @endif
+          </div>
         </div>
       </div>
     </div>
@@ -75,37 +77,79 @@
     {{Form::close()}}
   </div>
 </div>
+    <div class="guestList">
+      <table class="sg-table">
+        <tr>
+          <th>Status</th>
+          <th>Table</th>
+          <th>Name</th>
+          <th>Guests</th>
+          <th class="responsive-remove">Title &amp; Company</th>
+          <th class="responsive-remove">Notes</th>
+        </tr>
+        @if( $event['event_status']  == 0) <!--Open-->
+          @foreach($guestList as $guest)
+                <tr>
+                  <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
+                  <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
+                  <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
+                  <td>
+                    <form id='myform' method='POST' action='#'>
+                      <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
+                      <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
+                      <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
+                    </form>
+                  </td>
+                  <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+                  <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+                </tr>
 
-<div class="guestList">
-  <table class="sg-table">
-    <tr>
-      <th>Status</th>
-      <th>Table</th>
-      <th>Name</th>
-      <th>Guests</th>
-      <th class="responsive-remove">Title &amp; Company</th>
-      <th class="responsive-remove">Notes</th>
-    </tr>
-
-    @foreach($guestList as $guest)
-    <tr>
-      <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited', 'id' => $guest['guest_list_id']] ) !!}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
-      <td>
-        <form id='myform' method='POST' action='#'>
-          <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
-          <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
-          <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
-        </form>
-      </td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-    </tr>
-    <!--{{$index++}}-->
-    @endforeach
-  </table>
-
+          <!--{{$index++}}-->
+          @endforeach
+        @else
+            @if( $event['event_status']  == 1)<!--CheckedIn-->
+                @foreach($guestList as $guest)
+                  @if($guest['rsvp'] == 1)
+                    <tr>
+                      <td>{!! Form::select('rsvp', [0 => 'Check In', 1 => 'Checked In'], $guest['rsvp'], ['class' => 'checkin'] ) !!}</td>
+                      <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
+                      <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
+                      <td>
+                        <form id='myform' method='POST' action='#'>
+                          <input type='button' value='-' class='qtyminus' field='quantity{{$index}}' />
+                          <input type='number' name='quantity{{$index}}' value={{ $guest['additional_guests'] }} class='qty' />
+                          <input type='button' value='+' class='qtyplus' field='quantity{{$index}}' />
+                        </form>
+                      </td>
+                      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+                      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+                    </tr>
+                  @endif
+                <!--{{$index++}}-->
+                @endforeach
+              @else <!--$event['event_status']  == 2 -->
+                @foreach($guestList as $guest)
+                  <tr>
+                    @if($guest['checked_in_by'] != null)
+                      <td>Attended</td>
+                    @else
+                        @if($guest['rsvp']==1)
+                          <td>No Show</td>
+                        @else
+                          <td>Did Not Attend</td>
+                        @endif
+                    @endif
+                    <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
+                    <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
+                    <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+                    <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+                  </tr>
+                <!--{{$index++}}-->
+                @endforeach
+              @endif
+        @endif
+      </table>
+      
   @foreach($guestList as $guest)
   <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
     <div class="popup-mask">
