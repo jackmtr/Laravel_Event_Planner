@@ -87,7 +87,6 @@ class EventController extends Controller
         $company = $guest->contact()->withTrashed()->first()->company;
         $oneGuest['work'] = $occupation . " " . $company;
         $oneGuest['contact'] = $guest->contact()->first();
-        //dd($oneGuest['contact']);
 
         $guestList[] = $oneGuest;
       }

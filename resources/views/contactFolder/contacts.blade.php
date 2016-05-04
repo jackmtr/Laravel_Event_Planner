@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="contacts container" ng-app="">
+<div class="contacts container" >
 	<div class="subnav">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}">[ + ] Add Contact</a>
@@ -53,11 +53,10 @@
 					</select>
 					<input type="submit" name="guest_list_submit" value="Invite" />	
 				</div>
-				<tbody>
+				<tbody ng-app="myApp">
 				@if (count($contacts) > 0)
 					@foreach($contacts as $contact)
-
-						<tr id="article-item">
+						<tr id="article-item"><!-- make on click on this to find the corrosponding contact id, use it to make the div manually -->
 							<td class='cellcheckbox'>
 								{!! Form::label("invitelist[]", " ", array('class' => 'label-checkbox')) !!}
 								{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
@@ -71,6 +70,25 @@
 							<td>{{$contact['company']}}</td>
 							<td class="responsive-remove">{{$contact['notes']}}</td>
 							<td class="responsive-remove">{{$contact['added_by']}}</td>
+							<td>
+					            <div class="popup ng-hide" id="aaa" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
+					              <div class="popup-mask">
+					                <div class="panel">
+					                  <div class="panel-inner">
+					                    <div class="popup-cancel">
+					                      <a href="#" ng-click="popup{{$contact['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+					                    </div>
+					                    <div class="edit-events container">
+					                      <h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
+					                      {!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
+					                        @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
+					                      {!! Form::close() !!}        
+					                    </div>
+					                  </div>
+					                </div>
+					              </div>
+					            </div>								
+							</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -86,25 +104,6 @@
 
 		{{Form::close()}}
 	</div>
-	@foreach($contacts as $contact)
-            <div class="popup ng-hide" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
-              <div class="popup-mask">
-                <div class="panel">
-                  <div class="panel-inner">
-                    <div class="popup-cancel">
-                      <a href="#" ng-click="popup{{$contact['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
-                    </div>
-                    <div class="edit-events container">
-                      <h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
-                      {!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
-                        @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
-                      {!! Form::close() !!}        
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-    @endforeach
 </div>
 
 @endsection
@@ -120,33 +119,6 @@
 			checkbox.prop("checked", !checkbox.prop("checked"));
 		});
 
-		/*$('ul.pagination:visible:first').hide();
-	
-        $('div.scroller').jscroll({
-            debug: true,
-            autoTrigger: true,
-            nextSelector: '.pagination li.active + li a',
-            contentSelector: 'div.scroller',
-            callback: function() {
- 
-                //again hide the paginator from view
-                $('ul.pagination:visible:first').hide();
- 
-            }
-        });*/
-
-        /*var loading_options - {
-        	finishedMsg: "End of rows",
-        	msgText: "Loading new rows...:",
-        	img: "/images/Timeline.PNG"
-        };
-
-        $('table.table tbody').infinitescroll({
-        	loading: loading_options,
-        	navSelector: "#pagination .pagination",
-        	nextSelector: "#pagination .pagination li.active + li a",
-        	itemSelector: "#article-item"
-        });*/
   (function(){
 
     var loading_options = {

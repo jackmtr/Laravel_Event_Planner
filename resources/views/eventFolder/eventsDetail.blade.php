@@ -194,7 +194,6 @@
   
     $(function() {
         $('.scroll').jscroll({
-
             autoTrigger: true,
             nextSelector: '.pagination li.active + li a', 
             contentSelector: 'div.scroll',
