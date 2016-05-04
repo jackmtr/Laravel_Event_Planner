@@ -175,15 +175,16 @@
 @endfor
 -->
 @for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
-  <div class="form-group">
+  <div class="form-group delete-phone-numbers">
     {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
     {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+  	<a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
   </div>  
 @endfor
 
 
 <!-- new phone inputs come here -->
-<div class="new-phone-numbers"></div>
+<div class="new-phone-numbers delete-phone-numbers"></div>
 
 <a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
@@ -218,6 +219,7 @@
     $(document).ready(function(){
 
         var index = 0;
+        var max_fields      = 10; //maximum input boxes allowed
         // This button will increment the value
         $('.qtyplus').click(function(e){
             // Stop acting like a button
@@ -258,11 +260,18 @@
         });
 
         $(".add_phone").click(function(e){
-
-            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'></div>");
-
+        	if(index < max_fields)
+          { 
+            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'><a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a></div>");
             index++;
+          }
+    
         });
+
+         $(".delete-phone-numbers", $(this)).on("click",".remove_field", function(e)
+                { //user click on remove text
+                    e.preventDefault(); $(this).parent('div').remove(); index--;
+                }) //end of remove field 
     });
     </script>
   </div>
