@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/events/{id}', 'EventController@show');
 	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
 	Route::post('/events/{id}/duplicate', 'EventController@duplication');
-	
+
 
 	//Route::get('/contacts', 'ContactController@index');//standard read all
 	//Route::get('/contacts/create', 'ContactController@create');//standard create page
@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::patch('/contacts/{id}/edit', 'ContactController@update');//standard post edit
 
 	Route::resource('contacts', 'ContactController');
-
+  Route::post('/guestlist/update', 'GuestListController@update');
 	Route::post('/guestlist/create','GuestListController@store');
 
 });
