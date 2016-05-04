@@ -90,7 +90,7 @@
         @if( $event['event_status']  == 0) <!--Open-->
           @foreach($guestList as $guest)
                 <tr>
-                  <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
+                  <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited', 'id' => $guest['guest_list_id'] ] ) !!}</td>
                   <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
                   <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
                   <td>
@@ -149,7 +149,7 @@
               @endif
         @endif
       </table>
-      
+
   @foreach($guestList as $guest)
   <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
     <div class="popup-mask">
