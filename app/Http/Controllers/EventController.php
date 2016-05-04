@@ -36,7 +36,7 @@ class EventController extends Controller
           if($event->event_status == 0){
             $count = count($guests); //invited
           } else {
-            $count = count($guests->where('checked_in_by', null)); //going or went
+            $count = count($guests) - count($guests->where('checked_in_by', null)); //going or went
           }      
           $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
@@ -95,7 +95,7 @@ class EventController extends Controller
       }
 
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
-      $checkedIn =count($guests) - count($guests->where('checked_in_by', 0)); //count of guestList already checked in to pass to view
+      $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       
       //dd($guests);
       //dd($checkedIn);

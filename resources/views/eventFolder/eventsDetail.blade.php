@@ -40,11 +40,13 @@
           </h3>-->
         </div>
         <div class="guestListCount">
+
           <div class="guestVariableA">
             @if( $event['event_status']  == 0)
               <h2>{{ $rsvpYes }}</h2>
               <h3>Going</h3>
             @else
+
               <h2>{{ $checkedIn }}</h2>
               @if( $event['event_status']  == 1)
                 <h3>Checked In</h3>
@@ -53,6 +55,7 @@
               @endif
             @endif
           </div>
+
           <div class="guestVariableB">
             @if( $event['event_status']  == 1)
               <h2>{{ $rsvpYes }}</h2>
@@ -62,6 +65,7 @@
               <h3>Invited</h3>
             @endif
           </div>
+
         </div>        
       </div>
     </div>
