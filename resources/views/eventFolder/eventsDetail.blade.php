@@ -168,7 +168,7 @@
 @for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
   <div class="form-group">
       {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
-      {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control']) !!}
+      {!! Form::text('phone_number[$i+1]', $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control']) !!}
   </div>
 @endfor
 
@@ -248,7 +248,7 @@
         });
 
         $(".add_phone").click(function(e){
-            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phone_number" + index +"' type='text' value='' id='phone_number" + index + "'></div>");
+            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phone_number[]" + index +"' type='text' value='' id='phone_number" + index + "'></div>");
             index++;
         });
     });
