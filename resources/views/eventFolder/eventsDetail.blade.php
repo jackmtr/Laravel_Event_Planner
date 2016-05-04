@@ -165,13 +165,17 @@
   <br/>
 @endforeach
 -->
-
 @for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
   <div class="form-group">
-      {!! Form::label('phone_number', 'Phone Number ' . ($i+1) . ':') !!}
-      {!! Form::text('phone_number', $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control']) !!}
+      {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
+      {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control']) !!}
   </div>
 @endfor
+
+<!-- new phone inputs come here -->
+<div class="new-phone-numbers"></div>
+
+<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
 <div class="form-group">
     {!! Form::label('wechat_id', 'Wechat Id: ') !!}
@@ -202,6 +206,8 @@
     @section('javascript')
     <script>
     $(document).ready(function(){
+
+        var index = 100;
         // This button will increment the value
         $('.qtyplus').click(function(e){
             // Stop acting like a button
@@ -236,64 +242,16 @@
                 $('input[name='+fieldName+']').val(0);
             }
         });
-                // This function shows and hides contact's details .
-        $i = 0;        
-        $(".showDetails1").click(function(e) {
-          if(($i++)%2 == 0 ){               
-            document.getElementById("showDetails").style.display = 'inline';                     
-          }else{
-            document.getElementById("showDetails").style.display = 'none';
-          }                
-        });
 
         $(".showDetails").click(function(e){
           $("#showDetails").slideToggle("fast");
         });
+
+        $(".add_phone").click(function(e){
+            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phone_number" + index +"' type='text' value='' id='phone_number" + index + "'></div>");
+            index++;
+        });
     });
     </script>
-    <script type="text/javascript">
-   $(document).ready(function() {
-
-    var max_fields      = 10; //maximum input boxes allowed
-    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
-    var data            = $("#newPhone");         //new phone input id
-    var newPhone        = data.val();
-    var action          = 'addPhone';
-    
-    var x = 1; //initlal text box count
-    $(add_button).click(function(e)
-    { //on add input button click
-        e.preventDefault();
-
-        $.post(action, { add_button: newPhone }, function (response) 
-        {
-            if (response) {
-
-                if(x < max_fields)
-                { 
-                    x++; //text box increment
-                    $(wrapper).append('<div><input type="text" name="phone[]" class="chat_in"/><a href="#" class="remove_field"> <i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>'); //add input box
-                } //max input box allowed     
-                $(wrapper).on("click",".remove_field", function(e)
-                { //user click on remove text
-                    e.preventDefault(); $(this).parent('div').remove(); x--;
-                }) //end of remove field 
-                
-            } else {
-                alert('Error');
-            }
-        
-    });//end of on click
-    
-}); 
-
-
-
-});//end of document ready function
-
-
-
-</script>
   </div>
 @endsection
