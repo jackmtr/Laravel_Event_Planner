@@ -28,13 +28,10 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::patch('/events/{id}/edit', 'EventController@update');//standard post edit
 
 	Route::resource('events', 'EventController');//DOES EVERYTHING ABOVE
-  Route::post('/events/togglestatus', 'EventController@toggleStatus');
+  	Route::post('/events/togglestatus', 'EventController@toggleStatus');
 	Route::post('/events/{id}', 'EventController@show');
 	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
 	Route::post('/events/{id}/duplicate', 'EventController@duplication');
-
-
-
 
 	//Route::get('/contacts', 'ContactController@index');//standard read all
 	//Route::get('/contacts/create', 'ContactController@create');//standard create page
@@ -42,11 +39,13 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::post('/contacts', 'ContactController@store');//standard post creation page
 	//Route::get('/contacts/{id}/edit', 'ContactController@edit');//standard show edit form
 	//Route::patch('/contacts/{id}/edit', 'ContactController@update');//standard post edit
-
 	Route::resource('contacts', 'ContactController');
-  Route::post('/guestlist/update', 'GuestListController@update');
+
+  	Route::post('/guestlist/update', 'GuestListController@update');
 	Route::post('/guestlist/create','GuestListController@store');
-  Route::post('/guestlist/checkin', 'GuestListController@checkin');
-  Route::post('/guestlist/addguests', 'GuestListController@addguests');
+ 	Route::post('/guestlist/checkin', 'GuestListController@checkin');
+  	Route::post('/guestlist/addguests', 'GuestListController@addguests');
+
+  	Route::get('/export/contacts', 'CSVController@exportContactList');
 
 });

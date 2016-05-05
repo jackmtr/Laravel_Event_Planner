@@ -4,7 +4,8 @@
 <div class="contacts container">
 	<div class="subnav">
 		<h2>Contacts</h2>
-		<a href="{{ url('/contacts/create') }}">[ + ] Add Contact</a>
+		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
+		<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
 	</div>
 
 	<div class="contact-nav-bar">
@@ -12,7 +13,7 @@
 			{!! Form::text("searchitem", "", ['placeholder'=>'First or Last Name']) !!}
 			{!! Form::submit("Search Contacts") !!}
 		{!! Form::close() !!}
-	
+
 		<table class="sg-table">
 			<tr>
 				<th>CheckBox</th>
@@ -41,7 +42,7 @@
 				<th class="responsive-remove">Added By</th>
 			</tr>
 			{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
-			
+
 			<div class="search-event">
 				<label for="events">Select an Event: </label>
 				<select id="events" name="events">
@@ -49,9 +50,9 @@
 						<option value="{{$event['event_id']}}">{{$event['event_name']}}</option>
 					@endforeach
 				</select>
-				<input type="submit" name="guest_list_submit" value="Invite" />	
+				<input type="submit" name="guest_list_submit" value="Invite" />
 			</div>
-				
+
 			@if (count($contacts) > 0)
 				@foreach($contacts as $contact)
 					<tr>
@@ -74,7 +75,7 @@
 					<p>No Contacts Exist</p>
 			@endif
 		</table>
-		<div class="pagination"> {{$contacts->links()}} </div>	
+		<div class="pagination"> {{$contacts->links()}} </div>
 		{{Form::close()}}
 	</div>
 </div>
