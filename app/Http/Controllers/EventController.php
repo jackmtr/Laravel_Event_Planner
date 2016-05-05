@@ -89,7 +89,6 @@ class EventController extends Controller
         $oneGuest['work'] = $occupation . " " . $company;
         $oneGuest['contact'] = $guest->contact()->first();
         $oneGuest['phone_number'] = $guest->contact()->first()->phoneNumber()->get();
-        //dd($oneGuest['phone_number']);
 
         $guestList[] = $oneGuest;
       }
@@ -97,8 +96,9 @@ class EventController extends Controller
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
+      $phoneindex = 0;
 
-      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
+      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex'));
     }
 
     public function edit($id)

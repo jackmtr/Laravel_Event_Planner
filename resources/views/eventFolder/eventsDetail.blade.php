@@ -153,14 +153,33 @@
                             {!! Form::text('company', null, ['class' => 'form-control']) !!}
                         </div>
                         <br/>
-
+                        
+                        <!--
                         @for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
                           <div class="form-group delete-phone-numbers">
                             {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
                             {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
-                          	<a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
+                            <a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
                           </div>  
                         @endfor
+                        -->
+                        
+                        @forelse($guest['contact']['phoneNumber'] as $i => $phonenumber)
+                          <div class="form-group delete-phone-numbers">
+                            {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
+                            {!! Form::text('phone_number' . ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+                              @if($i != 0)
+                                <a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
+                              @endif
+                          </div>  
+                          <!--{{$phoneindex++}}-->  
+                        @empty
+                          <div class="form-group">
+                              {!! Form::label('phone_number', 'Phone Number 1: ') !!}
+                              {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}            
+                          </div>                          
+                        @endforelse
+                        
 
                         <!-- new phone inputs come here -->
                         <div class="new-phone-numbers delete-phone-numbers"></div>
@@ -197,7 +216,7 @@
 
 
         var max_fields      = 10; //maximum input boxes allowed
-        var index = {{$i}} + 1;
+        var index = {{$phoneindex}};
         //var index = 0;
 
         // This button will increment the value
@@ -242,7 +261,7 @@
         $(".add_phone").click(function(e){
         	if(index < max_fields)
           { 
-            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'><a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a></div>");
+            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Additional Phone Number: </label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'><a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a></div>");
 
             index++;
           }
@@ -250,9 +269,9 @@
         });
 
          $(".delete-phone-numbers", $(this)).on("click",".remove_field", function(e)
-                { //user click on remove text
-                    e.preventDefault(); $(this).parent('div').remove(); index--;
-                }) //end of remove field 
+          { //user click on remove text
+              e.preventDefault(); $(this).parent('div').remove(); index--;
+          }) //end of remove field 
     });
     </script>
   </div>
