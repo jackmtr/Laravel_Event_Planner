@@ -240,7 +240,6 @@
         });
 
         $(".add_phone").click(function(e){
-				alert({{$i}});
         	if(index < max_fields)
           { 
             $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'><a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a></div>");

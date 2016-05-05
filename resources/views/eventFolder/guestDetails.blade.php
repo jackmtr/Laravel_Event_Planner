@@ -13,26 +13,25 @@
                 <h2>Company: {{$guest['company'] }}</h2>     
             </div>   
             {!! Form::open(['action' => ['GuestListController@addPhone', $guest->contact_id], 'novalidate' => 'novalidate', 'files' => true]) !!}    
-            <div class="form-group">
+                <div class="form-group">
 
-                <div class="input_fields_wrap"> 
-                <a href="#" class="add_field_button"> <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                @if(count($phones) == 0)
-                    <div>
-                        <input type="text" name="phone[]" class="chat_in">
+                    <div class="input_fields_wrap"> 
+                    <a href="#" class="add_field_button"> <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                    @if(count($phones) == 0)
+                        <div>
+                            <input type="text" name="phone[]" class="chat_in">
+                        </div>
+                    @endif 
+                    @foreach($phones as $phone)
+                        <div>
+                            <input type="text" name="phone[]" value="{{$phone->phone_number}}" class="chat_in">
+                        </div>
+                     @endforeach
                     </div>
-                @endif 
-                 @foreach($phones as $phone)
-                    <div>
-                        <input type="text" name="phone[]" value="{{$phone->phone_number}}" class="chat_in">
-                    </div>
-                 @endforeach
-                 
-
                 </div>
-            </div>
-              <input type="submit" name="update" value="Update">
-        {{Form::close()}}
+                <input type="submit" name="update" value="Update">
+            {{Form::close()}}
+
             <div class="form-group">
                 <h2>Email: {{$guest['email'] }}</h2>  
                
