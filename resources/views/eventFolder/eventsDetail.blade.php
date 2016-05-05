@@ -128,80 +128,58 @@
             
                       {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
 
+                        <div class="form-group">
+                            {!! Form::label('first_name', 'First Name: ') !!}
+                            {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            {!! Form::label('last_name', 'Last Name: ') !!}
+                            {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+                        </div>   
+                        <br/>
+                        <div class="form-group">
+                            {!! Form::label('email', 'Email: ') !!}                
+                            {!! Form::text('email', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            {!! Form::label('occupation', 'Occupation: ') !!}
+                            {!! Form::text('occupation', null, ['class' => 'form-control']) !!}
+                        </div>   
+                        <br/>
+                        <div class="form-group">
+                            {!! Form::label('company', 'Company: ') !!}
+                            {!! Form::text('company', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <br/>
 
+                        @for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
+                          <div class="form-group delete-phone-numbers">
+                            {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
+                            {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+                          	<a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
+                          </div>  
+                        @endfor
 
+                        <!-- new phone inputs come here -->
+                        <div class="new-phone-numbers delete-phone-numbers"></div>
 
-<div class="form-group">
-    {!! Form::label('first_name', 'First Name: ') !!}
-    {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
-</div>
-<br/>
-<div class="form-group">
-    {!! Form::label('last_name', 'Last Name: ') !!}
-    {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
-</div>   
-<br/>
-<div class="form-group">
-    {!! Form::label('email', 'Email: ') !!}                
-    {!! Form::text('email', null, ['class' => 'form-control']) !!}
-</div>
-<br/>
-<div class="form-group">
-    {!! Form::label('occupation', 'Occupation: ') !!}
-    {!! Form::text('occupation', null, ['class' => 'form-control']) !!}
-</div>   
-<br/>
-<div class="form-group">
-    {!! Form::label('company', 'Company: ') !!}
-    {!! Form::text('company', null, ['class' => 'form-control']) !!}
-</div>
-<br/>
+                        <a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
-<!--
-@foreach($guest['contact']['phoneNumber'] as $phone)
-  <div class="form-group">
-      {!! Form::label('phone_number', 'Phone Number: ') !!}
-      {!! Form::text('phone_number', $phone['phone_number'], ['class' => 'form-control']) !!}
-  </div>
-  <br/>
-@endforeach
--->
-
-<!--good one
-@for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
-  <div class="form-group">
-      {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
-      {!! Form::text('phone_number[$i+1]', $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control']) !!}
-  </div>
-@endfor
--->
-@for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
-  <div class="form-group delete-phone-numbers">
-    {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
-    {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
-  	<a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
-  </div>  
-@endfor
-
-
-<!-- new phone inputs come here -->
-<div class="new-phone-numbers delete-phone-numbers"></div>
-
-<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-
-<div class="form-group">
-    {!! Form::label('wechat_id', 'Wechat Id: ') !!}
-    {!! Form::text('wechat_id', null, ['class' => 'form-control']) !!}
-</div>          
-<br/>        
-<div class="form-group">
-    {!! Form::label('notes', 'Notes: ') !!}
-    {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
-</div>             
-<br/>           
-<div class="form-group">
-    {!! Form::submit("Edit contact", ['class' => 'btn btn-primary form-control']) !!}
-</div>   
+                        <div class="form-group">
+                            {!! Form::label('wechat_id', 'Wechat Id: ') !!}
+                            {!! Form::text('wechat_id', null, ['class' => 'form-control']) !!}
+                        </div>          
+                        <br/>        
+                        <div class="form-group">
+                            {!! Form::label('notes', 'Notes: ') !!}
+                            {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+                        </div>             
+                        <br/>           
+                        <div class="form-group">
+                            {!! Form::submit("Edit contact", ['class' => 'btn btn-primary form-control']) !!}
+                        </div>   
 
                       {!! Form::close() !!}        
                     </div>
