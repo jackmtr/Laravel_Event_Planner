@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Contact;
 use App\ContactImport;
+use Auth;
 use Excel;
 
 class CSVController extends Controller
@@ -26,23 +27,42 @@ class CSVController extends Controller
     })->export('csv');
   }
 
-  public function importContacts(Request $requst)
+  public function importContacts(Request $request)
   {
     if ($request->hasFile('csvContacts')) {
-        $destinationPath = ;
-        $fileName = ;
-        $request->file('csvContacts')->move($destinationPath, $fileName);
+      $fileName = 'contactsImport.' . $request->file('csvContacts')->getClientOriginalExtension();
+      $request->file('csvContacts')->move(
+        base_path() . '/public/imports/', $fileName
+      );
     } else {
-      dd("no file");
+      // no file
     }
-    Excel::filter('chunk')->load($destinationPath, $fileName)->chunk(250, function($results)
+    Excel::filter('chunk')->load(base_path() . '/public/imports/' . $fileName)->chunk(250, function($results)
     {
-      dd($results);
-      // foreach($results as $row)
-      // {
-      //
-      // }
+      $authId = Auth::user()->user_id;
+      foreach($results as $row)
+      {
+        $contact = Contact::firstOrNew([
+          'first_name'=>$row->first_name,
+          'last_name'=>$row->last_name,
+          'email'=>$row->email
+        ]);
+        if ($contact->exists) {
+          //contact already in db
+        } else {
+          $newContact = Contact::create([
+            'first_name'=>$row->first_name,
+            'last_name'=>$row->last_name,
+            'email'=>$row->email,
+            'occupation'=>$row->occupation,
+            'company'=>$row->company,
+            'wechat_id'=>$row->wechat_id,
+            'notes'=>$row->notes,
+            'added_by'=>$authId
+          ]);
+        }
+      }
     });
+    return redirect()->action('ContactController@index');
   }
-
 }
