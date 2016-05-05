@@ -153,7 +153,7 @@
                             {!! Form::text('company', null, ['class' => 'form-control']) !!}
                         </div>
                         <br/>
-
+                         
                         @for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
                           <div class="form-group delete-phone-numbers">
                             {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
