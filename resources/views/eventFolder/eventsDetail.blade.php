@@ -130,6 +130,7 @@
 
 
 
+
 <div class="form-group">
     {!! Form::label('first_name', 'First Name: ') !!}
     {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
@@ -202,8 +203,6 @@
     {!! Form::submit("Edit contact", ['class' => 'btn btn-primary form-control']) !!}
 </div>   
 
-
-
                       {!! Form::close() !!}        
                     </div>
                   </div>
@@ -218,8 +217,9 @@
     <script>
     $(document).ready(function(){
 
-        var index = 0;
+
         var max_fields      = 10; //maximum input boxes allowed
+        var index = {{$i}} + 1;
         // This button will increment the value
         $('.qtyplus').click(function(e){
             // Stop acting like a button
@@ -260,9 +260,11 @@
         });
 
         $(".add_phone").click(function(e){
+
         	if(index < max_fields)
           { 
             $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Phone Number " + index + ":</label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'><a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a></div>");
+
             index++;
           }
     
