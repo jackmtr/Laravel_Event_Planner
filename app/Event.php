@@ -31,10 +31,6 @@ class Event extends Model
 
   public $timestamps = false;//will not use timestamps, we might change this later
 
-  public function setEventStatusAttribute($value){
-    $this->attributes['event_status'] = 0;
-  }//used to force set event creation's event status to open mode
-
   //date needs a mutator so edit form model can be set
 
   //time needs a mutator so edit form model can be set
