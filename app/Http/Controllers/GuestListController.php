@@ -120,22 +120,12 @@ class GuestListController extends Controller
     }
     public function addguests(Request $request)
     {
-      $guestid = $request->theGuest;
-      $eventid = $request->theEvent;
-      $guests = $request->guests;
+      $guest = GuestList::findOrFail($request->theGuest);
+      $guest->additional_guests = $request->guests;
+      $guest->save();
+      return "Additional Guests Updated";
+      //$eventid = $request->theEvent;
       // clear guestlist, clear contacts, build new contacts, build new guestlist
-
-
-      // $message = "Check In Status Updated";
-      // if ($checkin == "Not Checked In") {
-      //   $guest->checked_in_by = null;
-      // } elseif ($checkin == "Checked In") {
-      //   $guest->checked_in_by = Auth::user()->user_id;
-      // } else {
-      //   $message = "Error";
-      // }
-      // $guest->save();
-      // return $message;
     }
 
     /**
