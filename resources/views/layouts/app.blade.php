@@ -66,7 +66,7 @@
             <div class="container">
                 <ul>
                     <li>
-                        <a href="{{ url('/events/') }}">EVENTS</a>
+                        <a href="{{ url('/events/') }}" class="active">EVENTS</a>
                     </li>
                     <li>
                         <a href="{{ url('/contacts') }}">CONTACTS</a>

@@ -91,20 +91,20 @@ class ContactController extends Controller
 
     public function update(ContactRequest $request, $id)
     {
-        dd($request);
+        //dd($request);
         
         $contact = Contact::findOrFail($id)->update($request->all());
-        $phones = $contact->phoneNumber()->get();
+        // $phones = $contact->phoneNumber()->get();
 
-        //$guest = Contact::find($contactid);
+        $guest = Contact::find($id);
         $allNumbers = $request->all();
-        $newNumbers = $allNumbers['phone'];
+        $newNumbers = $allNumbers['phonegroup'];
         //dd($newNumbers);
 
 
-        //$affectedRows = $contact->phoneNumber()->get();
+        $affectedRows = $guest->phoneNumber()->get();
 
-        foreach($phones as $row)
+        foreach($affectedRows as $row)
         {
 
             $row->delete();
@@ -114,9 +114,12 @@ class ContactController extends Controller
         {
             if($number != "")
             {
-                PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$contactid));
+                PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$id));
             }
+             //dd($number);
         }
+
+
 
         return redirect('contacts');
     }
