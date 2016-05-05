@@ -41,7 +41,6 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::patch('/contacts/{id}/edit', 'ContactController@update');//standard post edit
 	Route::resource('contacts', 'ContactController');
 
-
   	Route::post('/guestlist/update', 'GuestListController@update');
 	Route::post('/guestlist/create','GuestListController@store');
  	Route::post('/guestlist/checkin', 'GuestListController@checkin');
@@ -50,4 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('guestlist/{id}/details','GuestListController@addPhone');
 
   	Route::get('/export/contacts', 'CSVController@exportContactList');
+
+    Route::post('/import/contacts', 'CSVController@importContacts');
 });

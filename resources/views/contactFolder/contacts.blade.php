@@ -5,6 +5,10 @@
 	<div class="subnav">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
+		{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'novalidate' => 'novalidate', 'files' => true]) !!}
+			{!! Form::file('csvContacts') !!}
+			{!! Form::submit("Import Contacts") !!}
+		{!! Form::close() !!}
 		<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
 	</div>
 
