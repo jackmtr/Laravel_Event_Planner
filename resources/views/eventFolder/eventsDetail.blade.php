@@ -8,7 +8,7 @@
         <h2>
           {{ $event['event_name'] }}
           <span><a href="#" class="showDetails">show details</a></span>
-        </h2>  
+        </h2>
       </div>
 
       <div id="showDetails" class="middleside popup-form" hidden>
@@ -21,15 +21,15 @@
         {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
         {!! Form::close() !!}
 
-        @include('errors._list')   
-      </div>      
+        @include('errors._list')
+      </div>
 
       <div class="rightside">
         <div class="eventStatus">
           {!! Form::label('event_status', 'Event Status:' )!!}
           {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
-        
-          <!--<h3>Event Status: 
+
+          <!--<h3>Event Status:
             @if( $event['event_status'] == 0)
               <span class="statusOpenBtn">Open</span>
             @elseif( $event['event_status'] == 1)
@@ -66,7 +66,7 @@
             @endif
           </div>
 
-        </div>        
+        </div>
       </div>
     </div>
 
@@ -75,7 +75,7 @@
         <input type="text" name="s" class="contact-searchbar search rounded" placeholder="[ ? ]Look up names or contact info" />
       </div>
       <div id="invitePrevious">
-        {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}  
+        {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}
           <label for="events">Invite Guests from a Previous Event: </label>
           <select id="events" name="events" />
             @foreach($events as $pastEvent)
@@ -84,7 +84,7 @@
           </select>
           <input type="submit" name="guest_list_submit" value="Invite">
         {{Form::close()}}
-      </div>  
+      </div>
     </div>
 
     <div class="guestList">
@@ -98,7 +98,7 @@
           <th class="responsive-remove">Notes</th>
         </tr>
         @if( $event['event_status']  == 0) <!--Open-->
-          @foreach($guestList as $guest)            
+          @foreach($guestList as $guest)
                 <tr>
                   <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going'], $guest['rsvp'], ['class' => 'invited'] ) !!}</td>
                   <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
@@ -113,13 +113,13 @@
                   <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
                   <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
                 </tr>
-              
-          <!--{{$index++}}-->        
+
+          <!--{{$index++}}-->
           @endforeach
-        @else           
+        @else
             @if( $event['event_status']  == 1)<!--CheckedIn-->
                 @foreach($guestList as $guest)
-                  @if($guest['rsvp'] == 1)                  
+                  @if($guest['rsvp'] == 1)
                     <tr>
                       <td>{!! Form::select('rsvp', [0 => 'Check In', 1 => 'Checked In'], $guest['rsvp'], ['class' => 'checkin'] ) !!}</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
@@ -133,9 +133,9 @@
                       </td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-                    </tr>                  
+                    </tr>
                   @endif
-                <!--{{$index++}}-->        
+                <!--{{$index++}}-->
                 @endforeach
               @else <!--$event['event_status']  == 2 -->
                 @foreach($guestList as $guest)
@@ -150,16 +150,16 @@
                         @endif
                     @endif
                     <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
-                    <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>                   
+                    <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
                     <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
                     <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
                   </tr>
-                <!--{{$index++}}-->        
+                <!--{{$index++}}-->
                 @endforeach
               @endif
         @endif
       </table>
-
+  </div>
     @foreach($guestList as $guest)
             <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
               <div class="popup-mask">
@@ -172,10 +172,10 @@
                     <div class="edit-events container">
 
                       <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
-            
+
                       {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
                         @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
-                      {!! Form::close() !!}        
+                      {!! Form::close() !!}
                     </div>
 
                   </div>
@@ -224,13 +224,13 @@
             }
         });
                 // This function shows and hides contact's details .
-        $i = 0;        
+        $i = 0;
         $(".showDetails1").click(function(e) {
-          if(($i++)%2 == 0 ){               
-            document.getElementById("showDetails").style.display = 'inline';                     
+          if(($i++)%2 == 0 ){
+            document.getElementById("showDetails").style.display = 'inline';
           }else{
             document.getElementById("showDetails").style.display = 'none';
-          }                
+          }
         });
 
         $(".showDetails").click(function(e){
@@ -238,5 +238,4 @@
         });
     });
     </script>
-  </div>
 @endsection

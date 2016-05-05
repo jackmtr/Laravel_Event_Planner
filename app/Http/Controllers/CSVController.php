@@ -26,9 +26,16 @@ class CSVController extends Controller
     })->export('csv');
   }
 
-  public function importContacts()
+  public function importContacts(Request $requst)
   {
-    Excel::filter('chunk')->load(Input::file('csvContacts'))->chunk(250, function($results)
+    if ($request->hasFile('csvContacts')) {
+        $destinationPath = ;
+        $fileName = ;
+        $request->file('csvContacts')->move($destinationPath, $fileName);
+    } else {
+      dd("no file");
+    }
+    Excel::filter('chunk')->load($destinationPath, $fileName)->chunk(250, function($results)
     {
       dd($results);
       // foreach($results as $row)
