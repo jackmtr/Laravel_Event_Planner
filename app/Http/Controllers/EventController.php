@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\GuestList;
+use App\Contact;
 use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
@@ -88,8 +89,7 @@ class EventController extends Controller
         $company = $guest->contact()->withTrashed()->first()->company;
         $oneGuest['work'] = $occupation . " " . $company;
         $oneGuest['contact'] = $guest->contact()->first();
-
-        //dd($oneGuest['contact']);
+        $oneGuest['phone_number'] = $guest->contact()->first()->phoneNumber()->get();
 
         $guestList[] = $oneGuest;
       }
@@ -101,8 +101,9 @@ class EventController extends Controller
       //dd($checkedIn);
 
       $index = 0;
+      $phoneindex = 0;
 
-      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
+      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex'));
     }
 
     public function edit($id)

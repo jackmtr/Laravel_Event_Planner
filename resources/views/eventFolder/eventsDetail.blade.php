@@ -146,124 +146,203 @@
     @endif
   </table>
 </div>
+
 @foreach($guestList as $guest)
-<div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
-  <div class="popup-mask">
-    <div class="panel">
-      <div class="panel-inner">
-        <div class="popup-cancel">
-          <a href="#" ng-click="popup{{$guest['guest_list_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
-        </div>
+  <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
+    <div class="popup-mask">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="popup-cancel">
+            <a href="#" ng-click="popup{{$guest['guest_list_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+          </div>
 
-        <div class="edit-events container">
+          <div class="edit-events container">
 
-          <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
+            <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
+  
+            {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
 
-          {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
-          @include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact'])
-          {!! Form::close() !!}
+              {!! Form::hidden('event_id', $event->event_id) !!}
+
+              <div class="form-group">
+                  {!! Form::label('first_name', 'First Name: ') !!}
+                  {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+              </div>
+              <br/>
+              <div class="form-group">
+                  {!! Form::label('last_name', 'Last Name: ') !!}
+                  {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+              </div>   
+              <br/>
+              <div class="form-group">
+                  {!! Form::label('email', 'Email: ') !!}                
+                  {!! Form::text('email', null, ['class' => 'form-control']) !!}
+              </div>
+              <br/>
+              <div class="form-group">
+                  {!! Form::label('occupation', 'Occupation: ') !!}
+                  {!! Form::text('occupation', null, ['class' => 'form-control']) !!}
+              </div>   
+              <br/>
+              <div class="form-group">
+                  {!! Form::label('company', 'Company: ') !!}
+                  {!! Form::text('company', null, ['class' => 'form-control']) !!}
+              </div>
+              <br/>
+              
+              @forelse($guest['contact']['phoneNumber'] as $i => $phonenumber)
+                <div class="form-group delete-phone-numbers">
+                  {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
+                  {!! Form::text('phone_number' . ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+                    @if($i != 0)
+                      <a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
+                    @endif
+                </div>  
+                <!--{{$phoneindex++}}-->  
+              @empty
+                <div class="form-group">
+                    {!! Form::label('phone_number', 'Phone Number 1: ') !!}
+                    {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}            
+                </div>                          
+              @endforelse
+              
+
+              <!-- new phone inputs come here -->
+              <div class="new-phone-numbers delete-phone-numbers"></div>
+
+              <a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+
+              <div class="form-group">
+                  {!! Form::label('wechat_id', 'Wechat Id: ') !!}
+                  {!! Form::text('wechat_id', null, ['class' => 'form-control']) !!}
+              </div>          
+              <br/>        
+              <div class="form-group">
+                  {!! Form::label('notes', 'Notes: ') !!}
+                  {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+              </div>             
+              <br/>           
+              <div class="form-group">
+                  {!! Form::submit("Edit contact", ['class' => 'btn btn-primary form-control']) !!}
+              </div>   
+
+            {!! Form::close() !!}        
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-@endforeach
-</div>
-@endsection
+  @endforeach
+  </div>
+  @endsection
 
-@section('javascript')
-<script>
-$.ajaxSetup({
-  headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-});
-</script>
+  @section('javascript')
 
-<script>
-$(document).ready(function(){
-  // This button will increment the value
-  $('.qtyplus').click(function(e){
-    // Stop acting like a button
-    e.preventDefault();
-    // Get the field name
-    fieldName = $(this).attr('field');
-    // Get its current value
-    var currentVal = parseInt($('input[name='+fieldName+']').val());
-    // If is not undefined
-    if (!isNaN(currentVal)) {
-      // Increment
-      $('input[name='+fieldName+']').val(currentVal + 1);
-    } else {
-      // Otherwise put a 0 there
-      $('input[name='+fieldName+']').val(0);
-    }
+  <script>
+  $.ajaxSetup({
+    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
   });
-  // This button will decrement the value till 0
-  $(".qtyminus").click(function(e) {
-    // Stop acting like a button
-    e.preventDefault();
-    // Get the field name
-    fieldName = $(this).attr('field');
-    // Get its current value
-    var currentVal = parseInt($('input[name='+fieldName+']').val());
-    // If it isn't undefined or its greater than 0
-    if (!isNaN(currentVal) && currentVal > 0) {
-      // Decrement one
-      $('input[name='+fieldName+']').val(currentVal - 1);
-    } else {
-      // Otherwise put a 0 there
-      $('input[name='+fieldName+']').val(0);
-    }
-  });
-  // This function shows and hides contact's details .
-  $i = 0;
-  $(".showDetails1").click(function(e) {
-    if(($i++)%2 == 0 ){
-      document.getElementById("showDetails").style.display = 'inline';
-    }else{
-      document.getElementById("showDetails").style.display = 'none';
-    }
-  });
+  </script>
 
-  $(".showDetails").click(function(e){
-    $("#showDetails").slideToggle("fast");
-  });
+  <script>
 
-  // This function changes the rsvp status
-  $(".ajaxSelect").change(function () {
-    var data = $(this).children(":selected").html();
-    if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
-      var action = '/guestlist/update';
-      var request = { theGuest : this.id , theRsvp : data };
-    } else if(data == "Not Checked In" || data == "Checked In"){
-      var action = '/guestlist/checkin';
-      var request = { theGuest : this.id, theCheckin : data };
-    } else {
-      var action = '/events/togglestatus';
-      var request = { theEvent : {{$event['event_id']}} , theStatus : data };
-    }
-    $.post(action, request, function (response) {
-      if (response) {
-        $('#ajax').html(response); // flash Success message
-        location.reload();
-      } else {
-        $('#ajax').html(response);
-      }
+  $(document).ready(function(){
+
+        var max_fields = 10; //maximum input boxes allowed
+        var index = {{$phoneindex}};
+
+        // This button will increment the value
+        $('.qtyplus').click(function(e){
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            fieldName = $(this).attr('field');
+            // Get its current value
+            var currentVal = parseInt($('input[name='+fieldName+']').val());
+            // If is not undefined
+            if (!isNaN(currentVal)) {
+                // Increment
+                $('input[name='+fieldName+']').val(currentVal + 1);
+            } else {
+                // Otherwise put a 0 there
+                $('input[name='+fieldName+']').val(0);
+            }
+        });
+
+            // This button will decrement the value till 0
+        $(".qtyminus").click(function(e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            fieldName = $(this).attr('field');
+            // Get its current value
+            var currentVal = parseInt($('input[name='+fieldName+']').val());
+            // If it isn't undefined or its greater than 0
+            if (!isNaN(currentVal) && currentVal > 0) {
+                // Decrement one
+                $('input[name='+fieldName+']').val(currentVal - 1);
+            } else {
+                // Otherwise put a 0 there
+                $('input[name='+fieldName+']').val(0);
+            }
+        });
+
+        $(".qtybtn").click(function(){
+          var data = $(this).siblings(".qty").val();
+          var action = '/guestlist/addguests';
+          var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
+          $.post(action, request, function (response) {
+            if (response) {
+              $('#ajax').html(response); // flash Success message
+              location.reload();
+            } else {
+              $('#ajax').html(response);
+            }
+          });
+        });        
+
+        $(".showDetails").click(function(e){
+          $("#showDetails").slideToggle("fast");
+        });
+    
+            // This function changes the rsvp status
+        $(".ajaxSelect").change(function () {
+          var data = $(this).children(":selected").html();
+          if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
+            var action = '/guestlist/update';
+            var request = { theGuest : this.id , theRsvp : data };
+          } else if(data == "Not Checked In" || data == "Checked In"){
+            var action = '/guestlist/checkin';
+            var request = { theGuest : this.id, theCheckin : data };
+          } else {
+            var action = '/events/togglestatus';
+            var request = { theEvent : {{$event['event_id']}} , theStatus : data };
+          }
+          $.post(action, request, function (response) {
+            if (response) {
+              $('#ajax').html(response); // flash Success message
+              location.reload();
+            } else {
+              $('#ajax').html(response);
+            }
+          });
+        });
+
+
+        $(".add_phone").click(function(e){
+          if(index < max_fields)
+          { 
+            $(".new-phone-numbers").append("<div class='form-group'><label for='phone_number" + index +"'>Additional Phone Number: </label><input class='form-control' name='phonegroup[]" + index +"' type='text' value='' id='phone_number" + index + "'><a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a></div>");
+            index++;
+          }
+    
+        });
+
+         $(".delete-phone-numbers", $(this)).on("click",".remove_field", function(e)
+          { //user click on remove text
+              e.preventDefault(); $(this).parent('div').remove(); index--;
+          }); //end of remove field 
+
     });
-  });
-
-  $(".qtybtn").click(function(){
-    var data = $(this).siblings(".qty").val();
-    var action = '/guestlist/addguests';
-    var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
-    $.post(action, request, function (response) {
-      if (response) {
-        $('#ajax').html(response); // flash Success message
-        location.reload();
-      } else {
-        $('#ajax').html(response);
-      }
-    });
-  });
-});
-</script>
+    </script>
 @endsection
