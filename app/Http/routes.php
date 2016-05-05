@@ -47,5 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
   	Route::post('/guestlist/addguests', 'GuestListController@addguests');
 
   	Route::get('/export/contacts', 'CSVController@exportContactList');
+    Route::post('/import/contacts', 'CSVController@importContacts');
 
 });

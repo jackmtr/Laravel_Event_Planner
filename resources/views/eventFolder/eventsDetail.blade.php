@@ -45,7 +45,6 @@
           @endif
           @endif
         </div>
-
         <div class="guestVariableB">
           @if( $event['event_status']  == 1)
           <h2>{{ $rsvpYes }}</h2>
@@ -58,7 +57,6 @@
       </div>
     </div>
   </div>
-
   <div class="subnav">
     <div>
       <input type="text" name="s" class="contact-searchbar search rounded" placeholder="Look up names or contact info" /><button><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -101,7 +99,6 @@
       <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
       <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
     </tr>
-
     <!--{{$index++}}-->
     @endforeach
     @else
