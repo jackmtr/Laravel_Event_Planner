@@ -91,15 +91,13 @@ class ContactController extends Controller
 
     public function update(ContactRequest $request, $id)
     {
-        //dd($request);
+        $eventId = $request->event_id;
         
         $contact = Contact::findOrFail($id)->update($request->all());
-        // $phones = $contact->phoneNumber()->get();
 
         $guest = Contact::find($id);
         $allNumbers = $request->all();
         $newNumbers = $allNumbers['phonegroup'];
-        //dd($newNumbers);
 
 
         $affectedRows = $guest->phoneNumber()->get();
@@ -116,12 +114,9 @@ class ContactController extends Controller
             {
                 PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$id));
             }
-             //dd($number);
         }
-
-
-
-        return redirect('contacts');
+        
+        return redirect()->action('EventController@show', $eventId);
     }
 
     public function destroy($id){
