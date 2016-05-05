@@ -47,7 +47,6 @@ class GuestListController extends Controller
         $guestlist = $request->toArray();
 
         foreach ($guestlist["invitelist"] as $invitee){
-
             GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
         }
 
@@ -83,9 +82,50 @@ class GuestListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $guest = GuestList::findOrFail($request->theGuest);
+      $rsvp = $request->theRsvp;
+      $message = "RSVP Updated";
+      if ($rsvp == "Invited") {
+        $guest->rsvp = 0;
+      } elseif ($rsvp == "Going") {
+        $guest->rsvp = 1;
+      } elseif ($rsvp == "Not Going") {
+        $guest->rsvp = 2;
+      } elseif ($rsvp == "Remove Guest") {
+        $this->destroy($guest->guest_list_id);
+        $message = "Guest Removed";
+      } else {
+        $message = "Error";
+      }
+      $guest->save();
+      return $message;
+    }
+
+    public function checkin(Request $request)
+    {
+      $guest = GuestList::findOrFail($request->theGuest);
+      $checkin = $request->theCheckin;
+      $message = "Check In Status Updated";
+      if ($checkin == "Not Checked In") {
+        $guest->checked_in_by = null;
+      } elseif ($checkin == "Checked In") {
+        $guest->checked_in_by = Auth::user()->user_id;
+      } else {
+        $message = "Error";
+      }
+      $guest->save();
+      return $message;
+    }
+    public function addguests(Request $request)
+    {
+      $guest = GuestList::findOrFail($request->theGuest);
+      $guest->additional_guests = $request->guests;
+      $guest->save();
+      return "Additional Guests Updated";
+      //$eventid = $request->theEvent;
+      // clear guestlist, clear contacts, build new contacts, build new guestlist
     }
 
     /**

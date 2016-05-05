@@ -37,7 +37,7 @@ class EventController extends Controller
             $count = count($guests); //invited
           } else {
             $count = count($guests) - count($guests->where('checked_in_by', null)); //going or went
-          }      
+          }
           $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
         }
@@ -59,7 +59,7 @@ class EventController extends Controller
     public function show($id)
     {
       $events = Event::all();
-      $event = Event::findOrFail($id); //get event details to pass to view   
+      $event = Event::findOrFail($id); //get event details to pass to view
       //used to invite previous guests from another event to this event.
       if(Request::input('events')){
         $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
@@ -69,7 +69,7 @@ class EventController extends Controller
             GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $event->event_id]);
           }
         }
-      }      
+      }
       $guests = $event->guestList()->get();
       $guestList = array(); //guestList contact details to pass to view
 
@@ -96,7 +96,7 @@ class EventController extends Controller
 
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
-      
+
       //dd($guests);
       //dd($checkedIn);
 
@@ -160,5 +160,22 @@ class EventController extends Controller
       }
 
      return redirect()->action('EventController@show', $eventId);
+    }
+
+    public function toggleStatus(Request $request){
+      $event = Event::findOrFail(Request::input('theEvent'));
+      $status = Request::input('theStatus');
+      $message = "Status Changed";
+      if ($status == "OPEN") {
+        $event->event_status = 0;
+      } elseif ($status == "CHECK-IN") {
+        $event->event_status = 1;
+      } elseif ($status == "COMPLETED") {
+        $event->event_status = 2;
+      } else {
+        $message = "Error";
+      }
+      $event->save();
+      return $message;
     }
 }
