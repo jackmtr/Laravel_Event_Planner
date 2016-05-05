@@ -26,8 +26,12 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::post('/events', 'EventController@store');//standard post creation page
 	//Route::get('/events/{id}/edit', 'EventController@edit');//standard show edit form
 	//Route::patch('/events/{id}/edit', 'EventController@update');//standard post edit
-
+	Route::get('/guestlist/{id}/search', 'GuestlistController@show');
 	Route::resource('events', 'EventController');//DOES EVERYTHING ABOVE
+	Route::post('/events/{id}', 'EventController@show');
+	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
+	Route::post('/events/{id}/duplicate', 'EventController@duplication');
+	
 
 	//Route::get('/contacts', 'ContactController@index');//standard read all
 	//Route::get('/contacts/create', 'ContactController@create');//standard create page
@@ -39,11 +43,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('contacts', 'ContactController');
 
 	Route::post('/guestlist/create','GuestListController@store');
+	Route::get('/guestlist/{id}/search', 'GuestListController@show');
 	//Route::resource('queries', 'ContactController');
 	//Route::get('/contacts/search','ContactController@search');
 
 	Route::group(['middleware' => 'cors'], function () {
 		Route::get('search', 'ContactController@search');
+		Route::post('search_post', 'ContactController@search_post');
 	});
 
 	//practice ajax route for get request

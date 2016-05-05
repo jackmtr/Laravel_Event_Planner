@@ -18,7 +18,7 @@ class CreateGuestListTable extends Migration
 
       $table->increments('guest_list_id');
       $table->integer('additional_guests');
-      $table->boolean('rsvp');
+      $table->integer('rsvp');
       $table->integer('checked_in_by')->nullable()->unsigned();
       $table->integer('contact_id')->unsigned();
       $table->integer('event_id')->unsigned();

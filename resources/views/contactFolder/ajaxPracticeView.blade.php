@@ -60,29 +60,30 @@
         </tr>
         {{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
 
+        <tbody id="tbody">
         @if (count($contacts) > 0)
 
             @foreach($contacts as $contact)
-                <tr>
+                <tr class="row">
                     <td class='cellcheckbox'>
                         {!! Form::label("invitelist[]", " ", array('class' => 'label-checkbox')) !!}
                         {{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
                         <span></span>
                     </td>
-                    <td>{{$contact['first_name']}}</td>
-                    <td>{{$contact['last_name']}}</td>
-                    <td>{{$contact['email']}}</td>
-                    <td>{{$contact['display_phoneNumber']}}</td>
-                    <td>{{$contact['occupation']}}</td>
-                    <td>{{$contact['company']}}</td>
-                    <td>{{$contact['notes']}}</td>
-                    <td>{{$contact['added_by']}}</td>
+                    <td id="firstname">{{$contact['first_name']}}</td>
+                    <td id="lastname">{{$contact['last_name']}}</td>
+                    <td id="email">{{$contact['email']}}</td>
+                    <td id="phone">{{$contact['display_phoneNumber']}}</td>
+                    <td id="occupation">{{$contact['occupation']}}</td>
+                    <td id="company">{{$contact['company']}}</td>
+                    <td id="notes">{{$contact['notes']}}</td>
+                    <td id="added_by">{{$contact['added_by']}}</td>
                 </tr>
             @endforeach
         @else
             <p>No Contacts Exist</p>
         @endif
-
+        </tbody>
     </table>
 
 

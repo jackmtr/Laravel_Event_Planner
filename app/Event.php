@@ -43,6 +43,6 @@ class Event extends Model
   * @return \Illuminate\Database\Eloquent\Relations\HasMany
   */
   public function guestList(){
-    return $this->hasMany('App\guestList');
-  }    
+    return $this->hasMany('App\GuestList');
+  }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Contact;
 use Illuminate\Http\Request;
 use App\GuestList;
 use Auth;
+use App\Event;
 
 class GuestListController extends Controller
 {
@@ -22,6 +24,7 @@ class GuestListController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -60,9 +63,48 @@ class GuestListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( Request $request, $id)
     {
         //
+
+      //  $event  = Event::findOrFail($id);
+        $search = $request->input('search');
+        /**
+         * Query for a search name in Contacts table.
+         * Check if found names are also inside the GuestList
+         *
+         */
+
+        $contact = Contact::
+        where('first_name', 'LIKE', '%'.$search.'%')
+            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+            ->take(5)->get();
+        if($contact->count() > 0){
+            foreach($contact as $contact_person)
+            {
+                $contact_query_id [] = $contact_person['contact_id'];
+                //dd($contact_query_id);
+            }
+
+            $guest_list = GuestList::where('contact_id',$contact_query_id)->where('event_id',$id)->take(3)->get();
+            if($guest_list->count() > 0){
+                foreach($guest_list as $guest){
+                   $guestList = $guest->contact()->get();
+                    return view();
+                }
+            }else{
+                return($contact);
+            }
+
+            // $guest_list_contact = $contact->guestList()->get();
+            // $roles = App\User::find(1)->roles()->orderBy('name')->get();
+            // $name = $contact['first_name'];
+
+
+        }else{
+            return("No contact found");
+        }
+
     }
 
     /**
@@ -74,6 +116,7 @@ class GuestListController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -86,6 +129,8 @@ class GuestListController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
     }
 
     /**
@@ -102,7 +147,7 @@ class GuestListController extends Controller
         if($eventStatus == 0){
             $guestList->forceDelete();
         }else{
-            alert("sorry, you can't delete a guest from a checkedin/completed event!");
+            echo("sorry, you can't delete a guest from a checkedin/completed event!");
         }
     }
 }
