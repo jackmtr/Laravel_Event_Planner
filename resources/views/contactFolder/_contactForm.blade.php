@@ -24,19 +24,10 @@
 </div>
 <br/>
 
-@for ($i = 0; $i < count($guest['contact']['phoneNumber']); $i++)
-  <div class="form-group">
-    {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
-    {!! Form::text('phone_number' . ($i+1), $guest['contact']['phoneNumber'][$i]['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
-  </div>  
-@endfor
-
 <div class="form-group">
     {!! Form::label('phone_number', 'Phone Number: ') !!}
-    {!! Form::text('phone_number', 'fdsfs', ['class' => 'form-control']) !!}
+    {!! Form::text('phone_number', null, ['class' => 'form-control']) !!}            
 </div>
-
-
 
 <br/>
 <div class="form-group">
