@@ -30,7 +30,7 @@
     <div class="rightside">
       <div class="eventStatus">
         {!! Form::label('event_status', 'Event Status:' )!!}
-        {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode'] ) !!}
+        {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode ajaxSelect'] ) !!}
       </div>
         <div class="guestListCount">
           <div class="guestVariableA">
@@ -68,7 +68,7 @@
     <div id="invitePrevious">
       {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}
       <label for="events">Invite Guests from a Previous Event: </label>
-      <select id="events" name="events" />
+      <select id="inviteEventSelect" name="events" />
       @foreach($events as $pastEvent)
       <option value="{{$pastEvent['event_id']}}">{{$pastEvent['event_name']}}</option>
       @endforeach
@@ -90,7 +90,7 @@
         @if( $event['event_status']  == 0) <!--Open-->
           @foreach($guestList as $guest)
                 <tr>
-                  <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited', 'id' => $guest['guest_list_id'] ] ) !!}</td>
+                  <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}</td>
                   <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
                   <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
                   <td>
@@ -112,7 +112,7 @@
                   @if($guest['rsvp'] == 1)
                     @if($guest['checked_in_by'] == null){{--*/ $checkStatus = 0 /*--}}@else{{--*/ $checkStatus = 1 /*--}}@endif
                     <tr>
-                      <td>{!! Form::select('rsvp', [0 => 'Not Checked In', 1 => 'Checked In'], $checkStatus, ['class' => 'checkin', 'id' => $guest['guest_list_id'] ] ) !!}</td>
+                      <td>{!! Form::select('rsvp', [0 => 'Not Checked In', 1 => 'Checked In'], $checkStatus, ['class' => 'checkin ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
                       <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
                       <td>
@@ -234,26 +234,26 @@ $(document).ready(function(){
   });
 
   // This function changes the rsvp status
-  $("select").change(function () {
-    var data = $(this).children(":selected").html();
-    if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
-      var action = '/guestlist/update';
-      var request = { theGuest : this.id , theRsvp : data };
-    } else if(data == "Not Checked In" || data == "Checked In"){
-      var action = '/guestlist/checkin';
-      var request = { theGuest : this.id, theCheckin : data };
-    } else {
-      var action = '/events/togglestatus';
-      var request = { theEvent : {{$event['event_id']}} , theStatus : data };
-    }
-    $.post(action, request, function (response) {
-      if (response) {
-        $('#ajax').html(response); // flash Success message
-        location.reload();
+  $(".ajaxSelect").change(function () {
+      var data = $(this).children(":selected").html();
+      if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
+        var action = '/guestlist/update';
+        var request = { theGuest : this.id , theRsvp : data };
+      } else if(data == "Not Checked In" || data == "Checked In"){
+        var action = '/guestlist/checkin';
+        var request = { theGuest : this.id, theCheckin : data };
       } else {
-        $('#ajax').html(response);
+        var action = '/events/togglestatus';
+        var request = { theEvent : {{$event['event_id']}} , theStatus : data };
       }
-    });
+      $.post(action, request, function (response) {
+        if (response) {
+          $('#ajax').html(response); // flash Success message
+          location.reload();
+        } else {
+          $('#ajax').html(response);
+        }
+      });
   });
 
   $(".qtybtn").click(function(){
