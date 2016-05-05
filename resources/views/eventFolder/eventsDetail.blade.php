@@ -198,6 +198,7 @@
 
         var max_fields      = 10; //maximum input boxes allowed
         var index = {{$i}} + 1;
+        //var index = 0;
 
         // This button will increment the value
         $('.qtyplus').click(function(e){
