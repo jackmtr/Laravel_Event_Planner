@@ -121,7 +121,7 @@ class EventController extends Controller
         return redirect('events');
     }
 
-    public function duplicate1($id){
+    public function duplicate($id){
 
       $event = Event::find($id);
       $list = $event->guestList()->get();
@@ -149,35 +149,6 @@ class EventController extends Controller
       }
 
       return redirect()->action('EventController@show', $newEventId);
-    }
-
-    public function duplicate($id){
-      $event = Event::find($id);
-      $list = $event->guestList()->get();
-
-      $guestList = array();
-      foreach($list as $li)
-      {
-          if($li->contact['contact_id'] > 0){
-            $guestList[] = $li->contact->toArray();
-          }
-      }
-      return view('eventFolder.duplicateEvent', compact('event', 'guestList'));
-    }
-
-    public function duplication(EventRequest $request){
-
-      $request["event_status"] = 0; //better way to do this?
-
-      $event = Event::create($request->all());//still need way to let forms default to today date and time
-      $eventId = $event->event_id;
-
-      foreach($request->toArray()['invitelist'] as $invitee)
-      {
-        GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId]);
-      }
-
-     return redirect()->action('EventController@show', $eventId);
     }
 
     public function invitePreviousGuests($id){
