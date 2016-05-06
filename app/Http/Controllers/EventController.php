@@ -62,15 +62,7 @@ class EventController extends Controller
       $events = Event::all();
       $event = Event::findOrFail($id); //get event details to pass to view
       //used to invite previous guests from another event to this event.
-      if(Request::input('events')){
-        $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
 
-        foreach ($previousGuestList as $previousGuest) {
-          if($previousGuest->contact['contact_id'] > 0){
-            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $event->event_id]);
-          }
-        }
-      }
       $guests = $event->guestList()->get();
       $guestList = array(); //guestList contact details to pass to view
 
@@ -102,7 +94,7 @@ class EventController extends Controller
 
       $index = 0;
       $phoneindex = 0;
-
+      header("Location:your_page.php");
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex'));
     }
 
@@ -161,6 +153,19 @@ class EventController extends Controller
       }
 
      return redirect()->action('EventController@show', $eventId);
+    }
+
+    public function invitePreviousGuests($id){
+      if(Request::input('events')){
+        $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
+
+        foreach ($previousGuestList as $previousGuest) {
+          if($previousGuest->contact['contact_id'] > 0){
+            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $id]);
+          }
+        }
+      }
+      return redirect()->action('EventController@show', $id);
     }
 
     public function toggleStatus(Request $request){
