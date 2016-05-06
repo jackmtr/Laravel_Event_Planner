@@ -17,9 +17,7 @@
     <nav class="navbar">
         <div class="container navbar-main">
             <div class="navbar-logo navbar-top-left">
-                    <a href="{{ url('/') }}">
-                        Istuary Event Manage<span>ment & CRM</span>
-                    </a>
+                    <a href="{{ url('/') }}">Istuary Event Management &amp; CRM</a>
             </div>
 <!--
             <div class="navbar-active-users navbar-top-middle">
