@@ -17,13 +17,13 @@ class RegistrationController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
         ]);
 
         $user = User::create($request->all());
 
-        flash('User Created!');
+        flash('You have successfully added a event coordinator.');
 
         return redirect()->back();
     }
