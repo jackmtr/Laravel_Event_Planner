@@ -62,7 +62,7 @@
     <input type="text" name="s" class="contact-searchbar search rounded" placeholder="Look up names or contact info" /><button><i class="fa fa-search" aria-hidden="true"></i></button>
   </div>
   <div id="invitePrevious">
-    {!! Form::open(['action' => ['EventController@show', $event->event_id], 'novalidate' => 'novalidate', 'files' => true, 'name'=>'previous_guests_submit']) !!}
+    {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
     <label for="events">Invite Guests from a Previous Event: </label>
     <select id="inviteEventSelect" name="events" />
     @foreach($events as $pastEvent)
