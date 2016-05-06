@@ -52,4 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
   	Route::get('/export/contacts', 'CSVController@exportContactList');
 
     Route::post('/import/contacts', 'CSVController@importContacts');
+
+    Route::get('/register', 'RegistrationController@register');
+	Route::post('/register', 'RegistrationController@postRegister');
 });
