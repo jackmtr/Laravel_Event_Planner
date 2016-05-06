@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="contacts container">
+<div class="contacts container" ng-app="">
 	<div class="subnav">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
@@ -65,14 +65,14 @@
 							{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
 							<span></span>
 						</td>
-						<td>{{$contact['first_name']}}</td>
-						<td>{{$contact['last_name']}}</td>
-						<td class="responsive-minimum">{{$contact['email']}}</td>
-						<td class="responsive-minimum">{{$contact['display_phoneNumber']}}</td>
-						<td class="responsive-remove">{{$contact['occupation']}}</td>
-						<td>{{$contact['company']}}</td>
-						<td class="responsive-remove">{{$contact['notes']}}</td>
-						<td class="responsive-remove">{{$contact['added_by']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['first_name']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['last_name']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-minimum">{{$contact['email']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-minimum">{{$contact['display_phoneNumber']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['occupation']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['company']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['notes']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['added_by']}}</td>
 					</tr>
 				@endforeach
 			@else
@@ -82,16 +82,35 @@
 		<div class="pagination"> {{$contacts->links()}} </div>
 		{{Form::close()}}
 	</div>
+
+@foreach($contacts as $contact)
+<div class="popup ng-hide" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
+  <div class="popup-mask">
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="popup-cancel">
+          <a href="#" ng-click="popup{{$contact['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+        </div>
+
+        <div class="edit-events container">
+
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach	
 </div>
 @endsection
 
 @section('javascript')
 	<script>
 		$(document).ready(function(){
+
 			$('.cellcheckbox').on('click', 'span', function(){
 				var checkbox = $(this).parent().find("input");
 				checkbox.prop("checked", !checkbox.prop("checked"));
 			});
+
 		});
 	</script>
 @endsection
