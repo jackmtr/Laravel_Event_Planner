@@ -4,7 +4,7 @@
 <div class="contacts container">
 	<div class="subnav">
 		<h2>Contacts</h2>
-		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
+		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
 		{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'novalidate' => 'novalidate', 'files' => true]) !!}
 			{!! Form::file('csvContacts') !!}
 			{!! Form::submit("Import Contacts") !!}

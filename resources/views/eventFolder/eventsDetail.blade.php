@@ -1,5 +1,33 @@
 @extends('layouts.app')
 @section('content')
+<style>
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
+
 <div class="container" ng-app="">
   <!-- <div id="ajax">
 
@@ -97,7 +125,9 @@
         </form>
       </td>
       <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">
+          <i class="fa fa-info-circle tooltip" aria-hidden="true">  <span class="tooltiptext">{{$guest['note']}}</span></i>
+</td>
     </tr>
     <!--{{$index++}}-->
     @endforeach
@@ -219,7 +249,9 @@
           <br/>
           <div class="form-group">
             {!! Form::label('notes', 'Notes: ') !!}
-            {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+            {!! Form::textarea('notes', null, ['class' => 'form-control ']) !!}
+
+
           </div>
           <br/>
           <div class="form-group">
@@ -270,7 +302,7 @@ $(document).ready(function(){
     }
   });
 
-  // This button will decrement the additional_guests value till 0
+  //------This button will decrement the additional_guests value till 0
   $(".qtyminus").click(function(e) {
     e.preventDefault();
     fieldName = $(this).attr('field');
@@ -285,7 +317,7 @@ $(document).ready(function(){
     }
   });
 
-  // This function changes the additional_guests value in the db
+  //-----This function changes the additional_guests value in the db
   $(".qtybtn").click(function(){
     var data = $(this).siblings(".qty").val();
     var action = '/guestlist/addguests';
@@ -299,7 +331,7 @@ $(document).ready(function(){
     });
   });
 
-  // This function changes the rsvp checked in and event status
+  //------This function changes the rsvp checked in and event status
   $(".ajaxSelect").change(function () {
     var data = $(this).children(":selected").html();
     if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
@@ -324,6 +356,8 @@ $(document).ready(function(){
     });
   });
 
+  //------------Multiple phone numbers
+
   $(".add_phone").click(function(e){
     if(index < max_fields)
     {
@@ -338,5 +372,22 @@ $(document).ready(function(){
     e.preventDefault(); $(this).parent('div').remove(); index--;
   }); //end of remove field
 });
+
+//-----------Dynamic Notes
+
+$(document).ready()
+{
+    $("#change").hover(
+        function() // on mouseover
+        {
+            $(this).text(" This is the new html");
+        }, 
+        
+        function() // on mouseout
+        {
+            $(this).text(' {{$guest['note']}}');
+            
+        });
+};
 </script>
 @endsection

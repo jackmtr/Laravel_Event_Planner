@@ -26,11 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::post('/events', 'EventController@store');//standard post creation page
 	//Route::get('/events/{id}/edit', 'EventController@edit');//standard show edit form
 	//Route::patch('/events/{id}/edit', 'EventController@update');//standard post edit
-
+	//Route::post();
 	Route::resource('events', 'EventController');//DOES EVERYTHING ABOVE
   	Route::post('/events/togglestatus', 'EventController@toggleStatus');
 	Route::post('/events/{id}', 'EventController@show');
-  Route::post('/events/{id}', 'EventController@invitePreviousGuests');
+  	Route::post('/events/{id}', 'EventController@invitePreviousGuests');
 	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
 	Route::post('/events/{id}/duplicate', 'EventController@duplication');
 
