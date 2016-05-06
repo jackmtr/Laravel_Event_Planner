@@ -53,6 +53,17 @@ class ContactController extends Controller
             }else{
                 $contact->display_phoneNumber = "";
             }
+
+            $previousEvent = array();
+
+            $guestsinfo = $contact->guestList()->get();
+
+            foreach($guestsinfo as $previousGuest){
+                $previousEvent[] = $previousGuest->event['event_name'];
+            }
+
+            $contact->previous_event = $previousEvent;
+
         } //for every contact, look for any number.  if finds one, put into a attribute called display_phoneNumber.  Put it empty if there's no number.
 
         $events_active_open = Event::where('event_status', '<', 2)->orderBy('event_status')->get();

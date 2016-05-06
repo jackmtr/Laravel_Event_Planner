@@ -166,6 +166,13 @@
 				</div>
 
 			{!! Form::close() !!}
+
+			<h2>Previously Attended Events</h2>
+			<ul>
+				@foreach($contact['previous_event'] as $previousEvent)
+					<li>{{$previousEvent}}</li>
+				@endforeach
+			</ul>
       	</div>
     </div>
   </div>
