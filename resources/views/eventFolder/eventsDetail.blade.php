@@ -4,7 +4,7 @@
     <div class="subnav">
 
       <div class="leftside">
-        <h3>Event Name</h3>
+        <h3>Event Name </h3>
         <h2>
           {{ $event['event_name'] }}
           <span><a href="#" class="showDetails">show details</a></span>

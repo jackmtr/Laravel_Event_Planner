@@ -13,7 +13,7 @@ class CreateGuestListTable extends Migration
   public function up()
   {
     Schema::drop('event_table_seats');
-    Schema::drop('guestlists');
+    Schema::drop('guest_lists');
     Schema::create('guest_lists', function (Blueprint $table) {
 
       $table->increments('guest_list_id');

@@ -63,47 +63,136 @@ class GuestListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function SearchHelperMethod ($search, $id, $conditional){
+
+
+        $guestList = Contact::whereHas('guestList', function ($query) use ($id,$conditional) {
+
+            $query->where('event_id',$conditional , $id);})
+            ->where('first_name', 'LIKE', '%'.$search.'%')
+            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+            ->get();
+
+        if($guestList->count() > 0){
+            return("On guest list");
+        }else{
+            $guestList = Contact::where('first_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                ->take(5)->get();
+            return ("On contact list");
+        }
+
+    }
+
     public function show( Request $request, $id)
     {
-        //
-
-      //  $event  = Event::findOrFail($id);
-        $search = $request->input('search');
         /**
          * Query for a search name in Contacts table.
          * Check if found names are also inside the GuestList
+         * Invited on top
          *
          */
+        $search = $request->input('search');
+        $event = Event::find($id);
+        $events = Event::all();
+        $guests = $event->guestList()->get();
+        $rsvpYes = count($guests->where('rsvp', 1));
+        $checkedIn = count($guests->where('checked_in_by', null));
+        $index = 0;
 
-        $contact = Contact::
-        where('first_name', 'LIKE', '%'.$search.'%')
+//        $contacts_that_match_search = Contact::where('first_name', 'LIKE','%'.$search.'%')
+//                                ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+//                                ->get();
+//
+//        $guests_that_belong_to_event = GuestList::where('event_id',$id)->get();
+
+        $guest_list_contacts = Contact::whereHas('guestList', function ($query) use ($id) {
+
+            $query->where('event_id','=' , $id);})
+            ->where('first_name', 'LIKE', '%'.$search.'%')
+            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+            ->get();
+
+        $all_contacts_that_match_search = Contact::where('first_name', 'LIKE', '%'.$search.'%')
             ->orWhere('last_name', 'LIKE', '%'.$search.'%')
             ->take(5)->get();
-        if($contact->count() > 0){
-            foreach($contact as $contact_person)
-            {
-                $contact_query_id [] = $contact_person['contact_id'];
-                //dd($contact_query_id);
+
+
+        foreach($all_contacts_that_match_search as $contact){
+
+            if(isset($contact, $guest_list_contacts) == false){
+                $contact_not_on_guestlist [] = $contact;
+            }elseif(in_array($contact, $guest_list_contacts)){
+                return($guest_list_contacts);
             }
-
-            $guest_list = GuestList::where('contact_id',$contact_query_id)->where('event_id',$id)->take(3)->get();
-            if($guest_list->count() > 0){
-                foreach($guest_list as $guest){
-                   $guestList = $guest->contact()->get();
-                    return view();
-                }
-            }else{
-                return($contact);
-            }
-
-            // $guest_list_contact = $contact->guestList()->get();
-            // $roles = App\User::find(1)->roles()->orderBy('name')->get();
-            // $name = $contact['first_name'];
-
-
-        }else{
-            return("No contact found");
         }
+
+        dd($contact_not_on_guestlist);
+
+
+
+
+
+
+
+
+
+
+        //will iterate depending on guest_list return
+        foreach($guests_that_belong_to_event as $guest_of_event){
+
+            $guest_of_event_contact_id = $guest_of_event->contact_id;
+
+            foreach($contacts_that_match_search as $matched_contact){
+
+                if($matched_contact->contact_id == $guest_of_event_contact_id){
+
+                    $invited_contacts [] = $matched_contact;
+
+                }elseif($matched_contact->contact_id != $guest_of_event_contact_id){
+                    $uninvited_contact [] = $matched_contact;
+                    $filtered = array_unique($uninvited_contact);
+                }
+            }
+
+        }
+
+
+        dd($uninvited_contact);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        $guest = GuestList::whereHas('contact', function($query) use ($search) {
+//            $query->where('first_name', 'LIKE', '%'.$search.'%')
+//                ->orWhere('last_name', 'LIKE', '%'.$search.'%');
+//        })->where('event_id',$id)->get();
+//
+//        if($guest->count() == 0){
+//            $guest->push(function($search){
+//
+//            });
+//        }
+//
+//        dd($guest);
+
+
+//        $guestList = $this->SearchHelperMethod($search, $id, '=');
+          //  return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
+
+//            return($guestList);
+          //  return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
 
     }
 
