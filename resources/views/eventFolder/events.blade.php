@@ -7,7 +7,7 @@
 		<div class="container">
 			<div class="subnav">
 				<h2>Active Events</h2>
-				<a href="{{ url('/events/create') }}">Add Event</a>
+				<a href="{{ url('/events/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add Event</a>
 			</div>
 			@forelse($eventsWithCount as $openEvent)
 				@if($openEvent['event']->event_status != 2)
