@@ -57,7 +57,9 @@ class ContactController extends Controller
 
         $events_active_open = Event::where('event_status', '<', 2)->orderBy('event_status')->get();
 
-    	return view('contactFolder.contacts', compact('contacts','events_active_open'));
+        $phoneindex = 0;
+
+    	return view('contactFolder.contacts', compact('contacts','events_active_open', 'phoneindex'));
     }
 
     public function create()
@@ -115,8 +117,13 @@ class ContactController extends Controller
                 PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$id));
             }
         }
-        
-        return redirect()->action('EventController@show', $eventId);
+
+        if ($eventId != null){
+            return redirect()->action('EventController@show', $eventId);
+        }
+        else{
+            return redirect('contacts'); 
+        }
     }
 
     public function destroy($id){
