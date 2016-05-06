@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{!! csrf_token() !!}"/>
     <meta name="viewport" content="width=device-width; maximum-scale=1; minimum-scale=1;" />
+
     <title>Istuary Event CRM</title>
     <link rel="stylesheet" type="text/css" href="/css/framework.css"/>
     <link href='https://fonts.googleapis.com/css?family=Rajdhani:600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="/js/dialog/dialog.js"></script>
@@ -17,18 +18,16 @@
 
 <body>
     <nav class="navbar">
-        <div class="container navbar-main"> 
+        <div class="container navbar-main">
             <div class="navbar-logo navbar-top-left">
-                    <a href="{{ url('/') }}">
-                        Istuary Event Manage<span>ment & CRM</span>
-                    </a>
+                    <a href="{{ url('/') }}">Istuary Event Management &amp; CRM</a>
             </div>
-
+<!--
             <div class="navbar-active-users navbar-top-middle">
                 <p>
                     Active users: 1
                 </p>
-            </div>
+            </div> -->
 
             <div class="navbar-auth navbar-auth">
                 <ul>
@@ -39,7 +38,7 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span>[ - ]</span>Logout <span>{{ Auth::user()->name }}</span></a>
+                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span><i class="fa fa-user" aria-hidden="true"></i> </span>Logout <span>{{ Auth::user()->name }}</span></a>
                         </li>
                     @endif
                 </ul>
@@ -51,7 +50,7 @@
             <div class="container">
                 <ul>
                     <li>
-                        <a href="{{ url('/events/') }}">EVENTS</a>
+                        <a href="{{ url('/events/') }}" class="active">EVENTS</a>
                     </li>
                     <li>
                         <a href="{{ url('/contacts') }}">CONTACTS</a>

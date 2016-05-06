@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\GuestList;
+use App\Contact;
 use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
@@ -37,8 +38,8 @@ class EventController extends Controller
           if($event->event_status == 0){
             $count = count($guests); //invited
           } else {
-            $count = count($guests->where('checked_in_by', null)); //going or went
-          }      
+            $count = count($guests) - count($guests->where('checked_in_by', null)); //going or went
+          }
           $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
         }
@@ -51,7 +52,6 @@ class EventController extends Controller
     }
 
     public function store(EventRequest $request){
-
         $request["event_status"] = 0; //better way to do this?
         Event::create($request->all());
         return redirect('events');
@@ -60,17 +60,7 @@ class EventController extends Controller
     public function show($id)
     {
       $events = Event::all();
-      $event = Event::findOrFail($id); //get event details to pass to view   
-      //used to invite previous guests from another event to this event.
-      if(Request::input('events')){
-        $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
-
-        foreach ($previousGuestList as $previousGuest) {
-          if($previousGuest->contact['contact_id'] > 0){
-            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $event->event_id]);
-          }
-        }
-      }      
+      $event = Event::findOrFail($id); //get event details to pass to view
       $guests = $event->guestList()->get();
       $guestList = array(); //guestList contact details to pass to view
 
@@ -79,7 +69,9 @@ class EventController extends Controller
         $oneGuest['guest_list_id'] = $guest->guest_list_id;
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
+        $oneGuest['checked_in_by'] = $guest->checked_in_by;
         $oneGuest['note'] = "coming soon";
+
         $first_name = $guest->contact()->withTrashed()->first()->first_name;
         $last_name = $guest->contact()->withTrashed()->first()->last_name;
         $oneGuest['name'] = $first_name . " " . $last_name;
@@ -87,17 +79,18 @@ class EventController extends Controller
         $occupation = $guest->contact()->withTrashed()->first()->occupation;
         $company = $guest->contact()->withTrashed()->first()->company;
         $oneGuest['work'] = $occupation . " " . $company;
+
         $oneGuest['contact'] = $guest->contact()->first();
-        //dd($oneGuest['contact']);
+        $oneGuest['phone_number'] = $guest->contact()->first()->phoneNumber()->get();
 
         $guestList[] = $oneGuest;
       }
 
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
-      $checkedIn = count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
+      $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
-
-      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
+      $phoneindex = 0;
+      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex'));
     }
 
     public function edit($id)
@@ -157,5 +150,33 @@ class EventController extends Controller
      return redirect()->action('EventController@show', $eventId);
     }
 
+    public function invitePreviousGuests($id){
+      if(Request::input('events')){
+        $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
 
+        foreach ($previousGuestList as $previousGuest) {
+          if($previousGuest->contact['contact_id'] > 0){
+            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $id]);
+          }
+        }
+      }
+      return redirect()->action('EventController@show', $id);
+    }
+
+    public function toggleStatus(Request $request){
+      $event = Event::findOrFail(Request::input('theEvent'));
+      $status = Request::input('theStatus');
+      $message = "Status Changed";
+      if ($status == "OPEN") {
+        $event->event_status = 0;
+      } elseif ($status == "CHECK-IN") {
+        $event->event_status = 1;
+      } elseif ($status == "COMPLETED") {
+        $event->event_status = 2;
+      } else {
+        $message = "Error";
+      }
+      $event->save();
+      return $message;
+    }
 }

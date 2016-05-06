@@ -141,9 +141,32 @@ class ContactController extends Controller
 
     public function update(ContactRequest $request, $id)
     {
+        $eventId = $request->event_id;
+        
         $contact = Contact::findOrFail($id)->update($request->all());
 
-        return redirect('contacts');
+        $guest = Contact::find($id);
+        $allNumbers = $request->all();
+        $newNumbers = $allNumbers['phonegroup'];
+
+
+        $affectedRows = $guest->phoneNumber()->get();
+
+        foreach($affectedRows as $row)
+        {
+
+            $row->delete();
+        }
+
+        foreach ($newNumbers as $number) 
+        {
+            if($number != "")
+            {
+                PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$id));
+            }
+        }
+        
+        return redirect()->action('EventController@show', $eventId);
     }
 
     public function destroy($id){
@@ -164,4 +187,6 @@ class ContactController extends Controller
         }
         return redirect('contacts');
     }
+
+
 }

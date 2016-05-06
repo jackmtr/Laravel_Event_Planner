@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
+
 use Illuminate\Http\Request;
 use App\GuestList;
 use Auth;
 use App\Event;
+use App\Contact;
+use App\PhoneNumber;
 
 class GuestListController extends Controller
 {
@@ -50,7 +52,6 @@ class GuestListController extends Controller
         $guestlist = $request->toArray();
 
         foreach ($guestlist["invitelist"] as $invitee){
-
             GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
         }
 
@@ -215,10 +216,50 @@ class GuestListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $guest = GuestList::findOrFail($request->theGuest);
+      $rsvp = $request->theRsvp;
+      $message = "RSVP Updated";
+      if ($rsvp == "Invited") {
+        $guest->rsvp = 0;
+      } elseif ($rsvp == "Going") {
+        $guest->rsvp = 1;
+      } elseif ($rsvp == "Not Going") {
+        $guest->rsvp = 2;
+      } elseif ($rsvp == "Remove Guest") {
+        $this->destroy($guest->guest_list_id);
+        $message = "Guest Removed";
+      } else {
+        $message = "Error";
+      }
+      $guest->save();
+      return $message;
+    }
 
+    public function checkin(Request $request)
+    {
+      $guest = GuestList::findOrFail($request->theGuest);
+      $checkin = $request->theCheckin;
+      $message = "Check In Status Updated";
+      if ($checkin == "Not Checked In") {
+        $guest->checked_in_by = null;
+      } elseif ($checkin == "Checked In") {
+        $guest->checked_in_by = Auth::user()->user_id;
+      } else {
+        $message = "Error";
+      }
+      $guest->save();
+      return $message;
+    }
+    public function addguests(Request $request)
+    {
+      $guest = GuestList::findOrFail($request->theGuest);
+      $guest->additional_guests = $request->guests;
+      $guest->save();
+      return "Additional Guests Updated";
+      //$eventid = $request->theEvent;
+      // clear guestlist, clear contacts, build new contacts, build new guestlist
 
     }
 
@@ -239,4 +280,60 @@ class GuestListController extends Controller
             echo("sorry, you can't delete a guest from a checkedin/completed event!");
         }
     }
+
+    // public function update(ContactRequest $request, $id)
+    // {
+    //     $contact = Contact::findOrFail($id)->update($request->all());
+    //     $phones = $contact->phoneNumber()->get();
+
+    //     return redirect('contacts');
+    // }
+
+    //id comes from guestlist
+    public function details($id){
+
+            
+
+        $guest = Contact::find($id);
+        $phones = $guest->phoneNumber()->get();
+
+        foreach($phones as $phone)
+        {
+            //dd($phone->phone_number);
+        }
+
+
+
+        //return $guest->contact_id;
+        return view('eventFolder.guestDetails', compact("guest","phones"));
+    }
+
+    public function addPhone(Request $request, $contactid)
+    {
+        $guest = Contact::find($contactid);
+        $allNumbers = $request->all();
+        $newNumbers = $allNumbers['phone'];
+        //dd($newNumbers);
+
+
+        $affectedRows = $guest->phoneNumber()->get();
+
+        foreach($affectedRows as $row)
+        {
+
+            $row->delete();
+        }
+
+        foreach ($newNumbers as $number) 
+        {
+            if($number != "")
+            {
+                PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$contactid));
+            }
+        }
+
+
+        return redirect('guestlist/'.$contactid.'/details');
+    }
+
 }

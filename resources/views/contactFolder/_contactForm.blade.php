@@ -23,10 +23,12 @@
     {!! Form::text('company', null, ['class' => 'form-control']) !!}
 </div>
 <br/>
+
 <div class="form-group">
     {!! Form::label('phone_number', 'Phone Number: ') !!}
     {!! Form::text('phone_number', null, ['class' => 'form-control']) !!}            
 </div>
+
 <br/>
 <div class="form-group">
     {!! Form::label('wechat_id', 'Wechat Id: ') !!}
