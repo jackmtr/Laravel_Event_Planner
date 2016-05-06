@@ -9,6 +9,7 @@ use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
 use Request;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -118,6 +119,36 @@ class EventController extends Controller
           $event->delete();//soft delete
         }
         return redirect('events');
+    }
+
+    public function duplicate1($id){
+
+      $event = Event::find($id);
+      $list = $event->guestList()->get();
+
+      $guestList = array();
+      foreach($list as $li)
+      {
+          if($li->contact['contact_id'] > 0){
+            $guestList[] = $li->contact->toArray();
+          }
+      }            
+
+      $duplicateEvent = $event->toArray();
+      $duplicateEvent["event_name"] = $duplicateEvent["event_name"] . " " . date("F j, Y");
+      $duplicateEvent["event_status"] = 0; 
+      $duplicateEvent["event_date"] = null;
+      $duplicateEvent["event_time"] = null;
+
+      $newEvent = Event::create($duplicateEvent);
+      $newEventId = $newEvent->event_id;
+
+      foreach($guestList as $invitee)
+      {
+        GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee["contact_id"], 'event_id' => $newEventId]);
+      }
+
+      return redirect()->action('EventController@show', $newEventId);
     }
 
     public function duplicate($id){
