@@ -120,14 +120,36 @@ class GuestListController extends Controller
       $guest->save();
       return $message;
     }
+
     public function addguests(Request $request)
     {
       $guest = GuestList::findOrFail($request->theGuest);
-      $guest->additional_guests = $request->guests;
+      $guest->additional_guests = $request->guests;      
       $guest->save();
-      return "Additional Guests Updated";
-      //$eventid = $request->theEvent;
-      // clear guestlist, clear contacts, build new contacts, build new guestlist
+
+      $authId = Auth::user()->user_id;      
+      $addedBy = $authId; 
+      $contact = Contact::findOrFail($guest->contact_id);             
+      $firstName = "Friend of ". $contact->first_name . " " . $contact->last_name;
+      $lastName = $guest->guest_list_id;
+      $eventId = $guest->event_id;
+
+      // $findContacts = Contact::where('last_name', '=', $lastName);
+      // foreach($findContacts as $findContact){   
+      //   $findGuest = GuestList::where('guest_list_id', '=', $findContact->last_name );     
+      //   $findGuest->forceDelete();
+      // }      
+           
+      // $findContacts = Contact::where('last_name', 'LIKE', '%'. $lastName . '%');    
+      // foreach($findContacts as $findContact){
+      //   $findContact->forceDelete();
+      // }
+
+      for($i = 0; $i < $request->guests; $i++){        
+        $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'added_by'=> $addedBy ]);
+        $invitee = $newContact->contact_id;
+        GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
+      }
     }
 
     /**
