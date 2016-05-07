@@ -7,9 +7,9 @@
 		<div class="container">
 			<div class="subnav">
 				<h2>Active Events</h2>
-				<a href="{{ url('/events/create') }}">Add Event</a>
+				<a href="{{ url('/events/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add Event</a>
 			</div>
-			@foreach($eventsWithCount as $openEvent)
+			@forelse($eventsWithCount as $openEvent)
 				@if($openEvent['event']->event_status != 2)
 					<div class="event-box col col-md-12 col-lg-6 section-business-col">
 						<div class="box-left-side">
@@ -44,7 +44,9 @@
 						@endif
 					</div>
 				@endif
-			@endforeach
+			@empty
+				<p>You do not have any current events.</p>
+			@endforelse
 		</div>
 	</div>
 
@@ -53,7 +55,7 @@
 			<div class="subnav">
 				<h2>Ended Events</h2>
 			</div>
-			@foreach($eventsWithCount as $closedEvent)
+			@forelse($eventsWithCount as $closedEvent)
 			@if($closedEvent['event']->event_status == 2)
 			<div class="event-box col col-md-12 col-lg-6 section-business-col">
 				<div class="box-left-side">
@@ -74,7 +76,9 @@
 				</div>
 			</div>
 			@endif
-			@endforeach
+			@empty
+				<p>You do not have any past events.</p>
+			@endforelse
 		</div>
 	</div>
 </div>
