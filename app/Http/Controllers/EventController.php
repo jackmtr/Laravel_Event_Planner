@@ -160,12 +160,6 @@ class EventController extends Controller
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex', 'contactList', 'comeFromSearch', 'query'));
     }
 
-    public function edit($id)
-    {
-        $event = Event::findOrFail($id);
-        return view('eventFolder.editEvents', compact("event"));
-    }
-
     public function update(EventRequest $request, $id)
     {
         $event = Event::findOrFail($id)->update($request->all());

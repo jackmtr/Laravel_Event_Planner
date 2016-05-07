@@ -14,9 +14,13 @@
   </div>
 
   <div id="showDetails" class="middleside popup-form" hidden>
+
     <h2>Edit Event {!! $event->event_name !!}</h2>
-    {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'novalidate' => 'novalidate', 'files' => true]) !!}
-    @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event'])
+
+    {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
+
+      @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event'])
+      
     {!! Form::close() !!}
 
     {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
