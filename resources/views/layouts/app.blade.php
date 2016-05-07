@@ -29,7 +29,7 @@
             <div class="navbar-auth navbar-auth">
                 <ul>
                     <li>
-                        <a href="#">Register <span>New Event Coordinator</span></a>
+                        <a href="/register">Register <span>New Event Coordinator</span></a>
                     </li>
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>

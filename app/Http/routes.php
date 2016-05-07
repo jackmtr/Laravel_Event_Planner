@@ -31,7 +31,6 @@ Route::group(['middleware' => 'auth'], function () {
   	Route::post('/events/togglestatus', 'EventController@toggleStatus');
 	Route::post('/events/{id}', 'EventController@show');
   	Route::post('/events/{id}', 'EventController@invitePreviousGuests');
-
   	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
 
 	//Route::get('/contacts', 'ContactController@index');//standard read all
@@ -52,4 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
   	Route::get('/export/contacts', 'CSVController@exportContactList');
 
     Route::post('/import/contacts', 'CSVController@importContacts');
+
+    Route::get('/register', 'RegistrationController@register');
+	Route::post('/register', 'RegistrationController@postRegister');
 });
