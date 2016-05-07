@@ -7,10 +7,8 @@ use App\Event;
 use App\GuestList;
 use App\PhoneNumber;
 use App\Http\Requests\ContactRequest;
-use Illuminate\Support\Facades\View;
-use Illuminate\Http\Request; //needed for the search function atm
+use Request; //needed for the search function atm
 use Auth;
-use Illuminate\Http\Response;
 
 class ContactController extends Controller
 {
@@ -29,70 +27,22 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search_post(Request $request){
-        $term = $request->input('search');
-
-        $results = array();
-        $contacts = Contact::
-        where('first_name', 'LIKE', '%'.$term.'%')
-            ->orWhere('last_name', 'LIKE', '%'.$term.'%')
-            ->take(5)->get();
-        $events_active_open = Event::where('event_status', '<', 2)->orderBy('event_status')->get();
-        if ($contacts->count() > 0){
-//            foreach ($queries as $query)
-//            {
-//                $results[] = [ 'id' => $query->contact_id, 'value' => $query->first_name.' '.$query->last_name ];
-//            }
-//            return response()->json($results);
-//            return view('contactFolder.ajaxPracticeView', compact('contacts','events_active_open'));
-           return response()->json($contacts);
-
-        }
-    }
-
-    public function search(Request $request){
-
-        $term = $request->input('term');
-
-        $results = array();
-
-
-
-        $contacts = Contact::
-            where('first_name', 'LIKE', '%'.$term.'%')
-            ->orWhere('last_name', 'LIKE', '%'.$term.'%')
-            ->take(5)->get();
-        $events_active_open = Event::where('event_status', '<', 2)->orderBy('event_status')->get();
-        if ($contacts->count() > 0){
-//            foreach ($queries as $query)
-//            {
-//                $results[] = [ 'id' => $query->contact_id, 'value' => $query->first_name.' '.$query->last_name ];
-//            }
-//            return response()->json($results);
-            return view('contactFolder.ajaxPracticeView', compact('contacts','events_active_open'));
-        }
-
-
-    }
-
-
-    public function index(Request $request) //shows all contacts
+    public function index() //shows all contacts
     {
         $sortby = "last_name";
 
-        if($request->input('sortby')){
-          $sortby = $request->input('sortby');
+        if(Request::input('sortby')){
+          $sortby = Request::input('sortby');
         }
 
         $contacts = Contact::orderBy($sortby)->paginate(10)->appends(['sortby' => $sortby]);
 
-        if($request->input('searchitem')){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
-            $query = $request->input('searchitem'); //look for only the input called searchitem
+        if(Request::input('searchitem')){ //if come from any type of form, enter the if.  if come here with no search, skip the if statement
+            $query = Request::input('searchitem'); //look for only the input called searchitem
             $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')
                 ->orWhere('last_name', 'LIKE', '%'. $query . '%')
                 ->orWhere('email', 'LIKE', '%' . $query . '%')->paginate(10);
                 //search by first/last/and email
-
         }
         foreach($contacts as $contact){
 

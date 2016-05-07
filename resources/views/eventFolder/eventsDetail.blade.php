@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <div class="container" ng-app="">
   <!-- <div id="ajax">
 
@@ -58,15 +57,6 @@
     </div>
   </div>
 </div>
-<<<<<<< HEAD
-  <div class="subnav">
-    {!! Form::open(['action' => ['GuestListController@show',$event->event_id], 'method' => 'get']) !!}
-    {!! Form::text("search", "", ['placeholder'=>'[ ? ]Look up names or contact info', 'class'=> "contact-searchbar search rounded"]) !!}
-    {!! Form::submit("Search") !!}
-    {!! Form::close() !!}
-  </div>
-    <div id="invitePrevious">
-=======
 <div class="subnav">
 <!--
   <div>
@@ -79,7 +69,6 @@
     {!! Form::close() !!}
 
   <div id="invitePrevious">
->>>>>>> e7f16cd12f5140cdde1e7cc9d9d47eee7b58a8ed
     {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
     <label for="events">Invite Guests from a Previous Event: </label>
     <select id="inviteEventSelect" name="events" />
@@ -244,7 +233,6 @@
           <div class="new-phone-numbers delete-phone-numbers"></div>
 
           <a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-
 
           <div class="form-group">
             {!! Form::label('wechat_id', 'Wechat Id: ') !!}

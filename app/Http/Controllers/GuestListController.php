@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\GuestList;
 use Auth;
-use App\Event;
 use App\Contact;
 use App\PhoneNumber;
 
@@ -26,7 +24,6 @@ class GuestListController extends Controller
     public function index()
     {
         //
-
     }
 
     /**
@@ -64,91 +61,9 @@ class GuestListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function SearchHelperMethod ($search, $id, $conditional){
-
-
-        $guestList = Contact::whereHas('guestList', function ($query) use ($id,$conditional) {
-
-            $query->where('event_id',$conditional , $id);})
-            ->where('first_name', 'LIKE', '%'.$search.'%')
-            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-            ->get();
-
-        if($guestList->count() > 0){
-            return("On guest list");
-        }else{
-            $guestList = Contact::where('first_name', 'LIKE', '%'.$search.'%')
-                ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-                ->take(5)->get();
-            return ("On contact list");
-        }
-
-    }
-
-    public function show( Request $request, $id)
+    public function show($id)
     {
-        /**
-         * Query for a search name in Contacts table.
-         * Check if found names are also inside the GuestList
-         * Invited on top
-         *
-         */
-        $search = $request->input('search');
-        $event = Event::find($id);
-        $events = Event::all();
-        $guests = $event->guestList()->get();
-        $rsvpYes = count($guests->where('rsvp', 1));
-        $checkedIn = count($guests->where('checked_in_by', null));
-        $index = 0;
-
-        $guest_list_contacts = Contact::whereHas('guestList', function ($query) use ($id) {
-
-            $query->where('event_id','=' , $id);})
-            ->where('first_name', 'LIKE', '%'.$search.'%')
-            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-            ->get();
-
-        $all_contacts_that_match_search = Contact::where('first_name', 'LIKE', '%'.$search.'%')
-            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-            ->get();
-        $contacts_not_invited = Array();
-        $guests_invited = Array();
-
-        foreach($all_contacts_that_match_search as $contact){
-
-
-            $guest = GuestList::where('event_id','=',$id)->where('contact_id',$contact['contact_id'])->get();
-
-                if($guest->count() == 0){
-                    array_push($contacts_not_invited,$contact);
-
-                }else{
-                    array_push($guests_invited,$guest);
-                }
-        }
-
-        dd($guests_invited);
-
-//        $guest = GuestList::whereHas('contact', function($query) use ($search) {
-//            $query->where('first_name', 'LIKE', '%'.$search.'%')
-//                ->orWhere('last_name', 'LIKE', '%'.$search.'%');
-//        })->where('event_id',$id)->get();
-//
-//        if($guest->count() == 0){
-//            $guest->push(function($search){
-//
-//            });
-//        }
-//
-//        dd($guest);
-
-
-//        $guestList = $this->SearchHelperMethod($search, $id, '=');
-          //  return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
-
-//            return($guestList);
-          //  return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index'));
-
+        //
     }
 
     /**
@@ -160,7 +75,6 @@ class GuestListController extends Controller
     public function edit($id)
     {
         //
-
     }
 
     /**
@@ -214,7 +128,6 @@ class GuestListController extends Controller
       return "Additional Guests Updated";
       //$eventid = $request->theEvent;
       // clear guestlist, clear contacts, build new contacts, build new guestlist
-
     }
 
     /**
@@ -231,7 +144,7 @@ class GuestListController extends Controller
         if($eventStatus == 0){
             $guestList->forceDelete();
         }else{
-            echo("sorry, you can't delete a guest from a checkedin/completed event!");
+            alert("sorry, you can't delete a guest from a checkedin/completed event!");
         }
     }
 

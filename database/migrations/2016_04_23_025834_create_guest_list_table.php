@@ -13,12 +13,12 @@ class CreateGuestListTable extends Migration
   public function up()
   {
     Schema::drop('event_table_seats');
-    Schema::drop('guest_lists');
+    Schema::drop('guestlists');
     Schema::create('guest_lists', function (Blueprint $table) {
 
       $table->increments('guest_list_id');
       $table->integer('additional_guests');
-      $table->integer('rsvp');
+      $table->boolean('rsvp');
       $table->integer('checked_in_by')->nullable()->unsigned();
       $table->integer('contact_id')->unsigned();
       $table->integer('event_id')->unsigned();
