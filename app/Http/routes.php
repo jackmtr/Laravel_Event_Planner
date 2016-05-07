@@ -31,8 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
   	Route::post('/events/togglestatus', 'EventController@toggleStatus');
 	Route::post('/events/{id}', 'EventController@show');
   	Route::post('/events/{id}', 'EventController@invitePreviousGuests');
-	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
-	Route::post('/events/{id}/duplicate', 'EventController@duplication');
+  	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
 
 	//Route::get('/contacts', 'ContactController@index');//standard read all
 	//Route::get('/contacts/create', 'ContactController@create');//standard create page
