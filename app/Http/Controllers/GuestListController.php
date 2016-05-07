@@ -101,12 +101,6 @@ class GuestListController extends Controller
         $checkedIn = count($guests->where('checked_in_by', null));
         $index = 0;
 
-//        $contacts_that_match_search = Contact::where('first_name', 'LIKE','%'.$search.'%')
-//                                ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-//                                ->get();
-//
-//        $guests_that_belong_to_event = GuestList::where('event_id',$id)->get();
-
         $guest_list_contacts = Contact::whereHas('guestList', function ($query) use ($id) {
 
             $query->where('event_id','=' , $id);})
@@ -116,64 +110,24 @@ class GuestListController extends Controller
 
         $all_contacts_that_match_search = Contact::where('first_name', 'LIKE', '%'.$search.'%')
             ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-            ->take(5)->get();
-
+            ->get();
+        $contacts_not_invited = Array();
+        $guests_invited = Array();
 
         foreach($all_contacts_that_match_search as $contact){
 
-            if(isset($contact, $guest_list_contacts) == false){
-                $contact_not_on_guestlist [] = $contact;
-            }elseif(in_array($contact, $guest_list_contacts)){
-                return($guest_list_contacts);
-            }
-        }
 
-        dd($contact_not_on_guestlist);
+            $guest = GuestList::where('event_id','=',$id)->where('contact_id',$contact['contact_id'])->get();
 
+                if($guest->count() == 0){
+                    array_push($contacts_not_invited,$contact);
 
-
-
-
-
-
-
-
-
-        //will iterate depending on guest_list return
-        foreach($guests_that_belong_to_event as $guest_of_event){
-
-            $guest_of_event_contact_id = $guest_of_event->contact_id;
-
-            foreach($contacts_that_match_search as $matched_contact){
-
-                if($matched_contact->contact_id == $guest_of_event_contact_id){
-
-                    $invited_contacts [] = $matched_contact;
-
-                }elseif($matched_contact->contact_id != $guest_of_event_contact_id){
-                    $uninvited_contact [] = $matched_contact;
-                    $filtered = array_unique($uninvited_contact);
+                }else{
+                    array_push($guests_invited,$guest);
                 }
-            }
-
         }
 
-
-        dd($uninvited_contact);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        dd($guests_invited);
 
 //        $guest = GuestList::whereHas('contact', function($query) use ($search) {
 //            $query->where('first_name', 'LIKE', '%'.$search.'%')

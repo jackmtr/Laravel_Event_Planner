@@ -81,6 +81,7 @@ class EventController extends Controller
         $oneGuest['work'] = $occupation . " " . $company;
 
         $oneGuest['contact'] = $guest->contact()->first();
+
         $oneGuest['phone_number'] = $guest->contact()->first()->phoneNumber()->get();
 
         $guestList[] = $oneGuest;
