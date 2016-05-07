@@ -116,7 +116,7 @@ class ContactController extends Controller
             }
         }
         
-        return redirect()->action('EventController@show', $eventId);
+        return redirect()->back()->withInput();
     }
 
     public function destroy($id){
