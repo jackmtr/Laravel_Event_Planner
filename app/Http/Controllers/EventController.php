@@ -71,36 +71,38 @@ class EventController extends Controller
       $contacts = array();
 
       if(Request::input('searchitem')){
-            $comeFromSearch = 1;
-            $query = Request::input('searchitem'); //look for only the input called searchitem
+
+        $comeFromSearch = 1;
+        $query = Request::input('searchitem');
             $contactMatches = Contact::withTrashed()->where('first_name', 'LIKE', '%'. $query . '%')
-                ->orWhere('last_name', 'LIKE', '%'. $query . '%')
-                ->orWhere('email', 'LIKE', '%' . $query . '%')->get()->toArray();
+              ->orWhere('last_name', 'LIKE', '%'. $query . '%')->get()->toArray();
 
-            $contactMatchesIds = array_column($contactMatches, 'contact_id');
+        $contactMatchesIds = array_column($contactMatches, 'contact_id');
 
-            $guestss = Event::find($id)->guestList;
+        $eventGuests = Event::find($id)->guestList;
             
-            foreach($guestss as $guest){
-              $guestMatches[] = $guest->contact->toArray();
-            }        
+        foreach($eventGuests as $guest){
+          $guestMatches[] = $guest->contact->toArray();
+        }        
 
-            $guestMatchesIds = array_column($guestMatches, "contact_id");
+        $guestMatchesIds = array_column($guestMatches, "contact_id");
 
-            foreach($contactMatchesIds as $matcher){
-              if (in_array($matcher, $guestMatchesIds)){
-                $guests[] = Contact::find($matcher)->guestList()->get()->first();
-              }else{
-                $contacts[] = Contact::find($matcher);
-              }
-            }
+        foreach($contactMatchesIds as $matcher){
+          if (in_array($matcher, $guestMatchesIds)){
+            $guests[] = Contact::find($matcher)->guestList()->get()->first();
+          }else{
+            $contacts[] = Contact::find($matcher);
+          }
+        }
+
       }else{
-        $guests1 = $event->guestList()->get();
-        $abc = array();
-        foreach($guests1 as $aaa ){
-          $guests[] = $aaa;
+        $allGuests = $event->guestList()->get();
+
+        foreach($allGuests as $guest ){
+          $guests[] = $guest;
         }
       }
+      
       foreach( $guests as $guest)
       {
 
