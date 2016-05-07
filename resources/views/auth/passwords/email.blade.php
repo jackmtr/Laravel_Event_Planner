@@ -58,7 +58,11 @@
 
             <h2>Reset Password</h2>
 
-            @include('flash')
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             {!! Form::open(['url' => '/password/email', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => 'true']) !!}
           
