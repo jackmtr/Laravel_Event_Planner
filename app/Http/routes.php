@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
   	Route::post('/events/{id}', 'EventController@invitePreviousGuests');
   	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
 
+
 	//Route::get('/contacts', 'ContactController@index');//standard read all
 	//Route::get('/contacts/create', 'ContactController@create');//standard create page
 	//Route::get('/contacts/{id}', 'ContactController@show');	//standard read one
