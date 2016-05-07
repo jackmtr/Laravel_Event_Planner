@@ -53,11 +53,24 @@ class ContactController extends Controller
             }else{
                 $contact->display_phoneNumber = "";
             }
+
+            $previousEvent = array();
+
+            $guestsinfo = $contact->guestList()->get();
+
+            foreach($guestsinfo as $previousGuest){
+                $previousEvent[] = $previousGuest->event['event_name'];
+            }
+
+            $contact->previous_event = $previousEvent;
+
         } //for every contact, look for any number.  if finds one, put into a attribute called display_phoneNumber.  Put it empty if there's no number.
 
         $events_active_open = Event::where('event_status', '<', 2)->orderBy('event_status')->get();
 
-    	return view('contactFolder.contacts', compact('contacts','events_active_open'));
+        $phoneindex = 0;
+
+    	return view('contactFolder.contacts', compact('contacts','events_active_open', 'phoneindex'));
     }
 
     public function create()
@@ -115,8 +128,13 @@ class ContactController extends Controller
                 PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$id));
             }
         }
-        
-        return redirect()->back()->withInput();
+
+        if ($eventId != null){
+            return redirect()->action('EventController@show', $eventId);
+        }
+        else{
+            return redirect('contacts'); 
+        }
     }
 
     public function destroy($id){
