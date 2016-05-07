@@ -25,6 +25,19 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /*public static function boot(){
+
+        parent::boot();
+
+        static::creating(function($user){
+            $user->token = str_random(30);
+        });
+    }*/
+
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = bcrypt($password);
+    }    
+
     /**
     * A user may add many contacts.
     *

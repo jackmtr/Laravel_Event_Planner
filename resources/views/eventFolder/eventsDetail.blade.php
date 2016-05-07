@@ -58,6 +58,7 @@
     </div>
   </div>
 </div>
+<<<<<<< HEAD
   <div class="subnav">
     {!! Form::open(['action' => ['GuestListController@show',$event->event_id], 'method' => 'get']) !!}
     {!! Form::text("search", "", ['placeholder'=>'[ ? ]Look up names or contact info', 'class'=> "contact-searchbar search rounded"]) !!}
@@ -65,6 +66,20 @@
     {!! Form::close() !!}
   </div>
     <div id="invitePrevious">
+=======
+<div class="subnav">
+<!--
+  <div>
+    <input type="text" name="s" class="contact-searchbar search rounded" placeholder="Look up names or contact info" /><button><i class="fa fa-search" aria-hidden="true"></i></button>
+  </div>
+-->
+    {!! Form::open(['action' => ['EventController@show', $event->event_id], 'method' => 'get']) !!}
+      {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
+      {!! Form::submit("Search Guestlist") !!}
+    {!! Form::close() !!}
+
+  <div id="invitePrevious">
+>>>>>>> e7f16cd12f5140cdde1e7cc9d9d47eee7b58a8ed
     {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
     <label for="events">Invite Guests from a Previous Event: </label>
     <select id="inviteEventSelect" name="events" />
@@ -87,23 +102,38 @@
       <th class="responsive-remove">Notes</th>
     </tr>
     @if( $event['event_status']  == 0) <!--Open-->
-    @foreach($guestList as $guest)
-    <tr>
-      <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
-      <td>
-        <form id='myform' method='POST' action='#'>
-          <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
-          <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
-          <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
-        </form>
-      </td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-    </tr>
-    <!--{{$index++}}-->
-    @endforeach
+      @foreach($guestList as $guest)
+      <tr>
+        <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}</td>
+        <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
+        <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
+        <td>
+          <form id='myform' method='POST' action='#'>
+            <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
+            <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
+            <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
+          </form>
+        </td>
+        <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+        <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+      </tr>
+      <!--{{$index++}}-->
+      @endforeach
+      @if($comeFromSearch)
+        @foreach($contactList as $guest)
+        <tr>
+          <td><button>Invite</button></td>
+          <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
+          <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
+          <td></td>
+          <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+          <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+        </tr>
+        @endforeach
+        <tr>
+          <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
+        </tr>        
+      @endif
     @else
     @if( $event['event_status']  == 1)<!--CheckedIn-->
     @foreach($guestList as $guest)
@@ -111,8 +141,8 @@
     @if($guest['checked_in_by'] == null){{--*/ $checkStatus = 0 /*--}}@else{{--*/ $checkStatus = 1 /*--}}@endif
     <tr>
       <td>{!! Form::select('rsvp', [0 => 'Not Checked In', 1 => 'Checked In'], $checkStatus, ['class' => 'checkin ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
       <td>
         <form id='myform' method='POST' action='#'>
           <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
@@ -120,8 +150,8 @@
           <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
         </form>
       </td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
     </tr>
     @endif
     <!--{{$index++}}-->
@@ -138,10 +168,10 @@
       <td>Did Not Attend</td>
       @endif
       @endif
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">N/A</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true">{{$guest['name']}}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-      <td ng-click="popup{{$guest['guest_list_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+      <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
     </tr>
     <!--{{$index++}}-->
     @endforeach
@@ -151,12 +181,12 @@
 </div>
 
 @foreach($guestList as $guest)
-<div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['guest_list_id']}}">
+<div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['contact']['contact_id']}}">
   <div class="popup-mask">
     <div class="panel">
       <div class="panel-inner">
         <div class="popup-cancel">
-          <a href="#" ng-click="popup{{$guest['guest_list_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+          <a href="#" ng-click="popup{{$guest['contact']['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
         </div>
 
         <div class="edit-events container">
@@ -236,6 +266,95 @@
     </div>
   </div>
 </div>
+@endforeach
+
+@foreach($contactList as $guest)
+
+  <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['contact']['contact_id']}}">
+    <div class="popup-mask">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="popup-cancel">
+            <a href="#" ng-click="popup{{$guest['contact']['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+          </div>
+
+          <div class="edit-events container">
+
+            <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
+
+            {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
+
+            {!! Form::hidden('event_id', $event->event_id) !!}
+
+            <div class="form-group">
+              {!! Form::label('first_name', 'First Name: ') !!}
+              {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+            </div>
+            <br/>
+            <div class="form-group">
+              {!! Form::label('last_name', 'Last Name: ') !!}
+              {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+            </div>
+            <br/>
+            <div class="form-group">
+              {!! Form::label('email', 'Email: ') !!}
+              {!! Form::text('email', null, ['class' => 'form-control']) !!}
+            </div>
+            <br/>
+            <div class="form-group">
+              {!! Form::label('occupation', 'Occupation: ') !!}
+              {!! Form::text('occupation', null, ['class' => 'form-control']) !!}
+            </div>
+            <br/>
+            <div class="form-group">
+              {!! Form::label('company', 'Company: ') !!}
+              {!! Form::text('company', null, ['class' => 'form-control']) !!}
+            </div>
+            <br/>
+
+            @forelse($guest['contact']['phoneNumber'] as $i => $phonenumber)
+            <div class="form-group delete-phone-numbers">
+              {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
+              {!! Form::text('phone_number' . ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+              @if($i != 0)
+              <a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
+              @endif
+            </div>
+            <!--{{$phoneindex++}}-->
+            @empty
+            <div class="form-group">
+              {!! Form::label('phone_number', 'Phone Number 1: ') !!}
+              {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+            </div>
+            @endforelse
+
+
+            <!-- new phone inputs come here -->
+            <div class="new-phone-numbers delete-phone-numbers"></div>
+
+            <a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+
+            <div class="form-group">
+              {!! Form::label('wechat_id', 'Wechat Id: ') !!}
+              {!! Form::text('wechat_id', null, ['class' => 'form-control']) !!}
+            </div>
+            <br/>
+            <div class="form-group">
+              {!! Form::label('notes', 'Notes: ') !!}
+              {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+            </div>
+            <br/>
+            <div class="form-group">
+              {!! Form::submit("Edit contact", ['class' => 'btn btn-primary form-control']) !!}
+            </div>
+
+            {!! Form::close() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endforeach
 </div>
 @endsection
