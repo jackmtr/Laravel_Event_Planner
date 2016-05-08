@@ -21,9 +21,11 @@
 
         {!! Form::close() !!}
 
-        {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
-          {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
-        {!! Form::close() !!}
+        @if( $event['event_status']  != 1)
+          {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
+            {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
+          {!! Form::close() !!}
+        @endif
 
         @include('errors._list')
     </div>
