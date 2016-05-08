@@ -75,7 +75,8 @@ class ContactController extends Controller
 
     public function create()
     {
-        return view('contactFolder.createContacts');
+        $phoneindex = 0;
+        return view('contactFolder.createContacts', compact('phoneindex'));
     }
 
     public function store(ContactRequest $request){
@@ -85,8 +86,14 @@ class ContactController extends Controller
 
         $request["contact_id"] = $contact->contact_id;
 
-        if (strlen($request["phone_number"]) > 1){
+        /*if (strlen($request["phone_number"]) > 1){
             PhoneNumber::create($request->all()); 
+        }*/
+        foreach($request['phonegroup'] as $phoneNumber){
+            //dd($phoneNumber);
+            if (strlen($phoneNumber) > 1){
+                PhoneNumber::create(array('phone_number'=>$phoneNumber, 'contact_id'=>$contact->contact_id));
+            }
         }
 
         return redirect('contacts');

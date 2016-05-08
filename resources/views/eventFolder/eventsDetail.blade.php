@@ -1,9 +1,6 @@
 @extends('layouts.app')
 @section('content')
 <div class="container" ng-app="">
-  <!-- <div id="ajax">
-
-</div> -->
 <div class="subnav">
   <div class="leftside">
     <h3>Event Name</h3>

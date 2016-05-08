@@ -17,7 +17,9 @@
 			{!! Form::text("searchitem", "", ['placeholder'=>'First or Last Name']) !!}
 			{!! Form::submit("Search Contacts") !!}
 		{!! Form::close() !!}
+	</div>
 
+	<div>
 		<table class="sg-table">
 			<tr>
 				<th>CheckBox</th>
@@ -83,109 +85,44 @@
 		{{Form::close()}}
 	</div>
 
-@foreach($contacts as $contact)
-<div class="popup ng-hide" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
-  <div class="popup-mask">
-    <div class="panel">
-      <div class="panel-inner">
-        <div class="popup-cancel">
-          <a href="#" ng-click="popup{{$contact['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
-        </div>
-
-        <div class="edit-events container">
-
-			<h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
-
-			{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form']) !!}
-
-				<div class="form-group">
-					{!! Form::label('first_name', 'First Name: ') !!}
-					{!! Form::text('first_name', null, ['class' => 'form-control']) !!}
-				</div>
-				<br/>
-
-				<div class="form-group">
-				{!! Form::label('last_name', 'Last Name: ') !!}
-				{!! Form::text('last_name', null, ['class' => 'form-control']) !!}
-				</div>
-				<br/>
-
-				<div class="form-group">
-				{!! Form::label('email', 'Email: ') !!}
-				{!! Form::text('email', null, ['class' => 'form-control']) !!}
-				</div>
-				<br/>
-
-				<div class="form-group">
-				{!! Form::label('occupation', 'Occupation: ') !!}
-				{!! Form::text('occupation', null, ['class' => 'form-control']) !!}
-				</div>
-				<br/>
-
-				<div class="form-group">
-				{!! Form::label('company', 'Company: ') !!}
-				{!! Form::text('company', null, ['class' => 'form-control']) !!}
-				</div>
-				<br/>
-
-				@forelse($contact['phoneNumber'] as $i => $phonenumber)
-					<div class="form-group delete-phone-numbers">
-					{!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
-					{!! Form::text('phone_number' . ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
-					@if($i != 0)
-						<a href='#' class='remove_field'> <i class='fa fa-minus-circle' aria-hidden='true'></i></a>
-					@endif
+	@foreach($contacts as $contact)
+	<div class="popup ng-hide" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
+		<div class="popup-mask">
+			<div class="panel">
+				<div class="panel-inner">
+					<div class="popup-cancel">
+						<a href="#" ng-click="popup{{$contact['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
 					</div>
-				<!--{{$phoneindex++}}-->
-				@empty
-					<div class="form-group">
-						{!! Form::label('phone_number', 'Phone Number 1: ') !!}
-						{!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+
+					<div class="edit-events container">
+
+						<h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
+
+						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form']) !!}
+
+							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true])
+
+						{!! Form::close() !!}
+
+						<div class="form-group">
+							{!! Form::open(['method' => 'DELETE', 'url' => 'contacts/' . $contact->contact_id]) !!}
+							{!! Form::submit("Delete Contact", ['class' => 'btn btn-primary form-control']) !!}
+							{!! Form::close() !!}	
+						</div> 
+
+						<h2>Previously Attended Events</h2>
+
+							<ul>
+								@foreach($contact['previous_event'] as $previousEvent)
+									<li>{{$previousEvent}}</li>
+								@endforeach
+							</ul>
 					</div>
-				@endforelse
-
-				<!-- new phone inputs come here -->
-				<div class="new-phone-numbers delete-phone-numbers"></div>
-
-				<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-
-				<div class="form-group">
-					{!! Form::label('wechat_id', 'Wechat Id: ') !!}
-					{!! Form::text('wechat_id', null, ['class' => 'form-control']) !!}
 				</div>
-				<br/>
-
-				<div class="form-group">
-					{!! Form::label('notes', 'Notes: ') !!}
-					{!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
-				</div>
-				<br/>
-
-				<div class="form-group">
-					{!! Form::submit("Edit contact", ['class' => 'btn btn-primary form-control']) !!}
-				</div>
-
-			{!! Form::close() !!}
-
-	        {!! Form::open(['method' => 'DELETE', 'url' => 'contacts/' . $contact->contact_id]) !!}
-
-				<div class="form-group">
-				    {!! Form::submit("Delete Contact", ['class' => 'btn btn-primary form-control']) !!}
-				</div> 
-
-	        {!! Form::close() !!}			
-
-			<h2>Previously Attended Events</h2>
-			<ul>
-				@foreach($contact['previous_event'] as $previousEvent)
-					<li>{{$previousEvent}}</li>
-				@endforeach
-			</ul>
-      	</div>
-    </div>
-  </div>
-</div>
-@endforeach	
+			</div>
+		</div>
+	</div>
+	@endforeach	
 </div>
 @endsection
 
