@@ -2,7 +2,9 @@
 @section('content')
 
 <div class="container" ng-app="">
+
   <div class="subnav">
+
     <div class="leftside">
       <h3>Event Name</h3>
       <h2>
@@ -11,7 +13,6 @@
     </div>
 
     <div id="showDetails" class="middleside popup-form" hidden>
-
       <h2>Edit Event {!! $event->event_name !!}</h2>
 
         {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
@@ -25,11 +26,9 @@
         {!! Form::close() !!}
 
         @include('errors._list')
-
     </div>
 
     <div class="rightside">
-
       <div class="eventStatus">
         {!! Form::label('event_status', 'Event Status:' )!!}
         {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode ajaxSelect'] ) !!}
@@ -61,7 +60,6 @@
         </div>
 
       </div>
-
     </div>
 
   </div>
@@ -94,6 +92,7 @@
   <div class="guestList">
 
     <table class="sg-table">
+
       <tr>
         <th>Status</th>
         <th>Table</th>
@@ -104,81 +103,56 @@
       </tr>
 
       @if( $event['event_status']  == 0)
+
         @foreach($guestList as $guest)
-        <tr>
-          <td>{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}</td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
-          <td>
-            <form id='myform' method='POST' action='#'>
-              <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
-              <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
-              <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
-            </form>
-          </td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-        </tr>
-        <!--{{$index++}}-->
+
+          @include('eventFolder._eventTableRows', ['status' => 0])
+          <!--{{$index++}}-->
+
         @endforeach
 
         @if($comeFromSearch)
 
           @foreach($contactList as $guest)
-          <tr>
-            <td><button>Invite</button></td>
-            <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
-            <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
-            <td></td>
-            <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-            <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-          </tr>
+            @include('eventFolder._eventTableRows', ['status' => 3])
           @endforeach
           <tr>
             <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
           </tr>        
+
         @endif
 
       @else
 
         @if( $event['event_status']  == 1)
+
           @foreach($guestList as $guest)
+
             @if($guest['rsvp'] == 1)
               @if($guest['checked_in_by'] == null){{--*/ $checkStatus = 0 /*--}}@else{{--*/ $checkStatus = 1 /*--}}@endif
-              <tr>
-                <td>{!! Form::select('rsvp', [0 => 'Not Checked In', 1 => 'Checked In'], $checkStatus, ['class' => 'checkin ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}</td>
-                <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
-                <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
-                <td>
-                  <form id='myform' method='POST' action='#'>
-                    <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
-                    <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
-                    <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
-                  </form>
-                </td>
-                <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-                <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-              </tr>
+
+              @include('eventFolder._eventTableRows', ['status' => 1])
+
             @endif
             <!--{{$index++}}-->
           @endforeach
+
+          @if($comeFromSearch)
+
+            @foreach($contactList as $guest)
+
+              @include('eventFolder._eventTableRows', ['status' => 3])
+
+            @endforeach
+            <tr>
+              <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
+            </tr>        
+            
+          @endif        
+
           @else <!--$event['event_status']  == 2 -->
             @foreach($guestList as $guest)
-              <tr>
-                @if($guest['checked_in_by'] != null)
-                  <td>Attended</td>
-                @else
-                  @if($guest['rsvp']==1)
-                    <td>No Show</td>
-                  @else
-                    <td>Did Not Attend</td>
-                  @endif
-                @endif
-                  <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
-                  <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
-                  <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-                  <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-              </tr>
+              @include('eventFolder._eventTableRows', ['status' => 2])
               <!--{{$index++}}-->
             @endforeach
           @endif
@@ -255,17 +229,15 @@
 @section('javascript')
 
   <script>
-    $.ajaxSetup({
-      headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-    });
-  </script>
-
-  <script>
 
   $(document).ready(function(){
 
     var max_fields = 10; //maximum input boxes allowed
     var index = {{$phoneindex}};
+
+    $.ajaxSetup({
+      headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+    });    
 
     $(".showDetails").click(function(e){
       $("#showDetails").slideToggle("fast");
