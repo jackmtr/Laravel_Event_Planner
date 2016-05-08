@@ -27,9 +27,9 @@
 {!! Form::text('company', null, ['class' => 'form-control']) !!}
 </div>
 <br/>
-
+<!--fsdkfjskdlfj-->
 @if($edit)
-    @forelse($contact['phoneNumber'] as $i => $phonenumber)
+    @forelse($object['phoneNumber'] as $i => $phonenumber)
         <div class="form-group delete-phone-numbers">
         {!! Form::label('phone_number'. ($i+1), 'Phone Number ' . ($i+1) . ':') !!}
         {!! Form::text('phone_number' . ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
@@ -44,11 +44,12 @@
             {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
         </div>
     @endforelse
+
 @else
-        <div class="form-group">
-            {!! Form::label('phone_number', 'Phone Number 1: ') !!}
-            {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
-        </div>
+    <div class="form-group">
+        {!! Form::label('phone_number', 'Phone Number 1: ') !!}
+        {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+    </div>
 @endif
 
 <!-- new phone inputs come here -->

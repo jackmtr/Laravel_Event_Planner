@@ -100,7 +100,7 @@
 
 						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form']) !!}
 
-							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true])
+							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 
 						{!! Form::close() !!}
 
