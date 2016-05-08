@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -9,7 +10,7 @@ class Event extends Model
 {
   use SoftDeletes;
 
-  protected $primaryKey = 'event_id'; //tells laravel what our primary key is
+  protected $primaryKey = 'event_id';
 
   protected $fillable = [
     'event_name',
@@ -20,20 +21,11 @@ class Event extends Model
     'num_of_tables',
     'seats_per_table',
     'event_status',
-  ];//allows these columns to be changed, and will ignore requests to change any other column
-    //INSERT INTO events (event_name, event_date, event_time, event_location, event_description, num_of_tables, seats_per_table, event_status) VALUES ('2016 Canada Day', '2016-07-01', '', 'Vancouver, stanley park','over 1 million people are walking ',5,8,1);
-    //UPDATE events SET event_status=0 WHERE event_id=32; 
-  //eventually set a query scope to most closest to Carbon::now()
+  ];
+  protected $dates = ["deleted_at"];
 
-  protected $dates = ["event_date", "deleted_at"]; //lets event_date be a carbon item
+  public $timestamps = false;
 
-  protected $times = ["event_time"]; //we need to migrate db to change event_time from datetime to time
-
-  public $timestamps = false;//will not use timestamps, we might change this later
-
-  //date needs a mutator so edit form model can be set
-
-  //time needs a mutator so edit form model can be set
   /**
   * An event may have many guests.
   *

@@ -4,7 +4,7 @@
 	<h1>Create Event</h1>
 	{!! Form::open(['url' => 'events', 'class' => 'form']) !!}
 
-		@include('eventFolder._eventForm', ['submitButtonText' => 'Create Event'])
+		@include('eventFolder._eventForm', ['submitButtonText' => 'Create Event', 'eventDate' => date('Y-m-d'), 'eventTime' => '18:00:00' ])
 		
 	{!! Form::close() !!}
 

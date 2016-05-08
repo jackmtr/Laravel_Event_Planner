@@ -163,7 +163,8 @@ class EventController extends Controller
     public function update(EventRequest $request, $id)
     {
         $event = Event::findOrFail($id)->update($request->all());
-        return redirect('events');
+
+        return redirect()->action('EventController@show', $id);
     }
 
     public function destroy($id){

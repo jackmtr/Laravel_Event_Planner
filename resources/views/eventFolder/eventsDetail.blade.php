@@ -19,8 +19,8 @@
 
     {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
 
-      @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event'])
-      
+      @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
+
     {!! Form::close() !!}
 
     {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
