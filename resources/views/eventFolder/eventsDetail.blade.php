@@ -8,7 +8,7 @@
     <div class="leftside">
       <h3>Event Name</h3>
       <h2>
-        {{ $event['event_name'] }}<span><a href="#" class="showDetails">show details</a></span>
+        {{ $event['event_name'] }} <span><a href="#" class="showDetails">show details</a></span>
       </h2>
     </div>
 
@@ -102,7 +102,7 @@
         <th class="responsive-remove">Notes</th>
       </tr>
 
-      @if( $event['event_status']  == 0)
+      @if( $event['event_status']  == 0) <!--$event['event_status']  == 0 -->
 
         @foreach($guestList as $guest)
 
@@ -116,6 +116,7 @@
           @foreach($contactList as $guest)
             @include('eventFolder._eventTableRows', ['status' => 3])
           @endforeach
+
           <tr>
             <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
           </tr>        
@@ -124,7 +125,7 @@
 
       @else
 
-        @if( $event['event_status']  == 1)
+        @if( $event['event_status']  == 1) <!--$event['event_status']  == 1 -->
 
           @foreach($guestList as $guest)
 
@@ -144,6 +145,7 @@
               @include('eventFolder._eventTableRows', ['status' => 3])
 
             @endforeach
+
             <tr>
               <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
             </tr>        
@@ -163,7 +165,7 @@
 
   </div>
 
-  @foreach($guestList as $guest)
+  @foreach(array_merge($guestList, $contactList) as $guest)
     <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['contact']['contact_id']}}">
       <div class="popup-mask">
         <div class="panel">
@@ -185,43 +187,12 @@
 
               {!! Form::close() !!}
 
-
             </div>
           </div>
         </div>
       </div>
     </div>
   @endforeach
-
-  @foreach($contactList as $guest)
-
-    <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['contact']['contact_id']}}">
-      <div class="popup-mask">
-        <div class="panel">
-          <div class="panel-inner">
-            <div class="popup-cancel">
-              <a href="#" ng-click="popup{{$guest['contact']['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
-            </div>
-
-            <div class="edit-events container">
-
-              <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
-
-              {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
-
-                {!! Form::hidden('event_id', $event->event_id) !!}
-
-                @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
-
-              {!! Form::close() !!}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  @endforeach
-
   </div>
 
 @endsection
