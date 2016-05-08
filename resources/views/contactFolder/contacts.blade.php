@@ -167,6 +167,14 @@
 
 			{!! Form::close() !!}
 
+	        {!! Form::open(['method' => 'DELETE', 'url' => 'contacts/' . $contact->contact_id]) !!}
+
+				<div class="form-group">
+				    {!! Form::submit("Delete Contact", ['class' => 'btn btn-primary form-control']) !!}
+				</div> 
+
+	        {!! Form::close() !!}			
+
 			<h2>Previously Attended Events</h2>
 			<ul>
 				@foreach($contact['previous_event'] as $previousEvent)

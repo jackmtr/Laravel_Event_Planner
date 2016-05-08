@@ -80,26 +80,16 @@ class ContactController extends Controller
 
     public function store(ContactRequest $request){
 
-        $authId = Auth::user()->user_id;
-
-        $request["added_by"] = $authId;//might be a better way to do this
-
+        $request["added_by"] = Auth::user()->user_id;
         $contact = Contact::create($request->all());
 
-        $request["contact_id"] = $contact->contact_id; //must be after contact create so i can pull the contact_id for the forein key in phone table
+        $request["contact_id"] = $contact->contact_id;
 
         if (strlen($request["phone_number"]) > 1){
-            PhoneNumber::create($request->all()); //request has the phone number already
+            PhoneNumber::create($request->all()); 
         }
 
         return redirect('contacts');
-    }
-
-    public function edit($id){
-
-        $contact = Contact::findOrFail($id);
-
-        return view('contactFolder.editContacts', compact("contact"));
     }
 
     public function update(ContactRequest $request, $id)
