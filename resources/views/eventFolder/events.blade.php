@@ -11,9 +11,9 @@
 			</div>
 			@forelse($eventsWithCount as $event)
 				@if($event['event']->event_status == 1)
-					@include('eventFolder._eventBox', ['eventStatusTitle' => 'Checked In', 'eventStatus' => 'checkedin-event'])
+					@include('eventFolder._eventBox', ['eventStatusTitle' => 'Checked In', 'eventStatus' => 'checkedin'])
 				@elseif($event['event']->event_status == 0)
-					@include('eventFolder._eventBox', ['eventStatusTitle' => 'Invited', 'eventStatus' => 'open-event'])
+					@include('eventFolder._eventBox', ['eventStatusTitle' => 'Invited', 'eventStatus' => 'open'])
 				@endif
 			@empty
 				<p>You do not have any current events.</p>
@@ -28,7 +28,7 @@
 			</div>
 			@forelse($eventsWithCount as $event)
 				@if($event['event']->event_status == 2)
-					@include('eventFolder._eventBox', ['eventStatusTitle' => 'Went', 'eventStatus' => 'completed-event'])
+					@include('eventFolder._eventBox', ['eventStatusTitle' => 'Went', 'eventStatus' => 'completed'])
 				@endif
 			@empty
 				<p>You do not have any past events.</p>

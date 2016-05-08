@@ -7,8 +7,8 @@
 		</a>
 	</div>
 
-	<div class="box-right-side">
-		<div class="checkedin {{$eventStatus}}">
+	<div class="box-right-side {{$eventStatus}}-event">
+		<div class="{{$eventStatus}}">
 			<p>{{$event['count']}}</p>
 			<p>{{$eventStatusTitle}}</p>
 		</div>

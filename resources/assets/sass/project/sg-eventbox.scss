@@ -43,15 +43,9 @@
     	p+p+p{ font-family: $font-family-secondary; font-size: $font-size-default; margin:0;}
     }
     .box-right-side{
-		background-color: $lime;
     	width: 20%;
     	text-align: center;
     	position: relative;
-    	.checkedin{
-    		margin: 5%;
-	    	p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $stone; margin:0;}
-	    	p+p{ font-size: $font-size-smallish; margin:0;}			    	
-    	}
     	.duplicate{
     		position: absolute;
     		bottom: 0;
@@ -65,7 +59,31 @@
     			&:hover{text-decoration:none;}
     		}
     	}    
-    } 
+    }
+    .open-event{
+        background-color: $jade;
+        .open{
+            margin: 5%;
+            p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $white; margin:0;}
+            p+p{ font-size: $font-size-smallish; margin:0;}                 
+        }
+
+    }
+    .checkedin-event{
+        background-color: $lime;
+        .checkedin{
+            margin: 5%;
+            p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $stone; margin:0;}
+            p+p{ font-size: $font-size-smallish; margin:0;}                 
+        }
+    }
+    .completed-event{
+        .completed{
+            margin: 5%;
+            p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $stone; margin:0;}
+            p+p{ font-size: $font-size-smallish; margin:0;}                 
+        }
+    }
 }
 /* Portrait tablet to landscape and desktop */
 @media (max-width: 1000px) { 
