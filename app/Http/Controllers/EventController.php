@@ -52,7 +52,6 @@ class EventController extends Controller
     }
 
     public function store(EventRequest $request){
-        $request["event_status"] = 0; //better way to do this?
         Event::create($request->all());
         return redirect('events');
     }
