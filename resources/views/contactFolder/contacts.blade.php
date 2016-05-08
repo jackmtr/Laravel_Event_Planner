@@ -52,7 +52,7 @@
 			<div class="search-event">
 				<label for="events">Select an Event: </label>
 				<select id="events" name="events">
-					@foreach($events_active_open as $event)
+					@foreach($open_events as $event)
 						<option value="{{$event['event_id']}}">{{$event['event_name']}}</option>
 					@endforeach
 				</select>

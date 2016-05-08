@@ -12,12 +12,12 @@ class GuestList extends Model
 	protected $fillable = [
 	'additional_guests',
 	'rsvp',
-	'checked_in_by',//should eventually remove, shouldnt be editable
-	'contact_id',//should eventually remove, shouldnt be editable
-	'event_id',//should eventually remove, shouldnt be editable
+	'checked_in_by',
+	'contact_id',
+	'event_id',
 	];
-//INSERT INTO guest_lists (additional_guests, rsvp, checked_in_by, contact_id, event_id, notes) VALUES (4, 0, 2, 9,30,'family waiking.');
-	public $timestamps = false;//might remove to allow timstamps
+
+	public $timestamps = false;
 
     /**
     * A guest is added by a user.

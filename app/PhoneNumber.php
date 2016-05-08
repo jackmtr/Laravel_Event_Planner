@@ -13,12 +13,12 @@ class PhoneNumber extends Model
 
     protected $fillable = [
     	'phone_number',
-    	'contact_id',//should eventually remove, shouldnt be editable
+    	'contact_id',
     ];
 
     protected $dates = ["deleted_at"];    
 
-    public $timestamps = false;//might remove to allow timstamps
+    public $timestamps = false;
 
     /**
     * A phonenumber is owned by a contact.
