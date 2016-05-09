@@ -13,7 +13,7 @@
 				@else
 					Did Not Attend
 				@endif
-			@endif	
+			@endif
 		@else
 			<button>Invite</button>
 		@endif
@@ -29,7 +29,7 @@
           </form>
         @else
 
-        @endif		
+        @endif
 	</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>

@@ -15,6 +15,7 @@
     <div id="showDetails" class="middleside popup-form" hidden>
       <h2>Edit Event {!! $event->event_name !!}</h2>
 
+
         {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
 
           @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
@@ -93,7 +94,7 @@
         {!! Form::submit("Search Guestlist") !!}
       {!! Form::close() !!}
     </div>
-
+@if($event['event_status'] == 0)
     <div id="invitePrevious">
       {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
 
@@ -107,7 +108,10 @@
 
       {{Form::close()}}
     </div>
-
+    @endif
+    @if($event['event_status'] == 2)
+    <a href="{{url("/export/guestlist/{$event['event_id']}") }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
+    @endif
   </div>
 
   <div class="guestList">
@@ -123,13 +127,13 @@
         <th class="responsive-remove">Notes</th>
       </tr>
 
+
       @if( $event['event_status']  == 0) <!--$event['event_status']  == 0 -->
 
         @foreach($guestList as $guest)
 
           @include('eventFolder._eventTableRows', ['status' => 0])
           <!--{{$index++}}-->
-
         @endforeach
 
         @if($comeFromSearch)
@@ -140,7 +144,7 @@
 
           <tr>
             <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
-          </tr>        
+          </tr>
 
         @endif
 
@@ -151,9 +155,8 @@
           @foreach($guestList as $guest)
 
             @if($guest['rsvp'] == 1)
-              @if($guest['checked_in_by'] == null){{--*/ $checkStatus = 0 /*--}}@else{{--*/ $checkStatus = 1 /*--}}@endif
-
-              @include('eventFolder._eventTableRows', ['status' => 1])
+              @if($guest['checked_in_by'] != null){{--*/ $checkStatus = 1 /*--}}@else{{--*/ $checkStatus = 0 /*--}}@endif
+              @include('eventFolder._eventTableRows', ['status' => 1, 'checkStatus'=>$checkStatus])
 
             @endif
             <!--{{$index++}}-->
@@ -169,9 +172,9 @@
 
             <tr>
               <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
-            </tr>        
-            
-          @endif        
+            </tr>
+
+          @endif
 
           @else <!--$event['event_status']  == 2 -->
             @foreach($guestList as $guest)
@@ -220,6 +223,7 @@
 
 @section('javascript')
 
+
   <script>
 
   $(document).ready(function(){
@@ -262,7 +266,7 @@
 
     $.ajaxSetup({
       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-    });    
+    });
 
     $(".showDetails").click(function(e){
       $("#showDetails").slideToggle("fast");
@@ -348,7 +352,7 @@
 
       }
       $.post(action, request, function (response) {
-        if (response == "Guest Removed" || "Status Changed") {
+        if (response == "Guest Removed" || response == "Status Changed") {
           // flash Success message
           location.reload();
         } else if (response) {
@@ -358,7 +362,7 @@
         }
       });
     });
-  });    
+  });
 
   </script>
 
