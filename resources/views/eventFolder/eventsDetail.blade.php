@@ -125,7 +125,7 @@
 
           <tr>
             <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
-          </tr>        
+          </tr>
 
         @endif
 
@@ -136,9 +136,8 @@
           @foreach($guestList as $guest)
 
             @if($guest['rsvp'] == 1)
-              @if($guest['checked_in_by'] == null){{--*/ $checkStatus = 0 /*--}}@else{{--*/ $checkStatus = 1 /*--}}@endif
-
-              @include('eventFolder._eventTableRows', ['status' => 1])
+              @if($guest['checked_in_by'] != null){{--*/ $checkStatus = 1 /*--}}@else{{--*/ $checkStatus = 0 /*--}}@endif
+              @include('eventFolder._eventTableRows', ['status' => 1, 'checkStatus'=>$checkStatus])
 
             @endif
             <!--{{$index++}}-->
@@ -154,9 +153,9 @@
 
             <tr>
               <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
-            </tr>        
-            
-          @endif        
+            </tr>
+
+          @endif
 
           @else <!--$event['event_status']  == 2 -->
             @foreach($guestList as $guest)
@@ -214,7 +213,7 @@
 
     $.ajaxSetup({
       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-    });    
+    });
 
     $(".showDetails").click(function(e){
       $("#showDetails").slideToggle("fast");
@@ -278,7 +277,7 @@
         var request = { theEvent : {{$event['event_id']}} , theStatus : data };
       }
       $.post(action, request, function (response) {
-        if (response == "Guest Removed" || "Status Changed") {
+        if (response == "Guest Removed" || response == "Status Changed") {
           // flash Success message
           location.reload();
         } else if (response) {
@@ -288,7 +287,7 @@
         }
       });
     });
-  });    
+  });
 
   </script>
 

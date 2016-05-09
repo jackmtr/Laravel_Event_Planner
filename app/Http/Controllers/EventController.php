@@ -119,7 +119,7 @@ class EventController extends Controller
         $oneGuest['guest_list_id'] = $guest->guest_list_id;
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
-        $oneGuest['checked_in_by'] = null;
+        $oneGuest['checked_in_by'] = $guest->checked_in_by;
         $oneGuest['note'] = $guest->contact['notes'];
 
         $first_name = $guest->contact()->withTrashed()->get()->toArray()[0]['first_name'];
