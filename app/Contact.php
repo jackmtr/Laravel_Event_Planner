@@ -19,12 +19,12 @@ class Contact extends Model
 		'company',
 		'wechat_id',
 		'notes',
-		'added_by',//should eventually remove, should't be editable
+		'added_by',
 	];
 
 	protected $dates = ["deleted_at"];
 
-	public $timestamps = false;//might remove to allow timstamps
+	public $timestamps = false;
 
 	/**
 	* A contact may be on many guestlists.

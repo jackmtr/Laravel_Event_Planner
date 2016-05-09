@@ -5,13 +5,13 @@
 <br/>
 <div class="form-group">
     {!! Form::label('event_date', 'Date: ') !!}
-    {!! Form::input('date', 'event_date', date('Y-m-d'), null, ['class' => 'form-control']) !!}
+    {!! Form::input('date', 'event_date', $eventDate, ['class' => 'form-control']) !!} <!--date('Y-m-d') date('h:i')-->
 </div>   
 <!--Need to cast the date and time with a accessor to cast the value from db for proper format for input-->
 <br/>
 <div class="form-group">
     {!! Form::label('event_time', 'Time: ') !!}
-    {!! Form::input('time', 'event_time', date('h:i'), null, ['class' => 'form-control']) !!}
+    {!! Form::input('time', 'event_time', $eventTime, ['class' => 'form-control']) !!}
 </div>
 <!--Need to cast the date and time with a accessor to cast the value from db for proper format for input-->
 <br/>

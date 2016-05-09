@@ -1715,20 +1715,9 @@ tr.active a {
       font-size: 14px;
       margin: 0; }
   .event-box .box-right-side {
-    background-color: #bed883;
     width: 20%;
     text-align: center;
     position: relative; }
-    .event-box .box-right-side .checkedin {
-      margin: 5%; }
-      .event-box .box-right-side .checkedin p {
-        font-family: "Rajdhani-Semibold", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
-        font-size: 24px;
-        color: #5f5f5f;
-        margin: 0; }
-      .event-box .box-right-side .checkedin p + p {
-        font-size: 13px;
-        margin: 0; }
     .event-box .box-right-side .duplicate {
       position: absolute;
       bottom: 0;
@@ -1741,6 +1730,40 @@ tr.active a {
         color: #fff; }
         .event-box .box-right-side .duplicate a:hover {
           text-decoration: none; }
+  .event-box .open-event {
+    background-color: #1e8f98; }
+    .event-box .open-event .open {
+      margin: 5%; }
+      .event-box .open-event .open p {
+        font-family: "Rajdhani-Semibold", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
+        font-size: 24px;
+        color: #fff;
+        margin: 0; }
+      .event-box .open-event .open p + p {
+        font-size: 13px;
+        margin: 0; }
+  .event-box .checkedin-event {
+    background-color: #bed883; }
+    .event-box .checkedin-event .checkedin {
+      margin: 5%; }
+      .event-box .checkedin-event .checkedin p {
+        font-family: "Rajdhani-Semibold", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
+        font-size: 24px;
+        color: #5f5f5f;
+        margin: 0; }
+      .event-box .checkedin-event .checkedin p + p {
+        font-size: 13px;
+        margin: 0; }
+  .event-box .completed-event .completed {
+    margin: 5%; }
+    .event-box .completed-event .completed p {
+      font-family: "Rajdhani-Semibold", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Arial, sans-serif;
+      font-size: 24px;
+      color: #5f5f5f;
+      margin: 0; }
+    .event-box .completed-event .completed p + p {
+      font-size: 13px;
+      margin: 0; }
 
 /* Portrait tablet to landscape and desktop */
 @media (max-width: 1000px) {
@@ -1870,10 +1893,6 @@ tr.active a {
   justify-content: center; }
 
 /* ------------------------------
-  Project Style: Variables
------------------------------- */
-/* ------ Font Family ------ */
-/* ------------------------------
   Project Style: Base Element
 ------------------------------ */
 h3 > span {
@@ -1917,152 +1936,6 @@ h3 > span {
   display: flex; }
   .eevents div {
     margin: 0 25px; }
-
-/* ------------------------------
-  Project Style: Container
------------------------------- */
-@media screen and (min-width: 1024px) {
-  .sg-container {
-    padding-bottom: 100px; } }
-
-.sg-container-1col h1 {
-  margin-top: 50px; }
-
-/* ---------------------------------
-  Project Style: Image
---------------------------------- */
-.sg-image {
-  width: 100%;
-  max-width: 700px;
-  border-radius: 100px;
-  border: 1px solid #eaeaea; }
-  @media screen and (min-width: 768px) {
-    .sg-image {
-      width: auto; } }
-
-/* ---------------------------------
-  Project Style: Notes
---------------------------------- */
-.sg-notes-designers, .sg-notes-developers, .sg-notes-important {
-  margin-bottom: 10px;
-  padding: 10px 20px;
-  border: 1px solid;
-  width: 100%; }
-  .sg-notes-designers p, .sg-notes-developers p, .sg-notes-important p {
-    margin: 0; }
-  @media screen and (min-width: 1024px) {
-    .sg-notes-designers, .sg-notes-developers, .sg-notes-important {
-      width: 700px; } }
-
-.sg-notes-designers {
-  border-color: #f5a623; }
-
-.sg-notes-developers {
-  border-color: #ececec; }
-
-.sg-notes-important {
-  border-color: #dd4627; }
-  .sg-notes-important:before, .sg-notes-important:after {
-    content: "";
-    display: table; }
-  .sg-notes-important:after {
-    clear: both; }
-  .sg-notes-important i {
-    float: left;
-    margin-top: 10px;
-    color: #dd4627;
-    font-size: 21px; }
-  .sg-notes-important p {
-    padding-left: 30px; }
-
-/* ---------------------------------
-  Project Style: Side Navigation
---------------------------------- */
-.sg-side-nav li a,
-.sg-side-nav-mobile li a {
-  display: block;
-  padding: 10px 15px;
-  background-color: #1e8f98;
-  color: #fff; }
-  .sg-side-nav li a:hover, .sg-side-nav li a:focus,
-  .sg-side-nav-mobile li a:hover,
-  .sg-side-nav-mobile li a:focus {
-    text-decoration: none; }
-  .sg-side-nav li a:hover,
-  .sg-side-nav-mobile li a:hover {
-    background-color: #22a3ad; }
-  .sg-side-nav li a.active,
-  .sg-side-nav-mobile li a.active {
-    background-color: #fff;
-    color: #1e8f98;
-    font-weight: 700; }
-
-@media screen and (min-width: 1024px) {
-  .sg-side-nav {
-    margin-top: 70px; } }
-
-.sg-side-nav li + li {
-  margin-top: 10px; }
-
-.sg-side-nav-mobile {
-  position: relative;
-  z-index: 1 !important; }
-  @media screen and (min-width: 768px) {
-    .sg-side-nav-mobile {
-      max-width: 250px; } }
-  .sg-side-nav-mobile .dropdown-trigger {
-    max-width: 100%; }
-    .sg-side-nav-mobile .dropdown-trigger .button-primary {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      margin-bottom: 10px;
-      padding-right: 20px;
-      text-align: left; }
-      .sg-side-nav-mobile .dropdown-trigger .button-primary i {
-        position: absolute;
-        top: 13px;
-        right: 20px; }
-  .sg-side-nav-mobile .dropdown-content {
-    display: none;
-    position: absolute;
-    top: 42px;
-    left: 0;
-    z-index: 1;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #adeaef; }
-    .sg-side-nav-mobile .dropdown-content.active {
-      display: block; }
-    .sg-side-nav-mobile .dropdown-content li + li {
-      border-top: 1px solid #fff; }
-
-/* ---------------------------------
-  Project Style: Spacer
---------------------------------- */
-.sg-spacer-xx-lg {
-  margin-bottom: 50px !important; }
-  @media screen and (min-width: 1024px) {
-    .sg-spacer-xx-lg {
-      margin-bottom: 80px !important; } }
-
-.sg-spacer-x-lg {
-  margin-bottom: 30px !important; }
-  @media screen and (min-width: 1024px) {
-    .sg-spacer-x-lg {
-      margin-bottom: 50px !important; } }
-
-.sg-spacer-lg {
-  margin-bottom: 20px !important; }
-  @media screen and (min-width: 1024px) {
-    .sg-spacer-lg {
-      margin-bottom: 30px !important; } }
-
-.sg-spacer-md {
-  margin-bottom: 15px !important; }
-  @media screen and (min-width: 1024px) {
-    .sg-spacer-md {
-      margin-bottom: 20px !important; } }
 
 /* ---------------------------------
   Project Style: Table
@@ -2140,29 +2013,5 @@ h3 > span {
 
 .qty {
   width: 45px; }
-
-/* ---------------------------------
-  Project Style: Trigger Up
---------------------------------- */
-.sg-trigger-up {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  background-color: #a0a0a0;
-  color: #fff;
-  text-align: center; }
-  .sg-trigger-up:hover, .sg-trigger-up:focus {
-    background-color: #d8d8d8;
-    color: #fff;
-    text-decoration: none; }
-  .sg-trigger-up i {
-    font-size: 21px; }
-  .sg-trigger-up span {
-    display: block;
-    margin-top: -5px;
-    font-size: 12px;
-    line-height: 1; }
 
 /*# sourceMappingURL=framework.css.map */
