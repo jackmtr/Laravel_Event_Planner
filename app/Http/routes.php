@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//Route::post('/events', 'EventController@store');//standard post creation page
 	//Route::get('/events/{id}/edit', 'EventController@edit');//standard show edit form
 	//Route::patch('/events/{id}/edit', 'EventController@update');//standard post edit
-	Route::get('/guestlist/{id}/search', 'GuestlistController@show');
+
 	Route::resource('events', 'EventController');//DOES EVERYTHING ABOVE
   	Route::post('/events/togglestatus', 'EventController@toggleStatus');
 	Route::post('/events/{id}', 'EventController@show');
@@ -44,21 +44,10 @@ Route::group(['middleware' => 'auth'], function () {
 
   	Route::post('/guestlist/update', 'GuestListController@update');
 	Route::post('/guestlist/create','GuestListController@store');
-	//Route::resource('queries', 'ContactController');
-	//Route::get('/contacts/search','ContactController@search');
-
-	Route::group(['middleware' => 'cors'], function () {
-		Route::get('search', 'ContactController@search');
-		Route::post('search_post', 'ContactController@search_post');
-	});
-
-	//practice ajax route for get request
-
  	Route::post('/guestlist/checkin', 'GuestListController@checkin');
   	Route::post('/guestlist/addguests', 'GuestListController@addguests');
 	Route::get('/guestlist/{id}/details','GuestListController@details');
 	Route::post('guestlist/{id}/details','GuestListController@addPhone');
-	Route::get('/guestlist/{id}/search', 'GuestListController@show');
 
   	Route::get('/export/contacts', 'CSVController@exportContactList');
 

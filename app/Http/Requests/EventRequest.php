@@ -34,6 +34,4 @@ class EventRequest extends Request
             'event_status' => 'integer',
         ];
     }
-
-
 }

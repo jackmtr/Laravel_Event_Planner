@@ -18,7 +18,6 @@ class EventController extends Controller
      *
      * @return void
      */
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -76,7 +75,7 @@ class EventController extends Controller
 
         $comeFromSearch = 1;
         $query = Request::input('searchitem');
-            $contactMatches = Contact::withTrashed()->where('first_name', 'LIKE', '%'. $query .'%')
+            $contactMatches = Contact::withTrashed()->where('first_name', 'LIKE', '%'. $query . '%')
               ->orWhere('last_name', 'LIKE', '%'. $query . '%')->get()->toArray();
 
         $contactMatchesIds = array_column($contactMatches, 'contact_id');
