@@ -20,6 +20,7 @@ class Contact extends Model
 		'wechat_id',
 		'notes',
 		'added_by',
+		'guest_of_id',
 	];
 
 	protected $dates = ["deleted_at"];
