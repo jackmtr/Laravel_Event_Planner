@@ -33,7 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
   	Route::post('/events/{id}', 'EventController@invitePreviousGuests');
   	Route::get('/events/{id}/duplicate', 'EventController@duplicate');
 
-
 	//Route::get('/contacts', 'ContactController@index');//standard read all
 	//Route::get('/contacts/create', 'ContactController@create');//standard create page
 	//Route::get('/contacts/{id}', 'ContactController@show');	//standard read one
@@ -46,13 +45,16 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/guestlist/create','GuestListController@store');
  	Route::post('/guestlist/checkin', 'GuestListController@checkin');
   	Route::post('/guestlist/addguests', 'GuestListController@addguests');
+
 	Route::get('/guestlist/{id}/details','GuestListController@details');
 	Route::post('guestlist/{id}/details','GuestListController@addPhone');
 
+
   	Route::get('/export/contacts', 'CSVController@exportContactList');
 
-    Route::post('/import/contacts', 'CSVController@importContacts');
 
+    Route::post('/import/contacts', 'CSVController@importContacts');
+	Route::get('/export/guestlist/{event_id}', 'CSVController@exportGuestList');
     Route::get('/register', 'RegistrationController@register');
 	Route::post('/register', 'RegistrationController@postRegister');
 });

@@ -15,6 +15,7 @@
     <div id="showDetails" class="middleside popup-form" hidden>
       <h2>Edit Event {!! $event->event_name !!}</h2>
 
+
         {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
 
           @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
@@ -74,7 +75,7 @@
         {!! Form::submit("Search Guestlist") !!}
       {!! Form::close() !!}
     </div>
-
+@if($event['event_status'] == 0)
     <div id="invitePrevious">
       {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
 
@@ -88,7 +89,10 @@
 
       {{Form::close()}}
     </div>
-
+    @endif
+    @if($event['event_status'] == 2)
+    <a href="{{url("/export/guestlist/{$event['event_id']}") }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
+    @endif
   </div>
 
   <div class="guestList">
@@ -104,13 +108,13 @@
         <th class="responsive-remove">Notes</th>
       </tr>
 
+
       @if( $event['event_status']  == 0) <!--$event['event_status']  == 0 -->
 
         @foreach($guestList as $guest)
 
           @include('eventFolder._eventTableRows', ['status' => 0])
           <!--{{$index++}}-->
-
         @endforeach
 
         @if($comeFromSearch)
@@ -200,6 +204,7 @@
 @endsection
 
 @section('javascript')
+
 
   <script>
 
