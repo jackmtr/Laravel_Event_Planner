@@ -2015,21 +2015,43 @@ h3 > span {
   width: 45px; }
 
 .openstatus {
-  background-color: lightyellow; }
+  background-color: #FFE4B5; }
+  .openstatus:hover {
+    background-color: #fff7e8; }
 
 .checkedinstatus {
   background-color: lightgreen; }
+  .checkedinstatus:hover {
+    background-color: #bcf5bc; }
 
 .completedstatus {
   background-color: #FF6666; }
+  .completedstatus:hover {
+    background-color: #ff9999; }
 
 .invitedstatus {
   background-color: #d8c383; }
+  .invitedstatus:hover {
+    background-color: #e4d6aa; }
 
 .goingstatus {
   background-color: #bed883; }
+  .goingstatus:hover {
+    background-color: #d2e4aa; }
 
 .notgoingstatus {
   background-color: #eaeaea; }
+  .notgoingstatus:hover {
+    background-color: white; }
+
+.guestcheckedin {
+  background-color: #1e8f98; }
+  .guestcheckedin:hover {
+    background-color: #26b7c3; }
+
+.guestnotcheckin {
+  background-color: #a0a0a0; }
+  .guestnotcheckin:hover {
+    background-color: #bababa; }
 
 /*# sourceMappingURL=framework.css.map */

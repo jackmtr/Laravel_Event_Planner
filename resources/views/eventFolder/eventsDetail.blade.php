@@ -229,28 +229,34 @@
     //alert($(".ajaxSelect"));
     //alert($('.eventStatus').find('option:selected').val());
 
-    var event_status = $('.eventStatus').find('option:selected').val();
+    var event_status = $('.eventStatus').find('option:selected').html();
 
-    if(event_status == 0){
-        //alert("hi");
-        //$('.openmode').css("background-color", "yellow");
+    if(event_status == "OPEN"){
         $(".openmode").addClass("openstatus");
-    }else if(event_status == 1){
+    }else if(event_status == "CHECK-IN"){
       $(".openmode").addClass("checkedinstatus");
-    }else if(event_status == 2){
+    }else if(event_status == "COMPLETED"){
       $(".openmode").addClass("completedstatus");
     }
 
     $('.status').each(function(){
-      var guest_status = $(this).find('option:selected').val();
+      var guest_status = $(this).find('option:selected').html();
 
-      if (guest_status == 0){
+      alert(guest_status);
+
+      if (guest_status == "Invited"){
         $(this).addClass("invitedstatus");
-      }else if(guest_status == 1){
+      }else if(guest_status == "Going"){
         $(this).addClass("goingstatus");
       }
-      else if(guest_status == 2){
+      else if(guest_status == "Not Going"){
         $(this).addClass("notgoingstatus");
+      }
+      else if(guest_status == "Checked In"){
+        $(this).addClass("guestcheckedin");
+      }
+      else if(guest_status == "Not Checked In"){
+        $(this).addClass("guestnotcheckedin");
       }
     })    
 

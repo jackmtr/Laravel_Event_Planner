@@ -1,23 +1,55 @@
 .openstatus{
-	background-color: lightyellow;
+	background-color: #FFE4B5;
+	&:hover{
+		background-color: lighten(#FFE4B5, 10%);
+	}
 }
 
 .checkedinstatus{
 	background-color: lightgreen;
+	&:hover{
+		background-color: lighten(lightgreen, 10%);
+	}	
 }
 
 .completedstatus{
 	background-color: #FF6666;
+	&:hover{
+		background-color: lighten(#FF6666, 10%);
+	}	
 }
 
 .invitedstatus{
 	background-color: $tan;
+	&:hover{
+		background-color: lighten($tan, 10%);
+	}	
 }
 
 .goingstatus{
 	background-color: $lime;
+	&:hover{
+		background-color: lighten($lime, 10%);
+	}	
 }
 
 .notgoingstatus{
 	background-color: $light-grey;
+	&:hover{
+		background-color: lighten($light-grey, 10%);
+	}	
+}
+
+.guestcheckedin{
+	background-color: $jade;
+	&:hover{
+		background-color: lighten($jade, 10%);
+	}		
+}
+
+.guestnotcheckin{
+	background-color: $gray-30;
+	&:hover{
+		background-color: lighten($gray-30, 10%);
+	}		
 }
