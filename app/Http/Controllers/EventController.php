@@ -67,7 +67,7 @@ class EventController extends Controller
       $comeFromSearch = 0;
       $query = "";
 
-      $event = Event::findOrFail($id); //get event details to pass to view      
+      $event = Event::findOrFail($id); //get event details to pass to view
       $events = Event::all();
 
       $guests = array();
@@ -90,10 +90,10 @@ class EventController extends Controller
         $contactMatchesIds = array_column($contactMatches, 'contact_id');
 
         $eventGuests = Event::find($id)->guestList;
-            
+
         foreach($eventGuests as $guest){
           $guestMatches[] = $guest->contact->toArray();
-        }        
+        }
 
         $guestMatchesIds = array_column($guestMatches, "contact_id");
 
@@ -112,7 +112,7 @@ class EventController extends Controller
           $guests[] = $guest;
         }
       }
-      
+
       foreach( $guests as $guest)
       {
 
@@ -203,11 +203,11 @@ class EventController extends Controller
           if($li->contact['contact_id'] > 0){
             $guestList[] = $li->contact->toArray();
           }
-      }            
+      }
 
       $duplicateEvent = $event->toArray();
       $duplicateEvent["event_name"] = $duplicateEvent["event_name"] . " " . date("F j, Y");
-      $duplicateEvent["event_status"] = 0; 
+      $duplicateEvent["event_status"] = 0;
       $duplicateEvent["event_date"] = null;
       $duplicateEvent["event_time"] = null;
 
