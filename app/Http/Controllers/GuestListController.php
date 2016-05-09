@@ -134,17 +134,18 @@ class GuestListController extends Controller
       $lastName = $guest->guest_list_id;
       $eventId = $guest->event_id;
 
-      // $findContacts = Contact::where('last_name', '=', $lastName);
-      // foreach($findContacts as $findContact){   
-      //   $findGuest = GuestList::where('guest_list_id', '=', $findContact->last_name );     
-      //   $findGuest->forceDelete();
-      // }      
-           
-      // $findContacts = Contact::where('last_name', 'LIKE', '%'. $lastName . '%');    
-      // foreach($findContacts as $findContact){
-      //   $findContact->forceDelete();
-      // }
+      $findContacts = Contact::where('last_name', '=', $lastName)->get();
 
+           
+      foreach($findContacts as $findContact){
+        $invitee = $findContact->contact_id;        
+        $findGuest = GuestList::where('contact_id', '=', $invitee);               
+        if($findGuest != null){          
+          $findGuest->forceDelete(); // First we need to delete data from guest_lists table 
+        }
+        $findContact->forceDelete(); // Deleting data from contacts table
+      }
+                               
       for($i = 0; $i < $request->guests; $i++){        
         $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'added_by'=> $addedBy ]);
         $invitee = $newContact->contact_id;
