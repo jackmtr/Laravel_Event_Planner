@@ -75,7 +75,7 @@
         {!! Form::submit("Search Guestlist") !!}
       {!! Form::close() !!}
     </div>
-
+@if($event['event_status'] == 0)
     <div id="invitePrevious">
       {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
 
@@ -89,7 +89,10 @@
 
       {{Form::close()}}
     </div>
-
+    @endif
+    @if($event['event_status'] == 2)
+    <a href="{{url("/export/guestlist/{$event['event_id']}") }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
+    @endif
   </div>
 
   <div class="guestList">
@@ -104,20 +107,7 @@
         <th class="responsive-remove">Title &amp; Company</th>
         <th class="responsive-remove">Notes</th>
       </tr>
-<<<<<<< HEAD
-      <!--{{$index++}}-->
-      @endforeach
-      @if($comeFromSearch)
-        @foreach($contactList as $guest)
-        <tr>
-          <td><button name="btn_invite_contact_{{$guest['guest_list_id']}}" type="button" id="btn_invite_contact" value="{{$guest['guest_list_id']}}">Invite</button></td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
-          <td></td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-          <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
-        </tr>
-=======
+
 
       @if( $event['event_status']  == 0) <!--$event['event_status']  == 0 -->
 
@@ -125,8 +115,6 @@
 
           @include('eventFolder._eventTableRows', ['status' => 0])
           <!--{{$index++}}-->
-
->>>>>>> ec9326b58c468b10cdccd35be94c095514c2cb40
         @endforeach
 
         @if($comeFromSearch)
@@ -217,77 +205,7 @@
 
 @section('javascript')
 
-<<<<<<< HEAD
-<script>
-$.ajaxSetup({
-  headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-});
-</script>
 
-<script>
-
-  $(document).ready(function(){
-    $('#btn_invite_contact').click(function(){
-      $.ajax({
-        url: '/guestlist/create',
-        type: "post",
-        data: {'contact': $('input[name =_token]').val() ,
-          '_token': $('input[name =_token]').val()},
-        success: function(data){
-          alert(data);
-        }
-      });
-    });
-  });
-
-$(document).ready(function(){
-
-  var max_fields = 10; //maximum input boxes allowed
-  var index = {{$phoneindex}};
-
-  $(".showDetails").click(function(e){
-    $("#showDetails").slideToggle("fast");
-  });
-
-  // This button will increment the additional_guests value
-  $('.qtyplus').click(function(e){
-    e.preventDefault();
-    fieldName = $(this).attr('field');
-    var currentVal = parseInt($('input[name='+fieldName+']').val());
-    // If is not undefined
-    if (!isNaN(currentVal)) {
-      // Increment
-      $('input[name='+fieldName+']').val(currentVal + 1);
-    } else {
-      // Otherwise put a 0 there
-      $('input[name='+fieldName+']').val(0);
-    }
-  });
-
-  // This button will decrement the additional_guests value till 0
-  $(".qtyminus").click(function(e) {
-    e.preventDefault();
-    fieldName = $(this).attr('field');
-    var currentVal = parseInt($('input[name='+fieldName+']').val());
-    // If it isn't undefined or its greater than 0
-    if (!isNaN(currentVal) && currentVal > 0) {
-      // Decrement one
-      $('input[name='+fieldName+']').val(currentVal - 1);
-    } else {
-      // Otherwise put a 0 there
-      $('input[name='+fieldName+']').val(0);
-    }
-  });
-
-  // This function changes the additional_guests value in the db
-  $(".qtybtn").click(function(){
-    var data = $(this).siblings(".qty").val();
-    var action = '/guestlist/addguests';
-    var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
-    $.post(action, request, function (response) {
-      if (response) {
-        // flash Success message
-=======
   <script>
 
   $(document).ready(function(){
@@ -311,7 +229,6 @@ $(document).ready(function(){
       if (!isNaN(currentVal)) {
         // Increment
         $('input[name='+fieldName+']').val(currentVal + 1);
->>>>>>> ec9326b58c468b10cdccd35be94c095514c2cb40
       } else {
         // Otherwise put a 0 there
         $('input[name='+fieldName+']').val(0);
