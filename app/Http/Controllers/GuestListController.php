@@ -131,8 +131,9 @@ class GuestListController extends Controller
       $addedBy = $authId; 
       $contact = Contact::findOrFail($guest->contact_id);             
       $firstName = "Friend of ". $contact->first_name . " " . $contact->last_name;
-      $lastName = $guest->guest_list_id;
+      $lastName = $guest->guest_list_id;      
       $eventId = $guest->event_id;
+      $email = $contact->email;
 
       $findContacts = Contact::where('last_name', '=', $lastName)->get();
 
@@ -147,7 +148,7 @@ class GuestListController extends Controller
       }
                                
       for($i = 0; $i < $request->guests; $i++){        
-        $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'added_by'=> $addedBy ]);
+        $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'email' => $email, 'added_by'=> $addedBy ]);
         $invitee = $newContact->contact_id;
         GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
       }
