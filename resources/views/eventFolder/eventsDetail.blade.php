@@ -31,6 +31,9 @@
       {!! Form::label('event_status', 'Event Status:' )!!}
       {!! Form::select('event_status', [0 => 'OPEN', 1 => 'CHECK-IN', 2 => 'COMPLETED'], $event['event_status'], ['class' => 'openmode ajaxSelect'] ) !!}
     </div>
+    {{--{!! link_to_action('CSVController@exportGuestList', 'export:'. $event->event_id,--}}
+    {{--["event_id"=>$event->event_id])!!}--}}
+    <a href="{{url('/export/guestlist', array('event_id' => $event->event_id)) }}"><i class="fa fa-download" aria-hidden="true"></i> Export Guest List</a>
     <div class="guestListCount">
       <div class="guestVariableA">
         @if( $event['event_status']  == 0)
@@ -111,7 +114,7 @@
       @if($comeFromSearch)
         @foreach($contactList as $guest)
         <tr>
-          <td><button>Invite</button></td>
+          <td><button name="btn_invite_contact_{{$guest['guest_list_id']}}" type="button" id="btn_invite_contact" value="{{$guest['guest_list_id']}}">Invite</button></td>
           <td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
           <td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
           <td></td>
@@ -356,6 +359,20 @@ $.ajaxSetup({
 </script>
 
 <script>
+
+  $(document).ready(function(){
+    $('#btn_invite_contact').click(function(){
+      $.ajax({
+        url: '/guestlist/create',
+        type: "post",
+        data: {'contact': $('input[name =_token]').val() ,
+          '_token': $('input[name =_token]').val()},
+        success: function(data){
+          alert(data);
+        }
+      });
+    });
+  });
 
 $(document).ready(function(){
 
