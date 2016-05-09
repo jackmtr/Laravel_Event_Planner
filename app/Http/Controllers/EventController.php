@@ -9,7 +9,6 @@ use App\Http\Requests\EventRequest;
 use App\EventWithCount;
 use App\EventDetails;
 use Request;
-//use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -34,25 +33,31 @@ class EventController extends Controller
 
         //if eventstatus 0, event->guestLists->count, else event->guestLists->where checkedInBy not null->count
         foreach(Event::latest("event_status")->get() as $event){
+
           $guests = $event->guestList()->get();
+
           if($event->event_status == 0){
-            $count = count($guests); //invited
-          } else {
-            $count = count($guests) - count($guests->where('checked_in_by', null)); //going or went
+
+            $count = count($guests);
+          }else{
+
+            $count = count($guests) - count($guests->where('checked_in_by', null));
           }
+
           $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
+
         }
         return view('eventFolder.events', compact('eventsWithCount'));
     }
 
-    public function create()
-    {
+    public function create(){
+
         return view('eventFolder.createEvents');
     }
 
     public function store(EventRequest $request){
-        $request["event_status"] = 0; //better way to do this?
+
         Event::create($request->all());
         return redirect('events');
     }
@@ -61,22 +66,26 @@ class EventController extends Controller
     {
       $comeFromSearch = 0;
       $query = "";
-      $events = Event::all();
-      $event = Event::findOrFail($id); //get event details to pass to view
-      $guestList = array(); //guestList contact details to pass to view
-      $contactList = array();
 
-      $contactMatches = array();
-      $guestMatches = array();
+      $event = Event::findOrFail($id); //get event details to pass to view      
+      $events = Event::all();
+
       $guests = array();
+      $guestMatches = array();
+        $guestList = array(); //guestList contact details to pass to view
+
       $contacts = array();
+      $contactMatches = array();
+        $contactList = array();
 
       if(Request::input('searchitem')){
 
         $comeFromSearch = 1;
+
         $query = Request::input('searchitem');
-            $contactMatches = Contact::withTrashed()->where('first_name', 'LIKE', '%'. $query . '%')
-              ->orWhere('last_name', 'LIKE', '%'. $query . '%')->get()->toArray();
+
+        $contactMatches = Contact::withTrashed()->where('first_name', 'LIKE', '%'. $query . '%')
+          ->orWhere('last_name', 'LIKE', '%'. $query . '%')->get()->toArray();
 
         $contactMatchesIds = array_column($contactMatches, 'contact_id');
 
@@ -111,7 +120,7 @@ class EventController extends Controller
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
         $oneGuest['checked_in_by'] = null;
-        $oneGuest['note'] = "coming soon";
+        $oneGuest['note'] = $guest->contact['notes'];
 
         $first_name = $guest->contact()->withTrashed()->get()->toArray()[0]['first_name'];
         $last_name = $guest->contact()->withTrashed()->get()->toArray()[0]['last_name'];
@@ -127,14 +136,16 @@ class EventController extends Controller
         $guestList[] = $oneGuest;
       }
 
+      $index = 0;
+      $phoneindex = 0;
 
       foreach($contacts as $guest){
 
-        $oneGuest['guest_list_id'] = $guest->guest_list_id;
-        $oneGuest['rsvp'] = $guest->rsvp;
-        $oneGuest['additional_guests'] = $guest->additional_guests;
-        $oneGuest['checked_in_by'] = $guest->checked_in_by;
-        $oneGuest['note'] = "coming soon";
+        $oneGuest['guest_list_id'] = "";
+        $oneGuest['rsvp'] = "";
+        $oneGuest['additional_guests'] = "";
+        $oneGuest['checked_in_by'] = "";
+        $oneGuest['note'] = $guest->notes;
 
         $first_name = $guest->first_name;
         $last_name = $guest->last_name;
@@ -145,8 +156,8 @@ class EventController extends Controller
         $oneGuest['work'] = $occupation . " " . $company;
 
         $oneGuest['contact'] = $guest;
-        $oneGuest['note'] = "coming soon";
 
+        $oneGuest['phone_number'] = $guest->first()->phoneNumber()->get();
         $contactList[] = $oneGuest;
       }
 
@@ -154,22 +165,15 @@ class EventController extends Controller
 
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
-      $index = 0;
-      $phoneindex = 0;
 
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex', 'contactList', 'comeFromSearch', 'query'));
-    }
-
-    public function edit($id)
-    {
-        $event = Event::findOrFail($id);
-        return view('eventFolder.editEvents', compact("event"));
     }
 
     public function update(EventRequest $request, $id)
     {
         $event = Event::findOrFail($id)->update($request->all());
-        return redirect('events');
+
+        return redirect()->action('EventController@show', $id);
     }
 
     public function destroy($id){
