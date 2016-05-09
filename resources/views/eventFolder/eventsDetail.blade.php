@@ -58,7 +58,6 @@
     </div>
   </div>
 </div>
-<<<<<<< HEAD
   <div class="subnav">
     {!! Form::open(['action' => ['GuestListController@show',$event->event_id], 'method' => 'get']) !!}
     {!! Form::text("search", "", ['placeholder'=>'[ ? ]Look up names or contact info', 'class'=> "contact-searchbar search rounded"]) !!}
@@ -66,20 +65,7 @@
     {!! Form::close() !!}
   </div>
     <div id="invitePrevious">
-=======
-<div class="subnav">
-<!--
-  <div>
-    <input type="text" name="s" class="contact-searchbar search rounded" placeholder="Look up names or contact info" /><button><i class="fa fa-search" aria-hidden="true"></i></button>
-  </div>
--->
-    {!! Form::open(['action' => ['EventController@show', $event->event_id], 'method' => 'get']) !!}
-      {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
-      {!! Form::submit("Search Guestlist") !!}
-    {!! Form::close() !!}
 
-  <div id="invitePrevious">
->>>>>>> e7f16cd12f5140cdde1e7cc9d9d47eee7b58a8ed
     {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
     <label for="events">Invite Guests from a Previous Event: </label>
     <select id="inviteEventSelect" name="events" />
