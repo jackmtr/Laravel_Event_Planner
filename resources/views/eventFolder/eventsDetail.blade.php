@@ -226,6 +226,34 @@
 
     @include('javascript._phoneJavascript')
 
+    //alert($(".ajaxSelect"));
+    //alert($('.eventStatus').find('option:selected').val());
+
+    var event_status = $('.eventStatus').find('option:selected').val();
+
+    if(event_status == 0){
+        //alert("hi");
+        //$('.openmode').css("background-color", "yellow");
+        $(".openmode").addClass("openstatus");
+    }else if(event_status == 1){
+      $(".openmode").addClass("checkedinstatus");
+    }else if(event_status == 2){
+      $(".openmode").addClass("completedstatus");
+    }
+
+    $('.status').each(function(){
+      var guest_status = $(this).find('option:selected').val();
+
+      if (guest_status == 0){
+        $(this).addClass("invitedstatus");
+      }else if(guest_status == 1){
+        $(this).addClass("goingstatus");
+      }
+      else if(guest_status == 2){
+        $(this).addClass("notgoingstatus");
+      }
+    })    
+
     $.ajaxSetup({
       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
     });    
@@ -280,16 +308,38 @@
 
     // This function changes the rsvp checked in and event status
     $(".ajaxSelect").change(function () {
+
+
+      //alert($(this).val());
+
       var data = $(this).children(":selected").html();
+
+      //alert(data);
+      /*if(data == "OPEN"){
+        //alert(data);
+        $(".ajaxSelect").addClass("yellow");
+      }
+      else if(data == "CHECK-IN"){
+        $(".ajaxSelect").addClass("green");
+        //alert(data);
+      }
+      else if(data == "COMPLETED"){
+        $(".ajaxSelect").addClass("red");
+        //alert(data);
+      }*/
+
       if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
         var action = '/guestlist/update';
         var request = { theGuest : this.id , theRsvp : data };
+
       } else if(data == "Not Checked In" || data == "Checked In"){
         var action = '/guestlist/checkin';
         var request = { theGuest : this.id, theCheckin : data };
+
       } else {
         var action = '/events/togglestatus';
         var request = { theEvent : {{$event['event_id']}} , theStatus : data };
+
       }
       $.post(action, request, function (response) {
         if (response == "Guest Removed" || "Status Changed") {

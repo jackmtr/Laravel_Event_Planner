@@ -132,7 +132,9 @@ class EventController extends Controller
 
         $oneGuest['contact'] = $guest->contact;
 
-        $oneGuest['phone_number'] = $guest->contact()->first()->phoneNumber()->get();
+        //dd($guest->contact()->withTrashed()->first()->phoneNumber()->get());
+        $oneGuest['phone_number'] = $guest->contact()->withTrashed()->first()->phoneNumber()->get()->toArray();
+
         $guestList[] = $oneGuest;
       }
 

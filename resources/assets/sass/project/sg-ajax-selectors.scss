@@ -1,0 +1,23 @@
+.openstatus{
+	background-color: lightyellow;
+}
+
+.checkedinstatus{
+	background-color: lightgreen;
+}
+
+.completedstatus{
+	background-color: #FF6666;
+}
+
+.invitedstatus{
+	background-color: $tan;
+}
+
+.goingstatus{
+	background-color: $lime;
+}
+
+.notgoingstatus{
+	background-color: $light-grey;
+}

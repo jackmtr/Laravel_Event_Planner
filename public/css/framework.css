@@ -2014,4 +2014,22 @@ h3 > span {
 .qty {
   width: 45px; }
 
+.openstatus {
+  background-color: lightyellow; }
+
+.checkedinstatus {
+  background-color: lightgreen; }
+
+.completedstatus {
+  background-color: #FF6666; }
+
+.invitedstatus {
+  background-color: #d8c383; }
+
+.goingstatus {
+  background-color: #bed883; }
+
+.notgoingstatus {
+  background-color: #eaeaea; }
+
 /*# sourceMappingURL=framework.css.map */
