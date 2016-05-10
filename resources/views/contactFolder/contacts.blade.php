@@ -5,12 +5,14 @@
 	<div class="subnav">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
-		{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'novalidate' => 'novalidate', 'files' => true]) !!}
-			{!! Form::file('csvContacts') !!}
-			{!! Form::submit("Import Contacts") !!}
+		{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'files' => true]) !!}
+			{!! Form::file('csvContacts', ['class' => 'fileinput']) !!}
+			{!! Form::submit("Import Contacts", ['class' => 'btn btn-primary form-control button-default import']) !!}
 		{!! Form::close() !!}
 		<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
 	</div>
+
+	@include('errors._list')
 
 	<div class="contact-nav-bar">
 		{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}

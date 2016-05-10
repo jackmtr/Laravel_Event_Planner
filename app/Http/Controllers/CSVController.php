@@ -67,6 +67,8 @@ class CSVController extends Controller
   }
   public function importContacts(Request $request)
   {
+    $this->validate($request, ['csvContacts' => 'required|mimes:csv,txt,xlsx']);//TURN ON extension=php_fileinfo.dll IN php.ini, restart server after.
+
     if ($request->hasFile('csvContacts')) {
       $fileName = 'contactsImport.' . $request->file('csvContacts')->getClientOriginalExtension();
       $request->file('csvContacts')->move(
@@ -83,7 +85,7 @@ class CSVController extends Controller
         $contact = Contact::firstOrNew([
           'first_name'=>$row->first_name,
           'last_name'=>$row->last_name,
-          'email'=>$row->email
+          //'email'=>$row->email
         ]);
         if ($contact->exists) {
           //contact already in db
