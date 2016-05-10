@@ -1,5 +1,32 @@
 @extends('layouts.app')
 @section('content')
+<style>
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
 
 <div class="container" ng-app="">
 
@@ -22,11 +49,36 @@
 
       {!! Form::close() !!}
 
+
       @if( $event['event_status']  != 1)
       {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
       {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
       {!! Form::close() !!}
       @endif
+        @if( $event['event_status']  != 1)
+
+          <input type="submit" name="button" class="button-default" ng-click="popupdelete = true;" value="Delete Event" />
+
+          <div class="popup ng-hide" style="display: block;" ng-show="popupdelete">
+            <div class="popup-mask">
+              <div class="panel">
+                <div class="panel-inner">
+                  <h2>Are you sure you want to delete this event?</h2>
+
+                  {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
+                    {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control button-default']) !!}
+                  {!! Form::close() !!}
+
+                  <p class="link-cancel">
+                    <a href="#" ng-click="popupdelete=false;">No, send me back to edits.</a>
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        @endif
 
       @include('errors._list')
     </div>
@@ -96,12 +148,10 @@
   </div>
 
   <div class="guestList">
-
     <table class="sg-table">
 
       <tr>
-        <th>Status</th>
-        <th>Table</th>
+        <th>Status</th>        
         <th>Name</th>
         <th>Guests</th>
         <th class="responsive-remove">Title &amp; Company</th>
@@ -222,6 +272,7 @@ $(document).ready(function(){
     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
   });
 
+<<<<<<< HEAD
   $(".showDetails").click(function(e){
     $("#showDetails").slideToggle("fast");
   });
@@ -240,6 +291,52 @@ $(document).ready(function(){
       $('input[name='+fieldName+']').val(0);
     }
   });
+=======
+  <script>
+
+  $(document).ready(function(){
+
+    $.ajaxSetup({
+      headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+    });
+
+    @include('javascript._phoneJavascript')
+
+    var event_status = $('.eventStatus').find('option:selected').html();
+
+    if(event_status == "OPEN"){
+        $(".openmode").addClass("openstatus");
+    }else if(event_status == "CHECK-IN"){
+      $(".openmode").addClass("checkedinstatus");
+    }else if(event_status == "COMPLETED"){
+      $(".openmode").addClass("completedstatus");
+    }
+
+    $('.status').each(function(){
+      var guest_status = $(this).find('option:selected').html();
+
+      if (guest_status == "Invited"){
+        $(this).addClass("invitedstatus").removeClass("status");
+      }else if(guest_status == "Going"){
+        $(this).addClass("goingstatus").removeClass("status");
+      }
+      else if(guest_status == "Not Going"){
+        $(this).addClass("notstatus").removeClass("status");
+      }
+      else if(guest_status == "Checked In"){
+        $(this).addClass("guestcheckedin").removeClass("status");
+      }
+      else if(guest_status == "Not Checked In"){
+        $(this).addClass("guestnotcheckedin").removeClass("status");
+      }
+    })
+
+
+
+    $(".showDetails").click(function(e){
+      $("#showDetails").slideToggle("fast");
+    });
+>>>>>>> master
 
   // This button will decrement the additional_guests value till 0
   $(".qtyminus").click(function(e) {
@@ -256,6 +353,7 @@ $(document).ready(function(){
     }
   });
 
+<<<<<<< HEAD
   // This function changes the additional_guests value in the db
   $(".qtybtn").click(function(){
     var data = $(this).siblings(".qty").val();
@@ -264,12 +362,25 @@ $(document).ready(function(){
     $.post(action, request, function (response) {
       if (response) {
         // flash Success message
+=======
+
+    // This button will decrement the additional_guests value till 0
+    $(".qtyminus").click(function(e) {
+      e.preventDefault();
+      fieldName = $(this).attr('field');
+      var currentVal = parseInt($('input[name='+fieldName+']').val());
+      // If it isn't undefined or its greater than 0
+      if (!isNaN(currentVal) && currentVal > 0) {
+        // Decrement one
+        $('input[name='+fieldName+']').val(currentVal - 1);
+>>>>>>> master
       } else {
         //something went wrong
       }
     });
   });
 
+<<<<<<< HEAD
   // This function changes the rsvp checked in and event status
   $(".ajaxSelect").change(function () {
     var data = $(this).children(":selected").html();
@@ -296,4 +407,57 @@ $(document).ready(function(){
   });
 });
 </script>
+=======
+    // This function changes the additional_guests value in the db
+    $(".qtybtn").click(function(){
+      var data = $(this).siblings(".qty").val();
+      var action = '/guestlist/addguests';
+      var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
+      $.post(action, request, function (response) {
+        if (response) {
+          // flash Success message
+        } else {
+          //something went wrong
+        }
+      });
+    });
+
+    // This function changes the rsvp checked in and event status
+    $(".ajaxSelect").change(function () {
+
+      var thisObject = $(this);
+
+      var data = thisObject.children(":selected").html();
+
+      if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
+        var action = '/guestlist/update';
+        var request = { theGuest : this.id , theRsvp : data };
+
+      } else if(data == "Not Checked In" || data == "Checked In"){
+        var action = '/guestlist/checkin';
+        var request = { theGuest : this.id, theCheckin : data };
+
+      } else {
+        var action = '/events/togglestatus';
+        var request = { theEvent : {{$event['event_id']}} , theStatus : data };
+
+      }
+      $.post(action, request, function (response) {
+        if (response == "Guest Removed" || response == "Status Changed") {
+          // flash Success message
+          location.reload();
+        } else if (response) {
+
+          console.log($(thisObject).attr('class').split(' ')[1]);
+
+          $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
+  
+        } else {
+          //something went wrong
+        }
+      });
+    });
+  });
+  </script>
+>>>>>>> master
 @endsection

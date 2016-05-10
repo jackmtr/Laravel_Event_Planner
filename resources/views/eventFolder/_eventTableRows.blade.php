@@ -1,9 +1,9 @@
 <tr>
 	<td>
 		@if($status == 0)
-			{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'invited ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}
+			{!! Form::select('rsvp', [0 => 'Invited', 1 => 'Going', 2 => 'Not Going', 3 => 'Remove Guest'], $guest['rsvp'], ['class' => 'status ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}
 		@elseif($status == 1)
-			{!! Form::select('rsvp', [0 => 'Not Checked In', 1 => 'Checked In'], $checkStatus, ['class' => 'checkin ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}
+			{!! Form::select('rsvp', [0 => 'Not Checked In', 1 => 'Checked In'], $checkStatus, ['class' => 'status ajaxSelect', 'id' => $guest['guest_list_id'] ] ) !!}
 		@elseif($status == 2)
 			@if($guest['checked_in_by'] != null)
 				Attended
@@ -21,8 +21,7 @@
 		{!! Form::submit("Invite") !!}
 		{!! Form::close() !!}
 		@endif
-	</td>
-	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
+	</td>	
 	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
 	<td>
 		@if($status < 2)
@@ -36,5 +35,7 @@
         @endif
 	</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
+			<i class="fa fa-info-circle tooltip" aria-hidden="true">  <span class="tooltiptext">{{$guest['note']}}</span></i>
+		</td>		
 </tr>

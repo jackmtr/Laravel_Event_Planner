@@ -65,6 +65,10 @@ class ContactController extends Controller
             }
 
             $contact->previous_event = $previousEvent;
+
+            //$contact->added_user = $contact->user()->get();
+            //$whoAdded = Contact::find(451)->user()->get();
+            //dd($whoAdded);
         } 
 
     	return view('contactFolder.contacts', compact('contacts','open_events', 'phoneindex'));

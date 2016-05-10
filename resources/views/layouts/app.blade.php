@@ -33,7 +33,8 @@
                         <li><a href="{{ url('/login') }}">Login</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span><i class="fa fa-user" aria-hidden="true"></i> </span>Logout <span>{{ Auth::user()->name }}</span></a>
+                            <a href="{{ url('/logout') }}" role="button" aria-expanded="false"><span><i class="fa fa-sign-out" aria-hidden="true"></i>
+ </span>Logout <span>{{ Auth::user()->name }}</span></a>
                         </li>
                     @endif
                 </ul>
