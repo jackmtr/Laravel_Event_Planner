@@ -22,6 +22,7 @@
 	<div>
 		<table class="sg-table">
 			<tr>
+				<th>Delete</th>
 				<th>CheckBox</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
@@ -62,6 +63,9 @@
 			@if (count($contacts) > 0)
 				@foreach($contacts as $contact)
 					<tr>
+						<td>
+							<button type="button" name="button" class="button-default" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>   							    								
+						</td>
 						<td class='cellcheckbox'>
 							{!! Form::label("invitelist[]", " ", array('class' => 'label-checkbox')) !!}
 							{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
@@ -86,6 +90,25 @@
 	</div>
 
 	@foreach($contacts as $contact)
+	<div class="popup ng-hide" style="display: block;" ng-show="popupdelete{{$contact['contact_id']}}">
+		<div class="popup-mask">
+		  <div class="panel">
+		    <div class="panel-inner">
+		      <h2>Are you sure you want to delete this contact?</h2>
+
+				{!! Form::open(['method' => 'DELETE', 'url' => 'contacts/' . $contact->contact_id]) !!}
+					{!! Form::submit("Delete Contact", ['class' => 'btn btn-primary form-control button-default']) !!}
+				{!! Form::close() !!}	   
+
+		      <p class="link-cancel">
+		        <a href="#" ng-click="popupdelete{{$contact['contact_id']}}=false;">No, take me back.</a>
+		      </p>
+
+		    </div>
+		  </div>
+		</div>
+	</div> 
+
 	<div class="popup ng-hide" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
 		<div class="popup-mask">
 			<div class="panel">
@@ -103,12 +126,6 @@
 							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 
 						{!! Form::close() !!}
-
-						<div class="form-group">
-							{!! Form::open(['method' => 'DELETE', 'url' => 'contacts/' . $contact->contact_id]) !!}
-							{!! Form::submit("Delete Contact", ['class' => 'btn btn-primary form-control']) !!}
-							{!! Form::close() !!}	
-						</div> 
 
 						<h2>Previously Attended Events</h2>
 

@@ -130,9 +130,9 @@ class EventController extends Controller
         $company = $guest->contact()->withTrashed()->get()->toArray()[0]['company'];
         $oneGuest['work'] = $occupation . " " . $company;
 
-        $oneGuest['contact'] = $guest->contact;
+        $oneGuest['contact'] = $guest->contact()->withTrashed()->first();
+        $oneGuest['phone_number'] = $guest->contact()->withTrashed()->first()->phoneNumber()->get()->toArray();
 
-        $oneGuest['phone_number'] = $guest->contact()->first()->phoneNumber()->get();
         $guestList[] = $oneGuest;
       }
 

@@ -23,9 +23,28 @@
         {!! Form::close() !!}
 
         @if( $event['event_status']  != 1)
-          {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
-            {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
-          {!! Form::close() !!}
+
+          <input type="submit" name="button" class="button-default" ng-click="popupdelete = true;" value="Delete Event" />
+
+          <div class="popup ng-hide" style="display: block;" ng-show="popupdelete">
+            <div class="popup-mask">
+              <div class="panel">
+                <div class="panel-inner">
+                  <h2>Are you sure you want to delete this event?</h2>
+
+                  {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
+                    {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control button-default']) !!}
+                  {!! Form::close() !!}                
+
+                  <p class="link-cancel">
+                    <a href="#" ng-click="popupdelete=false;">No, send me back to edits.</a>
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </div>          
+
         @endif
 
         @include('errors._list')
@@ -209,11 +228,43 @@
 
   $(document).ready(function(){
 
-    @include('javascript._phoneJavascript')
-
     $.ajaxSetup({
       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-    });
+    });    
+
+    @include('javascript._phoneJavascript')
+
+    var event_status = $('.eventStatus').find('option:selected').html();
+
+    
+    if(event_status == "OPEN"){
+        $(".openmode").addClass("openstatus");
+    }else if(event_status == "CHECK-IN"){
+      $(".openmode").addClass("checkedinstatus");
+    }else if(event_status == "COMPLETED"){
+      $(".openmode").addClass("completedstatus");
+    }
+
+    $('.status').each(function(){
+      var guest_status = $(this).find('option:selected').html();
+
+      if (guest_status == "Invited"){
+        $(this).addClass("invitedstatus").removeClass("status");
+      }else if(guest_status == "Going"){
+        $(this).addClass("goingstatus").removeClass("status");
+      }
+      else if(guest_status == "Not Going"){
+        $(this).addClass("notstatus").removeClass("status");
+      }
+      else if(guest_status == "Checked In"){
+        $(this).addClass("guestcheckedin").removeClass("status");
+      }
+      else if(guest_status == "Not Checked In"){
+        $(this).addClass("guestnotcheckedin").removeClass("status");
+      }
+    })    
+
+
 
     $(".showDetails").click(function(e){
       $("#showDetails").slideToggle("fast");
@@ -265,23 +316,36 @@
 
     // This function changes the rsvp checked in and event status
     $(".ajaxSelect").change(function () {
-      var data = $(this).children(":selected").html();
+
+      var thisObject = $(this);
+
+      var data = thisObject.children(":selected").html();
+
       if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
         var action = '/guestlist/update';
         var request = { theGuest : this.id , theRsvp : data };
+
       } else if(data == "Not Checked In" || data == "Checked In"){
         var action = '/guestlist/checkin';
         var request = { theGuest : this.id, theCheckin : data };
+
       } else {
         var action = '/events/togglestatus';
         var request = { theEvent : {{$event['event_id']}} , theStatus : data };
+
       }
       $.post(action, request, function (response) {
         if (response == "Guest Removed" || response == "Status Changed") {
           // flash Success message
           location.reload();
         } else if (response) {
-          // flash Success message
+
+          console.log($(thisObject).attr('class').split(' ')[1]);
+
+          $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
+
+          
+    
         } else {
           //something went wrong
         }
