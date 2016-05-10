@@ -131,35 +131,57 @@ class GuestListController extends Controller
     public function addguests(Request $request)
     {
       $guest = GuestList::findOrFail($request->theGuest);
-      $guest->additional_guests = $request->guests;      
+      $guest->additional_guests = $request->guests;
       $guest->save();
 
-      $authId = Auth::user()->user_id;      
-      $addedBy = $authId; 
-      $contact = Contact::findOrFail($guest->contact_id);             
+      $authId = Auth::user()->user_id;
+      $addedBy = $authId;
+      $contact = Contact::findOrFail($guest->contact_id);
       $firstName = "Friend of ". $contact->first_name;
       $lastName = $contact->last_name;
-      $guestOfId = $guest->guest_list_id;      
+      $guestOfId = $guest->guest_list_id;
       $eventId = $guest->event_id;
       $email = $contact->email;
 
       $findContacts = Contact::where('guest_of_id', '=', $guestOfId)->get();
 
-           
+
       foreach($findContacts as $findContact){
-        $invitee = $findContact->contact_id;        
-        $findGuest = GuestList::where('contact_id', '=', $invitee);               
-        if($findGuest != null){          
-          $findGuest->forceDelete(); // First we need to delete data from guest_lists table 
+        $invitee = $findContact->contact_id;
+        $findGuest = GuestList::where('contact_id', '=', $invitee);
+        if($findGuest != null){
+          $findGuest->forceDelete(); // First we need to delete data from guest_lists table
         }
         $findContact->forceDelete(); // Deleting data from contacts table
       }
-                               
-      for($i = 0; $i < $request->guests; $i++){        
+
+      for($i = 0; $i < $request->guests; $i++){
         $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'email' => $email, 'added_by'=> $addedBy, 'guest_of_id'=> $guestOfId  ]);
         $invitee = $newContact->contact_id;
         GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
       }
+    }
+
+    public function invite(Request $request)
+    {
+      $eventId = $request->eventId;
+      GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $request->contactId, 'event_id' => $eventId));
+      return redirect()->action('EventController@show', $eventId);
+    }
+
+    public function createContactGuest(Request $request)
+    {
+      $eventId = $request->eventId;
+      $request["added_by"] = Auth::user()->user_id;
+      $newContact = Contact::create(['first_name' => $request->first_name, 'last_name' => $request->last_name, 'email' => $request->email, 'occupation' => $request->occupation, 'company' => $request->company, 'wechat_id'=> $request->wechat_id, 'notes' => $request->notes, 'added_by'=> $request->added_by  ]);
+      $newContactId = $newContact->contact_id;
+      foreach($request['phonegroup'] as $phoneNumber){
+          if (strlen($phoneNumber) > 1){
+              PhoneNumber::create(array('phone_number'=>$phoneNumber, 'contact_id'=>$newContactId));
+          }
+      }
+      GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $newContactId, 'event_id' => $eventId ]);
+      return redirect()->action('EventController@show', $eventId);
     }
 
     /**

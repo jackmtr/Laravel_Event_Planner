@@ -15,7 +15,11 @@
 				@endif
 			@endif
 		@else
-			<button>Invite</button>
+		{!! Form::open(['action' => ['GuestListController@invite'], 'method' => 'post']) !!}
+		{!! Form::hidden("contactId", $guest['contact']['contact_id']) !!}
+		{!! Form::hidden("eventId", $event->event_id) !!}
+		{!! Form::submit("Invite") !!}
+		{!! Form::close() !!}
 		@endif
 	</td>	
 	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
