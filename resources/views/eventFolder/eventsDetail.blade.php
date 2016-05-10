@@ -49,12 +49,6 @@
 
       {!! Form::close() !!}
 
-
-      @if( $event['event_status']  != 1)
-      {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
-      {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
-      {!! Form::close() !!}
-      @endif
         @if( $event['event_status']  != 1)
 
           <input type="submit" name="button" class="button-default" ng-click="popupdelete = true;" value="Delete Event" />
