@@ -115,7 +115,7 @@
   </div>
 
   <div class="guestList">
-<a href="www.google.ca" id="abcc">CLICK ME</a>
+
     <table class="sg-table">
 
       <tr>
@@ -343,6 +343,8 @@
           console.log($(thisObject).attr('class').split(' ')[1]);
 
           $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
+
+          
     
         } else {
           //something went wrong
