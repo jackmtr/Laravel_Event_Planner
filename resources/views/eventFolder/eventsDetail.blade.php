@@ -151,7 +151,7 @@
     <table class="sg-table">
 
       <tr>
-        <th>Status</th>        
+        <th>Status</th>
         <th>Name</th>
         <th>Guests</th>
         <th class="responsive-remove">Title &amp; Company</th>
@@ -264,36 +264,7 @@
 @endsection
 
 @section('javascript')
-<script>
-$(document).ready(function(){
-  @include('javascript._phoneJavascript')
-
-  $.ajaxSetup({
-    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-  });
-
-<<<<<<< HEAD
-  $(".showDetails").click(function(e){
-    $("#showDetails").slideToggle("fast");
-  });
-
-  // This button will increment the additional_guests value
-  $('.qtyplus').click(function(e){
-    e.preventDefault();
-    fieldName = $(this).attr('field');
-    var currentVal = parseInt($('input[name='+fieldName+']').val());
-    // If is not undefined
-    if (!isNaN(currentVal)) {
-      // Increment
-      $('input[name='+fieldName+']').val(currentVal + 1);
-    } else {
-      // Otherwise put a 0 there
-      $('input[name='+fieldName+']').val(0);
-    }
-  });
-=======
   <script>
-
   $(document).ready(function(){
 
     $.ajaxSetup({
@@ -331,12 +302,9 @@ $(document).ready(function(){
       }
     })
 
-
-
     $(".showDetails").click(function(e){
       $("#showDetails").slideToggle("fast");
     });
->>>>>>> master
 
   // This button will decrement the additional_guests value till 0
   $(".qtyminus").click(function(e) {
@@ -353,61 +321,6 @@ $(document).ready(function(){
     }
   });
 
-<<<<<<< HEAD
-  // This function changes the additional_guests value in the db
-  $(".qtybtn").click(function(){
-    var data = $(this).siblings(".qty").val();
-    var action = '/guestlist/addguests';
-    var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
-    $.post(action, request, function (response) {
-      if (response) {
-        // flash Success message
-=======
-
-    // This button will decrement the additional_guests value till 0
-    $(".qtyminus").click(function(e) {
-      e.preventDefault();
-      fieldName = $(this).attr('field');
-      var currentVal = parseInt($('input[name='+fieldName+']').val());
-      // If it isn't undefined or its greater than 0
-      if (!isNaN(currentVal) && currentVal > 0) {
-        // Decrement one
-        $('input[name='+fieldName+']').val(currentVal - 1);
->>>>>>> master
-      } else {
-        //something went wrong
-      }
-    });
-  });
-
-<<<<<<< HEAD
-  // This function changes the rsvp checked in and event status
-  $(".ajaxSelect").change(function () {
-    var data = $(this).children(":selected").html();
-    if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
-      var action = '/guestlist/update';
-      var request = { theGuest : this.id , theRsvp : data };
-    } else if(data == "Not Checked In" || data == "Checked In"){
-      var action = '/guestlist/checkin';
-      var request = { theGuest : this.id, theCheckin : data };
-    } else {
-      var action = '/events/togglestatus';
-      var request = { theEvent : {{$event['event_id']}} , theStatus : data };
-    }
-    $.post(action, request, function (response) {
-      if (response == "Guest Removed" || response == "Status Changed") {
-        // flash Success message
-        location.reload();
-      } else if (response) {
-        // flash Success message
-      } else {
-        //something went wrong
-      }
-    });
-  });
-});
-</script>
-=======
     // This function changes the additional_guests value in the db
     $(".qtybtn").click(function(){
       var data = $(this).siblings(".qty").val();
@@ -451,7 +364,7 @@ $(document).ready(function(){
           console.log($(thisObject).attr('class').split(' ')[1]);
 
           $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
-  
+
         } else {
           //something went wrong
         }
@@ -459,5 +372,4 @@ $(document).ready(function(){
     });
   });
   </script>
->>>>>>> master
 @endsection
