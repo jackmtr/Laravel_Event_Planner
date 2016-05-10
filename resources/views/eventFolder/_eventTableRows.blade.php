@@ -17,8 +17,7 @@
 		@else
 			<button>Invite</button>
 		@endif
-	</td>
-	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">N/A</td>
+	</td>	
 	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
 	<td>
 		@if($status < 2)
