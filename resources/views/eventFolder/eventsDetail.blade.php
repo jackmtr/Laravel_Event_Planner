@@ -1,5 +1,32 @@
 @extends('layouts.app')
 @section('content')
+<style>
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
 
 <div class="container" ng-app="">
 
@@ -34,7 +61,7 @@
 
                   {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
                     {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control button-default']) !!}
-                  {!! Form::close() !!}                
+                  {!! Form::close() !!}
 
                   <p class="link-cancel">
                     <a href="#" ng-click="popupdelete=false;">No, send me back to edits.</a>
@@ -43,7 +70,7 @@
                 </div>
               </div>
             </div>
-          </div>          
+          </div>
 
         @endif
 
@@ -115,7 +142,6 @@
   </div>
 
   <div class="guestList">
-
     <table class="sg-table">
 
       <tr>
@@ -229,13 +255,12 @@
 
     $.ajaxSetup({
       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-    });    
+    });
 
     @include('javascript._phoneJavascript')
 
     var event_status = $('.eventStatus').find('option:selected').html();
 
-    
     if(event_status == "OPEN"){
         $(".openmode").addClass("openstatus");
     }else if(event_status == "CHECK-IN"){
@@ -261,7 +286,7 @@
       else if(guest_status == "Not Checked In"){
         $(this).addClass("guestnotcheckedin").removeClass("status");
       }
-    })    
+    })
 
 
 
@@ -283,6 +308,7 @@
         $('input[name='+fieldName+']').val(0);
       }
     });
+
 
     // This button will decrement the additional_guests value till 0
     $(".qtyminus").click(function(e) {
@@ -342,16 +368,12 @@
           console.log($(thisObject).attr('class').split(' ')[1]);
 
           $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
-
-          
-    
+  
         } else {
           //something went wrong
         }
       });
     });
   });
-
   </script>
-
 @endsection

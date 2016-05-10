@@ -31,5 +31,7 @@
         @endif
 	</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
-    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['note']}}</td>
+    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
+			<i class="fa fa-info-circle tooltip" aria-hidden="true">  <span class="tooltiptext">{{$guest['note']}}</span></i>
+		</td>		
 </tr>
