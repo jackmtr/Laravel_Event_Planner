@@ -9,6 +9,7 @@ use App\Contact;
 use App\ContactImport;
 use Auth;
 use Excel;
+use App\Event;
 
 class CSVController extends Controller
 {
@@ -26,7 +27,44 @@ class CSVController extends Controller
       });
     })->export('csv');
   }
+  public function exportGuestList($event_id)
+  {
+    $event = Event::find($event_id);
+    $event_name = $event->event_name;
+    $guestLists = $event->guestList;
+    // Foreach Guests //
 
+    foreach( $guestLists as $guest)
+    {
+      if($guest->checked_in_by != null){
+        $oneGuest['rsvp'] = "Attended";
+      }else{
+        if($guest->rsvp == 1){
+          $oneGuest['rsvp'] = "No Show";
+        }else{
+          $oneGuest['rsvp'] = "Did Not Attend";
+        }
+      }
+      $first_name = $guest->contact()->withTrashed()->get()->toArray()[0]['first_name'];
+      $last_name = $guest->contact()->withTrashed()->get()->toArray()[0]['last_name'];
+      $oneGuest['name'] = $first_name . " " . $last_name;
+
+      $occupation = $guest->contact()->withTrashed()->get()->toArray()[0]['occupation'];
+      $company = $guest->contact()->withTrashed()->get()->toArray()[0]['company'];
+      $oneGuest['work'] = $occupation . " " . $company;
+      $oneGuest['additional_guests'] = $guest->additional_guests;
+      $oneGuest['note'] = $guest->contact()->withTrashed()->get()->toArray()[0]['notes'];
+      $data [] = $oneGuest;
+    }
+    return Excel::create($event_name, function($excel) use ($data) {
+      $excel->sheet('sheet1', function($sheet) use($data) {
+        $sheet->fromArray($data);
+      });
+    })->export('csv');
+  }
+  public function rsvpStatus (){
+    return("null");
+  }
   public function importContacts(Request $request)
   {
     if ($request->hasFile('csvContacts')) {

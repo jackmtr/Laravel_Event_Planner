@@ -9,8 +9,6 @@
     <link href='https://fonts.googleapis.com/css?family=Rajdhani:600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script type="text/javascript" src="/js/app.js"></script>
-    <script type="text/javascript" src="/js/dialog/dialog.js"></script>
 </head>
 
 <body>
@@ -29,7 +27,7 @@
             <div class="navbar-auth navbar-auth">
                 <ul>
                     <li>
-                        <a href="#">Register <span>New Event Coordinator</span></a>
+                        <a href="/register">Register <span>New Event Coordinator</span></a>
                     </li>
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>

@@ -31,9 +31,11 @@ class GuestListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+
+
     }
 
     /**
@@ -90,10 +92,13 @@ class GuestListController extends Controller
       $rsvp = $request->theRsvp;
       $message = "RSVP Updated";
       if ($rsvp == "Invited") {
+        $message = "invitedstatus";
         $guest->rsvp = 0;
       } elseif ($rsvp == "Going") {
+        $message = "goingstatus";
         $guest->rsvp = 1;
       } elseif ($rsvp == "Not Going") {
+        $message = "notstatus";
         $guest->rsvp = 2;
       } elseif ($rsvp == "Remove Guest") {
         $this->destroy($guest->guest_list_id);
@@ -111,8 +116,10 @@ class GuestListController extends Controller
       $checkin = $request->theCheckin;
       $message = "Check In Status Updated";
       if ($checkin == "Not Checked In") {
+        $message = "guestnotcheckin";
         $guest->checked_in_by = null;
       } elseif ($checkin == "Checked In") {
+        $message = "guestcheckedin";
         $guest->checked_in_by = Auth::user()->user_id;
       } else {
         $message = "Error";
@@ -120,14 +127,39 @@ class GuestListController extends Controller
       $guest->save();
       return $message;
     }
+
     public function addguests(Request $request)
     {
       $guest = GuestList::findOrFail($request->theGuest);
-      $guest->additional_guests = $request->guests;
+      $guest->additional_guests = $request->guests;      
       $guest->save();
-      return "Additional Guests Updated";
-      //$eventid = $request->theEvent;
-      // clear guestlist, clear contacts, build new contacts, build new guestlist
+
+      $authId = Auth::user()->user_id;      
+      $addedBy = $authId; 
+      $contact = Contact::findOrFail($guest->contact_id);             
+      $firstName = "Friend of ". $contact->first_name;
+      $lastName = $contact->last_name;
+      $guestOfId = $guest->guest_list_id;      
+      $eventId = $guest->event_id;
+      $email = $contact->email;
+
+      $findContacts = Contact::where('guest_of_id', '=', $guestOfId)->get();
+
+           
+      foreach($findContacts as $findContact){
+        $invitee = $findContact->contact_id;        
+        $findGuest = GuestList::where('contact_id', '=', $invitee);               
+        if($findGuest != null){          
+          $findGuest->forceDelete(); // First we need to delete data from guest_lists table 
+        }
+        $findContact->forceDelete(); // Deleting data from contacts table
+      }
+                               
+      for($i = 0; $i < $request->guests; $i++){        
+        $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'email' => $email, 'added_by'=> $addedBy, 'guest_of_id'=> $guestOfId  ]);
+        $invitee = $newContact->contact_id;
+        GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
+      }
     }
 
     /**
@@ -147,60 +179,4 @@ class GuestListController extends Controller
             alert("sorry, you can't delete a guest from a checkedin/completed event!");
         }
     }
-
-    // public function update(ContactRequest $request, $id)
-    // {
-    //     $contact = Contact::findOrFail($id)->update($request->all());
-    //     $phones = $contact->phoneNumber()->get();
-
-    //     return redirect('contacts');
-    // }
-
-    //id comes from guestlist
-    public function details($id){
-
-            
-
-        $guest = Contact::find($id);
-        $phones = $guest->phoneNumber()->get();
-
-        foreach($phones as $phone)
-        {
-            //dd($phone->phone_number);
-        }
-
-
-
-        //return $guest->contact_id;
-        return view('eventFolder.guestDetails', compact("guest","phones"));
-    }
-
-    public function addPhone(Request $request, $contactid)
-    {
-        $guest = Contact::find($contactid);
-        $allNumbers = $request->all();
-        $newNumbers = $allNumbers['phone'];
-        //dd($newNumbers);
-
-
-        $affectedRows = $guest->phoneNumber()->get();
-
-        foreach($affectedRows as $row)
-        {
-
-            $row->delete();
-        }
-
-        foreach ($newNumbers as $number) 
-        {
-            if($number != "")
-            {
-                PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$contactid));
-            }
-        }
-
-
-        return redirect('guestlist/'.$contactid.'/details');
-    }
-
 }

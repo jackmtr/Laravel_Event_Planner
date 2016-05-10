@@ -33,75 +33,147 @@ class EventController extends Controller
 
         //if eventstatus 0, event->guestLists->count, else event->guestLists->where checkedInBy not null->count
         foreach(Event::latest("event_status")->get() as $event){
+
           $guests = $event->guestList()->get();
+
           if($event->event_status == 0){
-            $count = count($guests); //invited
-          } else {
-            $count = count($guests) - count($guests->where('checked_in_by', null)); //going or went
+
+            $count = count($guests);
+          }else{
+
+            $count = count($guests) - count($guests->where('checked_in_by', null));
           }
+
           $eventWithCount = new EventWithCount($event, $count);
           $eventsWithCount[] = $eventWithCount;
+
         }
         return view('eventFolder.events', compact('eventsWithCount'));
     }
 
-    public function create()
-    {
+    public function create(){
+
         return view('eventFolder.createEvents');
     }
 
     public function store(EventRequest $request){
-        $request["event_status"] = 0; //better way to do this?
+
         Event::create($request->all());
         return redirect('events');
     }
 
     public function show($id)
     {
-      $events = Event::all();
+      $comeFromSearch = 0;
+      $query = "";
+
       $event = Event::findOrFail($id); //get event details to pass to view
-      $guests = $event->guestList()->get();
-      $guestList = array(); //guestList contact details to pass to view
+      $events = Event::all();
+
+      $guests = array();
+      $guestMatches = array();
+        $guestList = array(); //guestList contact details to pass to view
+
+      $contacts = array();
+      $contactMatches = array();
+        $contactList = array();
+
+      if(Request::input('searchitem')){
+
+        $comeFromSearch = 1;
+
+        $query = Request::input('searchitem');
+
+        $contactMatches = Contact::withTrashed()->where('first_name', 'LIKE', '%'. $query . '%')
+          ->orWhere('last_name', 'LIKE', '%'. $query . '%')->get()->toArray();
+
+        $contactMatchesIds = array_column($contactMatches, 'contact_id');
+
+        $eventGuests = Event::find($id)->guestList;
+
+        foreach($eventGuests as $guest){
+          $guestMatches[] = $guest->contact->toArray();
+        }
+
+        $guestMatchesIds = array_column($guestMatches, "contact_id");
+
+        foreach($contactMatchesIds as $matcher){
+          if (in_array($matcher, $guestMatchesIds)){
+            $guests[] = Contact::find($matcher)->guestList()->get()->first();
+          }else{
+            $contacts[] = Contact::find($matcher);
+          }
+        }
+
+      }else{
+        $allGuests = $event->guestList()->get();
+
+        foreach($allGuests as $guest ){
+          $guests[] = $guest;
+        }
+      }
 
       foreach( $guests as $guest)
       {
+
         $oneGuest['guest_list_id'] = $guest->guest_list_id;
         $oneGuest['rsvp'] = $guest->rsvp;
         $oneGuest['additional_guests'] = $guest->additional_guests;
         $oneGuest['checked_in_by'] = $guest->checked_in_by;
         $oneGuest['note'] = $guest->contact()->withTrashed()->first()->notes;
 
-        $first_name = $guest->contact()->withTrashed()->first()->first_name;
-        $last_name = $guest->contact()->withTrashed()->first()->last_name;
+        $first_name = $guest->contact()->withTrashed()->get()->toArray()[0]['first_name'];
+        $last_name = $guest->contact()->withTrashed()->get()->toArray()[0]['last_name'];
         $oneGuest['name'] = $first_name . " " . $last_name;
 
-        $occupation = $guest->contact()->withTrashed()->first()->occupation;
-        $company = $guest->contact()->withTrashed()->first()->company;
+        $occupation = $guest->contact()->withTrashed()->get()->toArray()[0]['occupation'];
+        $company = $guest->contact()->withTrashed()->get()->toArray()[0]['company'];
         $oneGuest['work'] = $occupation . " " . $company;
 
-        $oneGuest['contact'] = $guest->contact()->first();
-        $oneGuest['phone_number'] = $guest->contact()->first()->phoneNumber()->get();
+        $oneGuest['contact'] = $guest->contact()->withTrashed()->first();
+        $oneGuest['phone_number'] = $guest->contact()->withTrashed()->first()->phoneNumber()->get()->toArray();
 
         $guestList[] = $oneGuest;
       }
 
-      $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
-      $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
       $index = 0;
       $phoneindex = 0;
-      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex'));
-    }
 
-    public function edit($id)
-    {
-        $event = Event::findOrFail($id);
-        return view('eventFolder.editEvents', compact("event"));
+      foreach($contacts as $guest){
+
+        $oneGuest['guest_list_id'] = "";
+        $oneGuest['rsvp'] = "";
+        $oneGuest['additional_guests'] = "";
+        $oneGuest['checked_in_by'] = "";
+        $oneGuest['note'] = $guest->notes;
+
+        $first_name = $guest->first_name;
+        $last_name = $guest->last_name;
+        $oneGuest['name'] = $first_name . " " . $last_name;
+
+        $occupation = $guest->occupation;
+        $company = $guest->company;
+        $oneGuest['work'] = $occupation . " " . $company;
+
+        $oneGuest['contact'] = $guest;
+
+        $oneGuest['phone_number'] = $guest->first()->phoneNumber()->get();
+        $contactList[] = $oneGuest;
+      }
+
+      $guests = $event->guestList()->get();
+
+      $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
+      $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
+
+      return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex', 'contactList', 'comeFromSearch', 'query'));
     }
 
     public function update(EventRequest $request, $id)
     {
         $event = Event::findOrFail($id)->update($request->all());
-        return redirect('events');
+
+        return redirect()->action('EventController@show', $id);
     }
 
     public function destroy($id){
@@ -121,6 +193,7 @@ class EventController extends Controller
     }
 
     public function duplicate($id){
+
       $event = Event::find($id);
       $list = $event->guestList()->get();
 
@@ -131,22 +204,22 @@ class EventController extends Controller
             $guestList[] = $li->contact->toArray();
           }
       }
-      return view('eventFolder.duplicateEvent', compact('event', 'guestList'));
-    }
 
-    public function duplication(EventRequest $request){
+      $duplicateEvent = $event->toArray();
+      $duplicateEvent["event_name"] = $duplicateEvent["event_name"] . " " . date("F j, Y");
+      $duplicateEvent["event_status"] = 0;
+      $duplicateEvent["event_date"] = null;
+      $duplicateEvent["event_time"] = null;
 
-      $request["event_status"] = 0; //better way to do this?
+      $newEvent = Event::create($duplicateEvent);
+      $newEventId = $newEvent->event_id;
 
-      $event = Event::create($request->all());//still need way to let forms default to today date and time
-      $eventId = $event->event_id;
-
-      foreach($request->toArray()['invitelist'] as $invitee)
+      foreach($guestList as $invitee)
       {
-        GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId]);
+        GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee["contact_id"], 'event_id' => $newEventId]);
       }
 
-     return redirect()->action('EventController@show', $eventId);
+      return redirect()->action('EventController@show', $newEventId);
     }
 
     public function invitePreviousGuests($id){
