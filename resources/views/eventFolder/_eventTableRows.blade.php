@@ -36,7 +36,7 @@
 	</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
-			<!-- <i class="fa fa-info-circle tooltip" aria-hidden="true">  <span class="tooltiptext">{{$guest['note']}}</span></i> -->
+			@if($guest['note'] != null)
 			<a href="#" class="tooltip">
 			<i class="fa fa-info-circle"></i>
 			<div class="inner">
@@ -44,5 +44,8 @@
 				{{$guest['note']}}
 			</div>
 		</a>
+		@else
+
+        @endif
 		</td>		
 </tr>
