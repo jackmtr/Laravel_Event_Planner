@@ -36,6 +36,13 @@
 	</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
-			<i class="fa fa-info-circle tooltip" aria-hidden="true">  <span class="tooltiptext">{{$guest['note']}}</span></i>
+			<!-- <i class="fa fa-info-circle tooltip" aria-hidden="true">  <span class="tooltiptext">{{$guest['note']}}</span></i> -->
+			<a href="#" class="tooltip">
+			<i class="fa fa-info-circle"></i>
+			<div class="inner">
+				<div class="arrow"><i class="fa fa-caret-left"></i></div>
+				{{$guest['note']}}
+			</div>
+		</a>
 		</td>		
 </tr>
