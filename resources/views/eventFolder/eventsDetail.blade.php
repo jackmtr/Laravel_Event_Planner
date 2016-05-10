@@ -16,19 +16,19 @@
       <h2>Edit Event {!! $event->event_name !!}</h2>
 
 
-        {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
+      {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
 
-          @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
+      @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
 
-        {!! Form::close() !!}
+      {!! Form::close() !!}
 
-        @if( $event['event_status']  != 1)
-          {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
-            {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
-          {!! Form::close() !!}
-        @endif
+      @if( $event['event_status']  != 1)
+      {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
+      {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
+      {!! Form::close() !!}
+      @endif
 
-        @include('errors._list')
+      @include('errors._list')
     </div>
 
     <div class="rightside">
@@ -40,25 +40,25 @@
       <div class="guestListCount">
         <div class="guestVariableA">
           @if( $event['event_status']  == 0)
-            <h2>{{ $rsvpYes }}</h2>
-            <h3>Going</h3>
+          <h2>{{ $rsvpYes }}</h2>
+          <h3>Going</h3>
           @else
-            <h2>{{ $checkedIn }}</h2>
-            @if( $event['event_status']  == 1)
-              <h3>Checked In</h3>
-            @else
-              <h3>Attended</h3>
-            @endif
+          <h2>{{ $checkedIn }}</h2>
+          @if( $event['event_status']  == 1)
+          <h3>Checked In</h3>
+          @else
+          <h3>Attended</h3>
+          @endif
           @endif
         </div>
 
         <div class="guestVariableB">
           @if( $event['event_status']  == 1)
-            <h2>{{ $rsvpYes }}</h2>
-            <h3>Attending</h3>
+          <h2>{{ $rsvpYes }}</h2>
+          <h3>Attending</h3>
           @else
-            <h2>{{ count($guestList) }}</h2>
-            <h3>Invited</h3>
+          <h2>{{ count($guestList) }}</h2>
+          <h3>Invited</h3>
           @endif
         </div>
 
@@ -71,21 +71,21 @@
 
     <div>
       {!! Form::open(['action' => ['EventController@show', $event->event_id], 'method' => 'get']) !!}
-        {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
-        {!! Form::submit("Search Guestlist") !!}
+      {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
+      {!! Form::submit("Search Guestlist") !!}
       {!! Form::close() !!}
     </div>
-@if($event['event_status'] == 0)
+    @if($event['event_status'] == 0)
     <div id="invitePrevious">
       {!! Form::open(['action' => ['EventController@invitePreviousGuests', $event->event_id], 'novalidate' => 'novalidate', 'name'=>'previous_guests_submit']) !!}
 
-        <label for="events">Invite Guests from a Previous Event: </label>
-        <select id="inviteEventSelect" name="events">
-          @foreach($events as $pastEvent)
-            <option value="{{$pastEvent['event_id']}}">{{$pastEvent['event_name']}}</option>
-          @endforeach
-        </select>
-        <input type="submit" name="guest_list_submit" value="Invite"/>
+      <label for="events">Invite Guests from a Previous Event: </label>
+      <select id="inviteEventSelect" name="events">
+        @foreach($events as $pastEvent)
+        <option value="{{$pastEvent['event_id']}}">{{$pastEvent['event_name']}}</option>
+        @endforeach
+      </select>
+      <input type="submit" name="guest_list_submit" value="Invite"/>
 
       {{Form::close()}}
     </div>
@@ -111,184 +111,189 @@
 
       @if( $event['event_status']  == 0) <!--$event['event_status']  == 0 -->
 
-        @foreach($guestList as $guest)
+      @foreach($guestList as $guest)
 
-          @include('eventFolder._eventTableRows', ['status' => 0])
-          <!--{{$index++}}-->
-        @endforeach
+      @include('eventFolder._eventTableRows', ['status' => 0])
+      <!--{{$index++}}-->
+      @endforeach
 
-        @if($comeFromSearch)
+      @if($comeFromSearch)
 
-          @foreach($contactList as $guest)
-            @include('eventFolder._eventTableRows', ['status' => 3])
-          @endforeach
+      @foreach($contactList as $guest)
+      @include('eventFolder._eventTableRows', ['status' => 3])
+      @endforeach
 
-          <tr>
-            <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
-          </tr>
-
-        @endif
-
-      @else
-
-        @if( $event['event_status']  == 1) <!--$event['event_status']  == 1 -->
-
-          @foreach($guestList as $guest)
-
-            @if($guest['rsvp'] == 1)
-              @if($guest['checked_in_by'] != null){{--*/ $checkStatus = 1 /*--}}@else{{--*/ $checkStatus = 0 /*--}}@endif
-              @include('eventFolder._eventTableRows', ['status' => 1, 'checkStatus'=>$checkStatus])
-
-            @endif
-            <!--{{$index++}}-->
-          @endforeach
-
-          @if($comeFromSearch)
-
-            @foreach($contactList as $guest)
-
-              @include('eventFolder._eventTableRows', ['status' => 3])
-
-            @endforeach
-
-            <tr>
-              <td colspan="6"><a href="#">Contact not in system?  Create him now!</a></td>
-            </tr>
-
-          @endif
-
-          @else <!--$event['event_status']  == 2 -->
-            @foreach($guestList as $guest)
-              @include('eventFolder._eventTableRows', ['status' => 2])
-              <!--{{$index++}}-->
-            @endforeach
-          @endif
+      <tr>
+        <td ng-click="popupNewContact=true" colspan="6"><a href="#">Contact not in system?  Create now!</a></td>
+        <div class="popup ng-hide" style="display: block;" ng-show="popupNewContact">
+          <div class="popup-mask">
+            <div class="panel">
+              <div class="panel-inner">
+                <div class="popup-cancel">
+                  <a href="#" ng-click="popupNewContact=false;"><i class="fa fa-fw fa-times"></i></a>
+                </div>
+                <div class="edit-events container">
+                  <h2>Create New Guest</h2>
+                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'method' => 'post', 'class' => 'form', 'novalidate' => 'novalidate']) !!}
+                  {!! Form::hidden("eventId", $event->event_id) !!}
+                      @include('eventFolder._contactAddGuestForm', ['submitButtonText' => 'Create Guest'])
+                  {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
 
       @endif
 
-    </table>
+      @else
 
+      @if( $event['event_status']  == 1) <!--$event['event_status']  == 1 -->
+
+      @foreach($guestList as $guest)
+
+      @if($guest['rsvp'] == 1)
+      @if($guest['checked_in_by'] != null){{--*/ $checkStatus = 1 /*--}}@else{{--*/ $checkStatus = 0 /*--}}@endif
+      @include('eventFolder._eventTableRows', ['status' => 1, 'checkStatus'=>$checkStatus])
+
+      @endif
+      <!--{{$index++}}-->
+      @endforeach
+
+      @if($comeFromSearch)
+
+      @foreach($contactList as $guest)
+
+      @include('eventFolder._eventTableRows', ['status' => 3])
+
+      @endforeach
+
+      <tr>
+        <td colspan="6"><a href="#">Contact not in system?  Create now!</a></td>
+      </tr>
+
+      @endif
+
+      @else <!--$event['event_status']  == 2 -->
+      @foreach($guestList as $guest)
+      @include('eventFolder._eventTableRows', ['status' => 2])
+      <!--{{$index++}}-->
+      @endforeach
+      @endif
+
+      @endif
+    </table>
   </div>
 
   @foreach(array_merge($guestList, $contactList) as $guest)
-    <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['contact']['contact_id']}}">
-      <div class="popup-mask">
-        <div class="panel">
-          <div class="panel-inner">
-            <div class="popup-cancel">
-              <a href="#" ng-click="popup{{$guest['contact']['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
-            </div>
+  <div class="popup ng-hide" style="display: block;" ng-show="popup{{$guest['contact']['contact_id']}}">
+    <div class="popup-mask">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="popup-cancel">
+            <a href="#" ng-click="popup{{$guest['contact']['contact_id']}}=false;"><i class="fa fa-fw fa-times"></i></a>
+          </div>
+          <div class="edit-events container">
+            <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
 
-            <div class="edit-events container">
+            {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
 
-              <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
+            {!! Form::hidden('event_id', $event->event_id) !!}
 
+            @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
 
-              {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
-
-                  {!! Form::hidden('event_id', $event->event_id) !!}
-
-                  @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
-
-              {!! Form::close() !!}
-
-            </div>
+            {!! Form::close() !!}
           </div>
         </div>
       </div>
     </div>
-  @endforeach
   </div>
-
+  @endforeach
+</div>
 @endsection
 
 @section('javascript')
+<script>
+$(document).ready(function(){
+  @include('javascript._phoneJavascript')
 
+  $.ajaxSetup({
+    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+  });
 
-  <script>
+  $(".showDetails").click(function(e){
+    $("#showDetails").slideToggle("fast");
+  });
 
-  $(document).ready(function(){
+  // This button will increment the additional_guests value
+  $('.qtyplus').click(function(e){
+    e.preventDefault();
+    fieldName = $(this).attr('field');
+    var currentVal = parseInt($('input[name='+fieldName+']').val());
+    // If is not undefined
+    if (!isNaN(currentVal)) {
+      // Increment
+      $('input[name='+fieldName+']').val(currentVal + 1);
+    } else {
+      // Otherwise put a 0 there
+      $('input[name='+fieldName+']').val(0);
+    }
+  });
 
-    @include('javascript._phoneJavascript')
+  // This button will decrement the additional_guests value till 0
+  $(".qtyminus").click(function(e) {
+    e.preventDefault();
+    fieldName = $(this).attr('field');
+    var currentVal = parseInt($('input[name='+fieldName+']').val());
+    // If it isn't undefined or its greater than 0
+    if (!isNaN(currentVal) && currentVal > 0) {
+      // Decrement one
+      $('input[name='+fieldName+']').val(currentVal - 1);
+    } else {
+      // Otherwise put a 0 there
+      $('input[name='+fieldName+']').val(0);
+    }
+  });
 
-    $.ajaxSetup({
-      headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-    });
-
-    $(".showDetails").click(function(e){
-      $("#showDetails").slideToggle("fast");
-    });
-
-    // This button will increment the additional_guests value
-    $('.qtyplus').click(function(e){
-      e.preventDefault();
-      fieldName = $(this).attr('field');
-      var currentVal = parseInt($('input[name='+fieldName+']').val());
-      // If is not undefined
-      if (!isNaN(currentVal)) {
-        // Increment
-        $('input[name='+fieldName+']').val(currentVal + 1);
+  // This function changes the additional_guests value in the db
+  $(".qtybtn").click(function(){
+    var data = $(this).siblings(".qty").val();
+    var action = '/guestlist/addguests';
+    var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
+    $.post(action, request, function (response) {
+      if (response) {
+        // flash Success message
       } else {
-        // Otherwise put a 0 there
-        $('input[name='+fieldName+']').val(0);
+        //something went wrong
       }
-    });
-
-    // This button will decrement the additional_guests value till 0
-    $(".qtyminus").click(function(e) {
-      e.preventDefault();
-      fieldName = $(this).attr('field');
-      var currentVal = parseInt($('input[name='+fieldName+']').val());
-      // If it isn't undefined or its greater than 0
-      if (!isNaN(currentVal) && currentVal > 0) {
-        // Decrement one
-        $('input[name='+fieldName+']').val(currentVal - 1);
-      } else {
-        // Otherwise put a 0 there
-        $('input[name='+fieldName+']').val(0);
-      }
-    });
-
-    // This function changes the additional_guests value in the db
-    $(".qtybtn").click(function(){
-      var data = $(this).siblings(".qty").val();
-      var action = '/guestlist/addguests';
-      var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
-      $.post(action, request, function (response) {
-        if (response) {
-          // flash Success message
-        } else {
-          //something went wrong
-        }
-      });
-    });
-
-    // This function changes the rsvp checked in and event status
-    $(".ajaxSelect").change(function () {
-      var data = $(this).children(":selected").html();
-      if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
-        var action = '/guestlist/update';
-        var request = { theGuest : this.id , theRsvp : data };
-      } else if(data == "Not Checked In" || data == "Checked In"){
-        var action = '/guestlist/checkin';
-        var request = { theGuest : this.id, theCheckin : data };
-      } else {
-        var action = '/events/togglestatus';
-        var request = { theEvent : {{$event['event_id']}} , theStatus : data };
-      }
-      $.post(action, request, function (response) {
-        if (response == "Guest Removed" || response == "Status Changed") {
-          // flash Success message
-          location.reload();
-        } else if (response) {
-          // flash Success message
-        } else {
-          //something went wrong
-        }
-      });
     });
   });
 
-  </script>
-
+  // This function changes the rsvp checked in and event status
+  $(".ajaxSelect").change(function () {
+    var data = $(this).children(":selected").html();
+    if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
+      var action = '/guestlist/update';
+      var request = { theGuest : this.id , theRsvp : data };
+    } else if(data == "Not Checked In" || data == "Checked In"){
+      var action = '/guestlist/checkin';
+      var request = { theGuest : this.id, theCheckin : data };
+    } else {
+      var action = '/events/togglestatus';
+      var request = { theEvent : {{$event['event_id']}} , theStatus : data };
+    }
+    $.post(action, request, function (response) {
+      if (response == "Guest Removed" || response == "Status Changed") {
+        // flash Success message
+        location.reload();
+      } else if (response) {
+        // flash Success message
+      } else {
+        //something went wrong
+      }
+    });
+  });
+});
+</script>
 @endsection

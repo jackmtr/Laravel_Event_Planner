@@ -45,7 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/guestlist/create','GuestListController@store');
  	Route::post('/guestlist/checkin', 'GuestListController@checkin');
   	Route::post('/guestlist/addguests', 'GuestListController@addguests');
-
+    Route::post('/guestlist/invite', 'GuestListController@invite');
+    Route::post('/guestlist/createcontactguest', 'GuestListController@createContactGuest');
 	Route::get('/guestlist/{id}/details','GuestListController@details');
 	Route::post('guestlist/{id}/details','GuestListController@addPhone');
 

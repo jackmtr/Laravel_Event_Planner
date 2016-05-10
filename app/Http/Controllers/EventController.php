@@ -72,11 +72,11 @@ class EventController extends Controller
 
       $guests = array();
       $guestMatches = array();
-        $guestList = array(); //guestList contact details to pass to view
+      $guestList = array(); //guestList contact details to pass to view
 
       $contacts = array();
       $contactMatches = array();
-        $contactList = array();
+      $contactList = array();
 
       if(Request::input('searchitem')){
 
@@ -141,11 +141,11 @@ class EventController extends Controller
 
       foreach($contacts as $guest){
 
-        $oneGuest['guest_list_id'] = "";
-        $oneGuest['rsvp'] = "";
-        $oneGuest['additional_guests'] = "";
-        $oneGuest['checked_in_by'] = "";
-        $oneGuest['note'] = $guest->notes;
+        $oneGuest['guest_list_id'] = null;
+        $oneGuest['rsvp'] = 0;
+        $oneGuest['additional_guests'] = 0;
+        $oneGuest['checked_in_by'] = null;
+        $oneGuest['note'] = $guest->contact['notes'];
 
         $first_name = $guest->first_name;
         $last_name = $guest->last_name;
