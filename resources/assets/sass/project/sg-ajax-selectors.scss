@@ -47,9 +47,3 @@
 	}		
 }
 
-.guestnotcheckin{
-	background-color: $gray-30;
-	&:hover{
-		background-color: lighten($gray-30, 10%);
-	}		
-}
