@@ -1852,23 +1852,25 @@ tr.active a {
   -ms-flex-pack: center;
   justify-content: center; }
   .login .flexbox {
+    display: block;
+    overflow: auto;
     background-color: #fff;
     width: 25%;
-    height: 400px;
     text-align: center;
-    min-width: 600px; }
+    min-width: 600px;
+    padding: 20px; }
     .login .flexbox h2 {
       font-size: 24px;
       margin: 25px;
       color: #1e8f98; }
     .login .flexbox form .input {
-      margin: 35px; }
+      margin: 20px; }
       .login .flexbox form .input label {
         font-size: 24px; }
     .login .flexbox form input {
       width: 500px;
       height: 30px;
-      margin: 0px;
+      margin-bottom: 10px;
       text-align: center; }
     .login .flexbox form .submit {
       background-color: #1e8f98; }
