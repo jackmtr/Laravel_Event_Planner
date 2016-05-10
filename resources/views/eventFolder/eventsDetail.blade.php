@@ -264,6 +264,8 @@
 @endsection
 
 @section('javascript')
+
+
   <script>
   $(document).ready(function(){
 
@@ -282,10 +284,9 @@
     }else if(event_status == "COMPLETED"){
       $(".openmode").addClass("completedstatus");
     }
-
+    
     $('.status').each(function(){
       var guest_status = $(this).find('option:selected').html();
-
       if (guest_status == "Invited"){
         $(this).addClass("invitedstatus").removeClass("status");
       }else if(guest_status == "Going"){
@@ -300,26 +301,41 @@
       else if(guest_status == "Not Checked In"){
         $(this).addClass("guestnotcheckedin").removeClass("status");
       }
-    })
+    });
 
     $(".showDetails").click(function(e){
       $("#showDetails").slideToggle("fast");
     });
 
-  // This button will decrement the additional_guests value till 0
-  $(".qtyminus").click(function(e) {
-    e.preventDefault();
-    fieldName = $(this).attr('field');
-    var currentVal = parseInt($('input[name='+fieldName+']').val());
-    // If it isn't undefined or its greater than 0
-    if (!isNaN(currentVal) && currentVal > 0) {
-      // Decrement one
-      $('input[name='+fieldName+']').val(currentVal - 1);
-    } else {
-      // Otherwise put a 0 there
-      $('input[name='+fieldName+']').val(0);
-    }
-  });
+    // This button will increment the additional_guests value
+    $('.qtyplus').click(function(e){
+      e.preventDefault();
+      fieldName = $(this).attr('field');
+      var currentVal = parseInt($('input[name='+fieldName+']').val());
+      // If is not undefined
+      if (!isNaN(currentVal)) {
+        // Increment
+        $('input[name='+fieldName+']').val(currentVal + 1);
+      } else {
+        // Otherwise put a 0 there
+        $('input[name='+fieldName+']').val(0);
+      }
+    });
+
+    // This button will decrement the additional_guests value till 0
+    $(".qtyminus").click(function(e) {
+      e.preventDefault();
+      fieldName = $(this).attr('field');
+      var currentVal = parseInt($('input[name='+fieldName+']').val());
+      // If it isn't undefined or its greater than 0
+      if (!isNaN(currentVal) && currentVal > 0) {
+        // Decrement one
+        $('input[name='+fieldName+']').val(currentVal - 1);
+      } else {
+        // Otherwise put a 0 there
+        $('input[name='+fieldName+']').val(0);
+      }
+    });
 
     // This function changes the additional_guests value in the db
     $(".qtybtn").click(function(){
@@ -337,34 +353,25 @@
 
     // This function changes the rsvp checked in and event status
     $(".ajaxSelect").change(function () {
-
       var thisObject = $(this);
-
       var data = thisObject.children(":selected").html();
-
       if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
         var action = '/guestlist/update';
         var request = { theGuest : this.id , theRsvp : data };
-
       } else if(data == "Not Checked In" || data == "Checked In"){
         var action = '/guestlist/checkin';
         var request = { theGuest : this.id, theCheckin : data };
-
       } else {
         var action = '/events/togglestatus';
         var request = { theEvent : {{$event['event_id']}} , theStatus : data };
-
       }
       $.post(action, request, function (response) {
         if (response == "Guest Removed" || response == "Status Changed") {
           // flash Success message
           location.reload();
         } else if (response) {
-
           console.log($(thisObject).attr('class').split(' ')[1]);
-
           $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
-
         } else {
           //something went wrong
         }
