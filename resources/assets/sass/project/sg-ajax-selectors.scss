@@ -1,26 +1,41 @@
+select, option { text-align-last:center; }
+
+.fakeselect{
+	display: inline-block;
+	position: relative;
+	height: 40px;
+	width: 155px;
+}
+
+.openmode{
+	color: $black !important;
+	font-weight: bold;
+}
+
 .openstatus{
-	background-color: #FFE4B5;
+	background-color: $lochness;
 	&:hover{
-		background-color: lighten(#FFE4B5, 10%);
+		background-color: lighten($lochness, 10%);
 	}
 }
 
 .checkedinstatus{
-	background-color: lightgreen;
+	background-color: $tan;
 	&:hover{
-		background-color: lighten(lightgreen, 10%);
+		background-color: lighten($tan, 10%);
 	}	
 }
 
 .completedstatus{
-	background-color: #FF6666;
+	background-color: $ocean;
 	&:hover{
-		background-color: lighten(#FF6666, 10%);
+		background-color: lighten($ocean, 10%);
 	}	
 }
 
 .invitedstatus{
 	background-color: $tan;
+	color: $wood !important;
 	&:hover{
 		background-color: lighten($tan, 10%);
 	}	
@@ -28,6 +43,7 @@
 
 .goingstatus{
 	background-color: $lime;
+	color: $forest !important;	
 	&:hover{
 		background-color: lighten($lime, 10%);
 	}	
@@ -35,8 +51,16 @@
 
 .notstatus{
 	background-color: lightgray;
+	color: $forest !important;		
 	&:hover{
 		background-color: lighten(lightgray, 10%);
+	}	
+}
+
+.invitestatus{
+	background-color: $teal;
+	&:hover{
+		background-color: lighten($teal, 10%);
 	}	
 }
 

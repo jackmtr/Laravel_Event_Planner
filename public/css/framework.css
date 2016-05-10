@@ -2014,35 +2014,57 @@ h3 > span {
 .qty {
   width: 45px; }
 
+select, option {
+  -moz-text-align-last: center;
+  text-align-last: center; }
+
+.fakeselect {
+  display: inline-block;
+  position: relative;
+  height: 40px;
+  width: 155px; }
+
+.openmode {
+  color: #252525 !important;
+  font-weight: bold; }
+
 .openstatus {
-  background-color: #FFE4B5; }
+  background-color: #7fb88d; }
   .openstatus:hover {
-    background-color: #fff7e8; }
+    background-color: #a0caaa; }
 
 .checkedinstatus {
-  background-color: lightgreen; }
+  background-color: #d8c383; }
   .checkedinstatus:hover {
-    background-color: #bcf5bc; }
+    background-color: #e4d6aa; }
 
 .completedstatus {
-  background-color: #FF6666; }
+  background-color: #1cb0c1; }
   .completedstatus:hover {
-    background-color: #ff9999; }
+    background-color: #2fcfe1; }
 
 .invitedstatus {
-  background-color: #d8c383; }
+  background-color: #d8c383;
+  color: #725f22 !important; }
   .invitedstatus:hover {
     background-color: #e4d6aa; }
 
 .goingstatus {
-  background-color: #bed883; }
+  background-color: #bed883;
+  color: #647f29 !important; }
   .goingstatus:hover {
     background-color: #d2e4aa; }
 
 .notstatus {
-  background-color: lightgray; }
+  background-color: lightgray;
+  color: #647f29 !important; }
   .notstatus:hover {
     background-color: #ededed; }
+
+.invitestatus {
+  background-color: #1cb0c1; }
+  .invitestatus:hover {
+    background-color: #2fcfe1; }
 
 .guestcheckedin {
   background-color: #bed883; }
