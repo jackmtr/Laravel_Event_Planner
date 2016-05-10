@@ -33,17 +33,17 @@
 	}	
 }
 
-.notgoingstatus{
-	background-color: $light-grey;
+.notstatus{
+	background-color: lightgray;
 	&:hover{
-		background-color: lighten($light-grey, 10%);
+		background-color: lighten(lightgray, 10%);
 	}	
 }
 
 .guestcheckedin{
-	background-color: $jade;
+	background-color: $lime;
 	&:hover{
-		background-color: lighten($jade, 10%);
+		background-color: lighten($lime, 10%);
 	}		
 }
 

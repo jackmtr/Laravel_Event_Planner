@@ -115,7 +115,7 @@
   </div>
 
   <div class="guestList">
-
+<a href="www.google.ca" id="abcc">CLICK ME</a>
     <table class="sg-table">
 
       <tr>
@@ -228,13 +228,15 @@
 
   $(document).ready(function(){
 
-    @include('javascript._phoneJavascript')
+    $.ajaxSetup({
+      headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+    });    
 
-    //alert($(".ajaxSelect"));
-    //alert($('.eventStatus').find('option:selected').val());
+    @include('javascript._phoneJavascript')
 
     var event_status = $('.eventStatus').find('option:selected').html();
 
+    
     if(event_status == "OPEN"){
         $(".openmode").addClass("openstatus");
     }else if(event_status == "CHECK-IN"){
@@ -246,27 +248,23 @@
     $('.status').each(function(){
       var guest_status = $(this).find('option:selected').html();
 
-      alert(guest_status);
-
       if (guest_status == "Invited"){
-        $(this).addClass("invitedstatus");
+        $(this).addClass("invitedstatus").removeClass("status");
       }else if(guest_status == "Going"){
-        $(this).addClass("goingstatus");
+        $(this).addClass("goingstatus").removeClass("status");
       }
       else if(guest_status == "Not Going"){
-        $(this).addClass("notgoingstatus");
+        $(this).addClass("notstatus").removeClass("status");
       }
       else if(guest_status == "Checked In"){
-        $(this).addClass("guestcheckedin");
+        $(this).addClass("guestcheckedin").removeClass("status");
       }
       else if(guest_status == "Not Checked In"){
-        $(this).addClass("guestnotcheckedin");
+        $(this).addClass("guestnotcheckedin").removeClass("status");
       }
     })    
 
-    $.ajaxSetup({
-      headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-    });
+
 
     $(".showDetails").click(function(e){
       $("#showDetails").slideToggle("fast");
@@ -319,24 +317,9 @@
     // This function changes the rsvp checked in and event status
     $(".ajaxSelect").change(function () {
 
+      var thisObject = $(this);
 
-      //alert($(this).val());
-
-      var data = $(this).children(":selected").html();
-
-      //alert(data);
-      /*if(data == "OPEN"){
-        //alert(data);
-        $(".ajaxSelect").addClass("yellow");
-      }
-      else if(data == "CHECK-IN"){
-        $(".ajaxSelect").addClass("green");
-        //alert(data);
-      }
-      else if(data == "COMPLETED"){
-        $(".ajaxSelect").addClass("red");
-        //alert(data);
-      }*/
+      var data = thisObject.children(":selected").html();
 
       if(data == "Invited" || data == "Going" || data == "Not Going" || data == "Remove Guest"){
         var action = '/guestlist/update';
@@ -356,7 +339,11 @@
           // flash Success message
           location.reload();
         } else if (response) {
-          // flash Success message
+
+          console.log($(thisObject).attr('class').split(' ')[1]);
+
+          $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
+    
         } else {
           //something went wrong
         }

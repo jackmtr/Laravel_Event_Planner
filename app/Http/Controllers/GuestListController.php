@@ -92,10 +92,13 @@ class GuestListController extends Controller
       $rsvp = $request->theRsvp;
       $message = "RSVP Updated";
       if ($rsvp == "Invited") {
+        $message = "invitedstatus";
         $guest->rsvp = 0;
       } elseif ($rsvp == "Going") {
+        $message = "goingstatus";
         $guest->rsvp = 1;
       } elseif ($rsvp == "Not Going") {
+        $message = "notstatus";
         $guest->rsvp = 2;
       } elseif ($rsvp == "Remove Guest") {
         $this->destroy($guest->guest_list_id);
@@ -113,8 +116,10 @@ class GuestListController extends Controller
       $checkin = $request->theCheckin;
       $message = "Check In Status Updated";
       if ($checkin == "Not Checked In") {
+        $message = "guestnotcheckin";
         $guest->checked_in_by = null;
       } elseif ($checkin == "Checked In") {
+        $message = "guestcheckedin";
         $guest->checked_in_by = Auth::user()->user_id;
       } else {
         $message = "Error";

@@ -2039,15 +2039,15 @@ h3 > span {
   .goingstatus:hover {
     background-color: #d2e4aa; }
 
-.notgoingstatus {
-  background-color: #eaeaea; }
-  .notgoingstatus:hover {
-    background-color: white; }
+.notstatus {
+  background-color: lightgray; }
+  .notstatus:hover {
+    background-color: #ededed; }
 
 .guestcheckedin {
-  background-color: #1e8f98; }
+  background-color: #bed883; }
   .guestcheckedin:hover {
-    background-color: #26b7c3; }
+    background-color: #d2e4aa; }
 
 .guestnotcheckin {
   background-color: #a0a0a0; }
