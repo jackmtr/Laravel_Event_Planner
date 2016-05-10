@@ -119,8 +119,7 @@
     <table class="sg-table">
 
       <tr>
-        <th>Status</th>
-        <th>Table</th>
+        <th>Status</th>        
         <th>Name</th>
         <th>Guests</th>
         <th class="responsive-remove">Title &amp; Company</th>
