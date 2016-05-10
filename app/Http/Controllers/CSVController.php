@@ -67,7 +67,7 @@ class CSVController extends Controller
   }
   public function importContacts(Request $request)
   {
-    $this->validate($request, ['csvContacts' => 'required|mimes:csv,txt,xlsx']);//TURN ON extension=php_fileinfo.dll IN php.ini, restart server after.
+    $this->validate($request, ['csvContacts' => 'required|mimes:csv,txt,xlsx'], ['required' => 'You must input a csv or xlsx file.']);//TURN ON extension=php_fileinfo.dll IN php.ini, restart server after.
 
     if ($request->hasFile('csvContacts')) {
       $fileName = 'contactsImport.' . $request->file('csvContacts')->getClientOriginalExtension();
