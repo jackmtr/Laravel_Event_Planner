@@ -16,7 +16,7 @@
 
 				<div class="input loginname">
 					<label for="email">Email</label>
-					<input name="email" type="email" value="{{ old('email') }}" placeholder="test = admin@email.com" />
+					<input name="email" type="email" value="{{ old('email') }}" />
 
                     @if ($errors->has('email'))
                         <span class="help-block">
@@ -27,7 +27,7 @@
 
 				<div class="input loginpassword">
 					<label for="password">Password</label>
-					<input name="password" type="password" placeholder="test = password" />
+					<input name="password" type="password"/>
 				</div>
 
 				<input class="login-submit" type="submit" value="Login"/>
