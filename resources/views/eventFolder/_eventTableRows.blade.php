@@ -23,17 +23,15 @@
 		@endif
 	</td>	
 	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
-	<td>
 		@if($status < 2)
-          <form id='myform' method='POST' action='#'>
-            <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
-            <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
-            <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
-          </form>
-        @else
-
+			<td>
+	          <form id='myform' method='POST' action='#'>
+	            <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
+	            <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
+	            <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
+	          </form>
+			</td>          
         @endif
-	</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
 			@if($guest['note'] != null)
