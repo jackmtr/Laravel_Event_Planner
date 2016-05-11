@@ -170,8 +170,6 @@
 				var checkbox = $(this).parent().find("input");
 				checkbox.prop("checked", !checkbox.prop("checked"));
 			});
-
-			
 		});
 	</script>
 @endsection

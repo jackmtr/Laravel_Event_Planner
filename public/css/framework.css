@@ -973,6 +973,15 @@ button.with-icon-right i, a.with-icon-right i {
     font-family: FontAwesome;
     font-size: 14px; }
 
+.form-group {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 2.5px;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end; }
+
 /* ------------------------------
   Helpers
 ------------------------------ */
