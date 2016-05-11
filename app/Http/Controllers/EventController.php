@@ -25,7 +25,7 @@ class EventController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Responses
      */
     public function index()
     {
@@ -121,7 +121,6 @@ class EventController extends Controller
         $oneGuest['additional_guests'] = $guest->additional_guests;
         $oneGuest['checked_in_by'] = $guest->checked_in_by;
         $oneGuest['note'] = $guest->contact()->withTrashed()->first()->notes;
-
         $first_name = $guest->contact()->withTrashed()->get()->toArray()[0]['first_name'];
         $last_name = $guest->contact()->withTrashed()->get()->toArray()[0]['last_name'];
         $oneGuest['name'] = $first_name . " " . $last_name;
@@ -165,7 +164,6 @@ class EventController extends Controller
 
       $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
       $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
-
       return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex', 'contactList', 'comeFromSearch', 'query'));
     }
 
