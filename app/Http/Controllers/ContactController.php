@@ -8,6 +8,7 @@ use App\PhoneNumber;
 use App\Http\Requests\ContactRequest;
 use Request;
 use Auth;
+use App\User;
 
 class ContactController extends Controller
 {
@@ -65,11 +66,11 @@ class ContactController extends Controller
             }
 
             $contact->previous_event = $previousEvent;
-
-            //$contact->added_user = $contact->user()->get();
-            //$whoAdded = Contact::find(451)->user()->get();
-            //dd($whoAdded);
+                 
+            $whoAdded = User::find($contact->added_by)->name;
+            $contact->whoAdded = $whoAdded;          
         } 
+        //dd($contacts);
 
     	return view('contactFolder.contacts', compact('contacts','open_events', 'phoneindex'));
     }

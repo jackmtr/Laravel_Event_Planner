@@ -314,7 +314,7 @@
     $(".qtybtn").click(function(){
       var data = $(this).siblings(".qty").val();
       var action = '/guestlist/addguests';
-      var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
+      var request = { theGuest : this.name, guests : data };
       $.post(action, request, function (response) {
         if (response) {
           // flash Success message
