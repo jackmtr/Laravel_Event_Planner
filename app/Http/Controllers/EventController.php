@@ -223,15 +223,22 @@ class EventController extends Controller
     }
 
     public function invitePreviousGuests($id){
-      if(Request::input('events')){
-        $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
+        //Event that's added to is $id
+       // GuestList::with('event','guestcontacts')->where('event_id',$id)->get()->toArray();
+        if(Request::input('events')) {
+            $added_event_id = Request::input('events');
 
-        foreach ($previousGuestList as $previousGuest) {
-          if($previousGuest->contact['contact_id'] > 0){
-            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $id]);
-          }
+            $added_to = GuestList::where('event_id', $id)->get()->pluck('contact_id')->toArray();
+               $added = GuestList::where('event_id', $added_event_id)->get()->pluck('contact_id')->toArray();
+           // $merged_array = array_merge($added_to, $added);
+            $contacts_combined = array_diff($added_to, $added);
+
+            dd($contacts_combined);
+            foreach ($contacts_combined as $contact) {
+                    GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $contact, 'event_id' => $id]);
+            }
         }
-      }
+
       return redirect()->action('EventController@show', $id);
     }
 
