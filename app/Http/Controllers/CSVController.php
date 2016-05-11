@@ -77,6 +77,8 @@ class CSVController extends Controller
     } else {
       // no file
     }
+
+    // add break for pop up proceed/cancel
     Excel::filter('chunk')->load(base_path() . '/public/imports/' . $fileName)->chunk(250, function($results)
     {
       $authId = Auth::user()->user_id;
@@ -85,7 +87,7 @@ class CSVController extends Controller
         $contact = Contact::firstOrNew([
           'first_name'=>$row->first_name,
           'last_name'=>$row->last_name,
-          //'email'=>$row->email
+          'email'=>$row->email
         ]);
         if ($contact->exists) {
           //contact already in db
