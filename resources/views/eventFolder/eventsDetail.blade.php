@@ -123,6 +123,9 @@
         <th>Guests</th>
         <th class="responsive-remove">Title &amp; Company</th>
         <th class="responsive-remove">Notes</th>
+        @if($event['event_status'] == 1)
+          <th class="responsive-remove">Checked In By</th>
+        @endif
       </tr>
 
 

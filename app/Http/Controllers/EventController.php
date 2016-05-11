@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Event;
 use App\GuestList;
 use App\Contact;
@@ -113,11 +114,17 @@ class EventController extends Controller
 
     foreach( $guests as $guest)
     {
+      $whoAdded = null;
+
+      if(User::find($guest->checked_in_by)){
+        $whoAdded = User::find($guest->checked_in_by)->name;
+      }
 
       $oneGuest['guest_list_id'] = $guest->guest_list_id;
       $oneGuest['rsvp'] = $guest->rsvp;
       $oneGuest['additional_guests'] = $guest->additional_guests;
-      $oneGuest['checked_in_by'] = $guest->checked_in_by;
+      $oneGuest['checked_in_by'] = $whoAdded;
+
       $oneGuest['note'] = $guest->contact()->withTrashed()->first()->notes;
       $first_name = $guest->contact()->withTrashed()->get()->toArray()[0]['first_name'];
       $last_name = $guest->contact()->withTrashed()->get()->toArray()[0]['last_name'];
@@ -128,6 +135,8 @@ class EventController extends Controller
       $oneGuest['work'] = $occupation . " " . $company;
 
       $oneGuest['contact'] = $guest->contact()->withTrashed()->first();
+
+
       $oneGuest['phone_number'] = $guest->contact()->withTrashed()->first()->phoneNumber()->get()->toArray();
 
       $guestList[] = $oneGuest;

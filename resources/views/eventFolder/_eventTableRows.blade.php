@@ -37,15 +37,18 @@
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
 			@if($guest['note'] != null)
-			<a href="#" class="tooltip">
-			<i class="fa fa-info-circle"></i>
-			<div class="inner">
-				<div class="arrow"><i class="fa fa-caret-left"></i></div>
-				{{$guest['note']}}
-			</div>
-		</a>
-		@else
+				<a href="#" class="tooltip">
+					<i class="fa fa-info-circle"></i>
+					<div class="inner">
+						<div class="arrow"><i class="fa fa-caret-left"></i></div>
+						{{$guest['note']}}
+					</div>
+				</a>
+			@else
 
-        @endif
-		</td>		
+	        @endif
+	</td>
+	@if($status == 1)
+		<td>{{$guest['checked_in_by']}}</td>
+	@endif		
 </tr>
