@@ -15,10 +15,10 @@
 				@endif
 			@endif
 		@else
-		{!! Form::open(['action' => ['GuestListController@invite'], 'method' => 'post']) !!}
+		{!! Form::open(['action' => ['GuestListController@store'], 'method' => 'post']) !!}
 		{!! Form::hidden("contactId", $guest['contact']['contact_id']) !!}
 		{!! Form::hidden("eventId", $event->event_id) !!}
-		{!! Form::submit("Invite") !!}
+		{!! Form::submit("Invite", ['class' => 'fakeselect btn btn-primary form-control button-default']) !!}
 		{!! Form::close() !!}
 		@endif
 	</td>	

@@ -9,11 +9,13 @@
 	justify-content: center;
 
 	.flexbox{
+		display:block;
+		overflow: auto;
 		background-color: $white;
 		width: 25%;
-		height: 400px;
 		text-align:center;
 		min-width: 600px;
+		padding: 20px;
 		h2{
 			font-size: $font-size-h1;
 			margin: 25px;
@@ -21,7 +23,7 @@
 		}
 		form{
 			.input{
-				margin: 35px;
+				margin: 20px;
 				label{
 					font-size: $font-size-h1;
 				}
@@ -29,7 +31,7 @@
 			input{
 				width: 500px;
 				height: 30px;
-				margin: 0px;
+				margin-bottom: 10px;
 				text-align: center;
 			}
 			.submit{

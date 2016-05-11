@@ -50,7 +50,12 @@ class ContactController extends Controller
 
         foreach($contacts as $contact){
 
-            $previousEvent = array();
+            $pastEvents = array();
+            $ongoingEvents = array();
+
+            $whoAdded = User::find($contact->added_by)->name;
+            $contact->whoAdded = $whoAdded;     
+
             $anyPhone = $contact->phoneNumber()->first();
 
             if ($anyPhone){
@@ -62,16 +67,23 @@ class ContactController extends Controller
             $guestsinfo = $contact->guestList()->get();
 
             foreach($guestsinfo as $previousGuest){
-                $previousEvent[] = $previousGuest->event['event_name'];
+
+                $guestEventInfo = array();
+                $guestEventInfo['event_name'] = $previousGuest->event['event_name'];
+                $guestEventInfo['event_status'] = $previousGuest->event['event_status'];
+                $guestEventInfo['rsvp'] = $previousGuest['rsvp'];
+                $guestEventInfo['checked_in_by'] = $previousGuest['checked_in_by'];
+
+                if ($guestEventInfo['event_status'] == 2 && $guestEventInfo['checked_in_by'] != null){
+                    $pastEvents[] = $guestEventInfo['event_name'];
+                }else if($guestEventInfo['event_status'] < 2 && $guestEventInfo['rsvp'] != 2){
+                    $ongoingEvents[] = $guestEventInfo['event_name'];
+                }
             }
 
-            $contact->previous_event = $previousEvent;
-                 
-            $whoAdded = User::find($contact->added_by)->name;
-            $contact->whoAdded = $whoAdded;          
+            $contact->past_events = $pastEvents;
+            $contact->ongoing_events = $ongoingEvents;     
         } 
-        //dd($contacts);
-
     	return view('contactFolder.contacts', compact('contacts','open_events', 'phoneindex'));
     }
 

@@ -46,10 +46,10 @@
             <div class="container">
                 <ul>
                     <li>
-                        <a href="{{ url('/events/') }}" class="active">EVENTS</a>
+                        <a href="{{ url('/events/') }}" class="eventSide" id="eventSide">EVENTS</a>
                     </li>
                     <li>
-                        <a href="{{ url('/contacts') }}">CONTACTS</a>
+                        <a href="{{ url('/contacts') }}" class="contactSide" id="contactSide">CONTACTS</a>
                     </li>
                 </ul>
             <div>
@@ -60,7 +60,23 @@
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+    $(function(){
+        console.log(window.location.href);
+        var catagory = window.location.href;
+        if (catagory.indexOf("event") > 1) {
+            console.log("we are on the events side");
+            $('#eventSide').css("background-color: blue")
+            $("#eventSide").addClass("selected");
+        }else if (catagory.indexOf("contact") > 1){
+            console.log("we are on the contacts side");
+            $("#contactSide").addClass("selected");
+        }
+    });
+
+    </script>
     <!--{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}-->
     @yield('javascript')
 </body>
