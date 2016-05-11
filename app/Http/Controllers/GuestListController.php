@@ -159,14 +159,7 @@ class GuestListController extends Controller
         GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
       }
     }
-
-    /*public function invite(Request $request)
-    {
-      $eventId = $request->eventId;
-      GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $request->contactId, 'event_id' => $eventId));
-      return redirect()->action('EventController@show', $eventId);
-    }*/
-
+    
     public function createContactGuest(ContactRequest $request)
     {
       $eventId = $request->eventId;
