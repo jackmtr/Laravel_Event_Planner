@@ -973,6 +973,15 @@ button.with-icon-right i, a.with-icon-right i {
     font-family: FontAwesome;
     font-size: 14px; }
 
+.form-group {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 2.5px;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end; }
+
 /* ------------------------------
   Helpers
 ------------------------------ */
@@ -1366,6 +1375,17 @@ button.with-icon-right i, a.with-icon-right i {
   margin-top: 30px;
   margin-bottom: 0; }
 
+.popup-form {
+  text-align: center; }
+  .popup-form div {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    margin: 5px; }
+
 /* ------------------------------
   Status
 ------------------------------ */
@@ -1667,6 +1687,11 @@ tr.active a {
   .navbar-active-users {
     display: none; } }
 
+.selected {
+  color: #1e8f98;
+  text-decoration: none;
+  border-bottom: solid 3px #1e8f98; }
+
 /* ---------------------------------
   Project Style: Event-box
 --------------------------------- */
@@ -1852,23 +1877,25 @@ tr.active a {
   -ms-flex-pack: center;
   justify-content: center; }
   .login .flexbox {
+    display: block;
+    overflow: auto;
     background-color: #fff;
     width: 25%;
-    height: 400px;
     text-align: center;
-    min-width: 600px; }
+    min-width: 600px;
+    padding: 20px; }
     .login .flexbox h2 {
       font-size: 24px;
       margin: 25px;
       color: #1e8f98; }
     .login .flexbox form .input {
-      margin: 35px; }
+      margin: 20px; }
       .login .flexbox form .input label {
         font-size: 24px; }
     .login .flexbox form input {
       width: 500px;
       height: 30px;
-      margin: 0px;
+      margin-bottom: 10px;
       text-align: center; }
     .login .flexbox form .submit {
       background-color: #1e8f98; }
@@ -2014,44 +2041,61 @@ h3 > span {
 .qty {
   width: 45px; }
 
+select, option {
+  -moz-text-align-last: center;
+  text-align-last: center; }
+
+.fakeselect {
+  display: inline-block;
+  position: relative;
+  height: 40px;
+  width: 155px; }
+
+.openmode {
+  color: #252525 !important;
+  font-weight: bold; }
+
 .openstatus {
-  background-color: #FFE4B5; }
+  background-color: #7fb88d; }
   .openstatus:hover {
-    background-color: #fff7e8; }
+    background-color: #a0caaa; }
 
 .checkedinstatus {
-  background-color: lightgreen; }
+  background-color: #d8c383; }
   .checkedinstatus:hover {
-    background-color: #bcf5bc; }
+    background-color: #e4d6aa; }
 
 .completedstatus {
-  background-color: #FF6666; }
+  background-color: #1cb0c1; }
   .completedstatus:hover {
-    background-color: #ff9999; }
+    background-color: #2fcfe1; }
 
 .invitedstatus {
-  background-color: #d8c383; }
+  background-color: #d8c383;
+  color: #725f22 !important; }
   .invitedstatus:hover {
     background-color: #e4d6aa; }
 
 .goingstatus {
-  background-color: #bed883; }
+  background-color: #bed883;
+  color: #647f29 !important; }
   .goingstatus:hover {
     background-color: #d2e4aa; }
 
 .notstatus {
-  background-color: lightgray; }
+  background-color: lightgray;
+  color: #647f29 !important; }
   .notstatus:hover {
     background-color: #ededed; }
+
+.invitestatus {
+  background-color: #1cb0c1; }
+  .invitestatus:hover {
+    background-color: #2fcfe1; }
 
 .guestcheckedin {
   background-color: #bed883; }
   .guestcheckedin:hover {
     background-color: #d2e4aa; }
-
-.guestnotcheckin {
-  background-color: #a0a0a0; }
-  .guestnotcheckin:hover {
-    background-color: #bababa; }
 
 /*# sourceMappingURL=framework.css.map */

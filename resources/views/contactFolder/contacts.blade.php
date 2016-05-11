@@ -5,12 +5,14 @@
 	<div class="subnav">
 		<h2>Contacts</h2>
 		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
-		{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'novalidate' => 'novalidate', 'files' => true]) !!}
-			{!! Form::file('csvContacts') !!}
-			{!! Form::submit("Import Contacts") !!}
+		{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'files' => true]) !!}
+			{!! Form::file('csvContacts', ['class' => 'fileinput']) !!}
+			{!! Form::submit("Import Contacts", ['class' => 'btn btn-primary form-control button-default import']) !!}
 		{!! Form::close() !!}
 		<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
 	</div>
+
+	@include('errors._list')
 
 	<div class="contact-nav-bar">
 		{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
@@ -121,19 +123,34 @@
 
 						<h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
 
-						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form']) !!}
+						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form',  'id' => 'contactForm']) !!}
 
 							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 
 						{!! Form::close() !!}
+						<div>
+						<h2>Upcoming Attending Events</h2>
 
+							<ul>
+								@forelse($contact['ongoing_events'] as $ongoingEvent)
+									<li>{{$ongoingEvent}}</li>
+								@empty
+									<li>This contact is currently not registered for any upcoming event.</li>
+								@endforelse
+							</ul>
+						</div>
+						<br/>
+						<div>
 						<h2>Previously Attended Events</h2>
 
 							<ul>
-								@foreach($contact['previous_event'] as $previousEvent)
+								@forelse($contact['past_events'] as $previousEvent)
 									<li>{{$previousEvent}}</li>
-								@endforeach
+								@empty
+									<li>This contact has not attended any previous event.</li>
+								@endforelse
 							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -147,14 +164,14 @@
 	<script>
 		$(document).ready(function(){
 
+			$(#contactForm).validate();
+
 			@include('javascript._phoneJavascript')	
 
 			$('.cellcheckbox').on('click', 'span', function(){
 				var checkbox = $(this).parent().find("input");
 				checkbox.prop("checked", !checkbox.prop("checked"));
 			});
-
-			
 		});
 	</script>
 @endsection

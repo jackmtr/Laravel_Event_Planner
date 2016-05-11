@@ -97,3 +97,9 @@
     display: none;
   }
 }  
+
+.selected{
+  color: $color-primary;
+  text-decoration: none;
+  border-bottom: solid 3px $color-primary;      
+}
