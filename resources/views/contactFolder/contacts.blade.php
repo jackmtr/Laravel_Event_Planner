@@ -128,14 +128,29 @@
 							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 
 						{!! Form::close() !!}
+						<div>
+						<h2>Upcoming Attending Events</h2>
 
+							<ul>
+								@forelse($contact['ongoing_events'] as $ongoingEvent)
+									<li>{{$ongoingEvent}}</li>
+								@empty
+									<li>This contact is currently not registered for any upcoming event.</li>
+								@endforelse
+							</ul>
+						</div>
+						<br/>
+						<div>
 						<h2>Previously Attended Events</h2>
 
 							<ul>
-								@foreach($contact['previous_event'] as $previousEvent)
+								@forelse($contact['past_events'] as $previousEvent)
 									<li>{{$previousEvent}}</li>
-								@endforeach
+								@empty
+									<li>This contact has not attended any previous event.</li>
+								@endforelse
 							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
