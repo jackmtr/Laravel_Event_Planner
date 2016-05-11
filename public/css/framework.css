@@ -1687,6 +1687,11 @@ tr.active a {
   .navbar-active-users {
     display: none; } }
 
+.selected {
+  color: #1e8f98;
+  text-decoration: none;
+  border-bottom: solid 3px #1e8f98; }
+
 /* ---------------------------------
   Project Style: Event-box
 --------------------------------- */
