@@ -223,23 +223,22 @@ class EventController extends Controller
     }
 
     public function invitePreviousGuests($id){
-        //Event that's added to is $id
-       // GuestList::with('event','guestcontacts')->where('event_id',$id)->get()->toArray();
         if(Request::input('events')) {
             $added_event_id = Request::input('events');
 
-            $added_to = GuestList::where('event_id', $id)->get()->pluck('contact_id')->toArray();
-               $added = GuestList::where('event_id', $added_event_id)->get()->pluck('contact_id')->toArray();
-           // $merged_array = array_merge($added_to, $added);
-            $contacts_combined = array_diff($added_to, $added);
+            $currentEventGuestListIds = GuestList::where('event_id', $id)->get()->pluck('contact_id')->toArray();
+            $previousGuestListIds = GuestList::where('event_id', $added_event_id)->get()->pluck('contact_id')->toArray();
 
-            dd($contacts_combined);
-            foreach ($contacts_combined as $contact) {
-                    GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $contact, 'event_id' => $id]);
+            $contacts_to_add = array_diff($previousGuestListIds, $currentEventGuestListIds);
+            $duplicates_to_remove = array_intersect($previousGuestListIds, $currentEventGuestListIds);
+            $count_of_additions = count($contacts_to_add);
+            $count_of_duplicates = count($duplicates_to_remove);
+
+            foreach ($contacts_to_add as $contact) {
+              GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $contact, 'event_id' => $id]);
             }
         }
-
-      return redirect()->action('EventController@show', $id);
+      return redirect()->action('EventController@show', $id)->with('popup', $count_of_additions);
     }
 
     public function toggleStatus(Request $request){
