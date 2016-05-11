@@ -90,9 +90,9 @@ class EventController extends Controller
         $contactMatchesIds = array_column($contactMatches, 'contact_id');
 
         $eventGuests = Event::find($id)->guestList;
-
+        //dd($contactMatches);
         foreach($eventGuests as $guest){
-          $guestMatches[] = $guest->contact->toArray();
+          $guestMatches[] = $guest->contact;
         }
 
         $guestMatchesIds = array_column($guestMatches, "contact_id");
