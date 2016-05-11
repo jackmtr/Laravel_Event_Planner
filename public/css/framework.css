@@ -1828,6 +1828,35 @@ tr.active a {
       -ms-flex-pack: justify;
       justify-content: space-between; }
 
+.subnav1 {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .subnav1 > div {
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between; }
+    .subnav1 > div > div {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column; }
+
+.contact-nav-bar {
+  float: left; }
+
 /* ---------------------------------
   Project Style: Guestlist
 --------------------------------- */
@@ -2040,6 +2069,10 @@ h3 > span {
 
 .qty {
   width: 45px; }
+
+.sorter {
+  border: none;
+  background: none; }
 
 select, option {
   -moz-text-align-last: center;

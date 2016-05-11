@@ -18,7 +18,7 @@
       <div>
         {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'id' => 'eventForm' ]) !!}
 
-          @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
+          @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null, 'eventEndTime' => null])
 
         {!! Form::close() !!}
       </div>
@@ -150,11 +150,19 @@
                   <a href="#" ng-click="popupNewContact=false;"><i class="fa fa-fw fa-times"></i></a>
                 </div>
                 <div class="edit-events container">
-                  <h2>Create New Guest</h2>
-                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'method' => 'post', 'class' => 'form', 'id' => 'guestContactForm']) !!}
-                    {!! Form::hidden("eventId", $event->event_id) !!}
-                    @include('eventFolder._contactAddGuestForm', ['submitButtonText' => 'Create Guest'])
+
+                  <h1>Create Contact</h1>
+
+                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'class' => 'form']) !!}
+
+                    {!! Form::hidden('eventId', $event->event_id) !!}
+
+                    @include('contactFolder._contactForm', ['submitButtonText' => 'Create Contact and Invite to Event', 'edit' => false])
+
                   {!! Form::close() !!}
+
+                  @include('errors._list')
+
                 </div>
               </div>
             </div>
