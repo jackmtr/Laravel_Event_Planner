@@ -10,9 +10,7 @@ $(".add_phone").click(function(e){
 });
 
 $(".delete-phone-numbers", $(this)).on("click",".remove_field", function(e)
-	{ //user click on remove text
-
-	console.log('hi');
+	{
 	  e.preventDefault(); $(this).parent('div').remove(); index--;
 	}
-); //end of remove field
+);

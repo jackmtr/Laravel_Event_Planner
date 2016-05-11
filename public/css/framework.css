@@ -1375,6 +1375,17 @@ button.with-icon-right i, a.with-icon-right i {
   margin-top: 30px;
   margin-bottom: 0; }
 
+.popup-form {
+  text-align: center; }
+  .popup-form div {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    margin: 5px; }
+
 /* ------------------------------
   Status
 ------------------------------ */
