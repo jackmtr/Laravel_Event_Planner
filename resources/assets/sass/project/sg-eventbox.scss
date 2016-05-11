@@ -1,0 +1,103 @@
+/* ---------------------------------
+  Project Style: Event-box
+--------------------------------- */
+
+.event{
+	display: flex;
+	flex-direction: column;
+}
+
+
+.bottom-event-color{
+	background-color: $color-bg-footer;
+	.event-box{
+		border: black solid 1px;
+	}
+	.box-right-side{
+		border-left: black solid 1px;
+	}
+}
+
+.event-box{
+	min-width: 400px;
+    width: 48%;
+    height: 85px;
+    margin: 1%;
+    display: flex;
+    justifly-content: space-between;
+    background-color: $light-grey;
+    .box-left-side{
+    	width: 76%;
+    	margin: 1% 5%;
+    	//display: flex;
+    	//flex-direction: column;
+    	//justify-content:flex-start;
+    	a{
+	     	&:hover{
+	    		text-decoration: none;
+	    	}   	
+    	}
+
+    	p{ font-family: $font-family-secondary; font-size: $font-size-h3; color: $stone; margin:0;}
+    	p+p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $jade; margin:0;}
+    	p+p+p{ font-family: $font-family-secondary; font-size: $font-size-default; margin:0;}
+    }
+    .box-right-side{
+    	width: 20%;
+    	text-align: center;
+    	position: relative;
+    	.duplicate{
+    		position: absolute;
+    		bottom: 0;
+    		height: 20px;
+    		width: 100%;
+    		background-color: $gray-50;
+    		font-size: $font-size-small;
+    		a{
+    			display: block;
+    			color: $white;
+    			&:hover{text-decoration:none;}
+    		}
+    	}    
+    }
+    .open-event{
+        background-color: $jade;
+        .open{
+            margin: 5%;
+            p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $white; margin:0;}
+            p+p{ font-size: $font-size-smallish; margin:0;}                 
+        }
+
+    }
+    .checkedin-event{
+        background-color: $lime;
+        .checkedin{
+            margin: 5%;
+            p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $stone; margin:0;}
+            p+p{ font-size: $font-size-smallish; margin:0;}                 
+        }
+    }
+    .completed-event{
+        .completed{
+            margin: 5%;
+            p{ font-family: $font-family-primary; font-size: $font-size-h1; color: $stone; margin:0;}
+            p+p{ font-size: $font-size-smallish; margin:0;}                 
+        }
+    }
+}
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 1000px) { 
+	.event-box{
+	width: 90%;
+	}
+	.box-right-side{
+		min-width: 150px;
+	}
+}   
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 700px) { 
+	.event-box span{
+		display:none;
+	}
+}   

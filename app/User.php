@@ -24,4 +24,35 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /*public static function boot(){
+
+        parent::boot();
+
+        static::creating(function($user){
+            $user->token = str_random(30);
+        });
+    }*/
+
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = bcrypt($password);
+    }    
+
+    /**
+    * A user may add many contacts.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function contact(){
+        return $this->hasMany('App\Contact');
+    }      
+
+    /**
+    * A user may add many guests.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function guestList(){
+        return $this->hasMany('App\GuestList');
+    }     
 }

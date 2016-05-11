@@ -2,21 +2,36 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model as Model;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class event extends Model
+class Event extends Model
 {
-	protected $primaryKey = 'event_id';
+  use SoftDeletes;
 
-    protected $fillable = [
-    	'event_name',
-    	'event_date',
-		'event_time',
-		'event_location',
-		'event_description',
-		'num_of_tables',
-		'seats_per_table',
-    ];
+  protected $primaryKey = 'event_id';
 
-    public $timestamps = false;
+  protected $fillable = [
+    'event_name',
+    'event_date',
+    'event_time',
+    'event_location',
+    'event_description',
+    'num_of_tables',
+    'seats_per_table',
+    'event_status',
+  ];
+  protected $dates = ["deleted_at"];
+
+  public $timestamps = false;
+
+  /**
+  * An event may have many guests.
+  *
+  * @return \Illuminate\Database\Eloquent\Relations\HasMany
+  */
+  public function guestList(){
+    return $this->hasMany('App\GuestList');
+  }
 }

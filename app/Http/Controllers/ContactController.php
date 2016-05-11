@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Event;
-use App\Http\Requests;
-//use Carbon\Carbon;
+use App\PhoneNumber;
+use App\Http\Requests\ContactRequest;
+use Request;
 use Auth;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -26,71 +26,124 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() //shows all contacts
     {
-        $contacts = Contact::paginate(10);
-        $events_active_open = Event::where('event_status', 0)->orWhere('event_status',1)->get();
+        $sortby = "last_name";
+        $phoneindex = 0;
+        $open_events = Event::where('event_status', '<', 2)->orderBy('event_status')->get();
 
-       // $contacts = Contact::all();
+        if(Request::input('sortby')){
+          $sortby = Request::input('sortby');
+        }
 
-    	return view('contactFolder.contacts', compact('contacts','events_active_open'));
+        $contacts = Contact::orderBy($sortby)->paginate(10)->appends(['sortby' => $sortby]);
+
+        if(Request::input('searchitem')){ 
+            $query = Request::input('searchitem'); 
+            $contacts = Contact::where('first_name', 'LIKE', '%'. $query . '%')
+                ->orWhere('last_name', 'LIKE', '%'. $query . '%')
+                ->orWhere('email', 'LIKE', '%' . $query . '%')
+                ->orWhere('occupation', 'LIKE', '%' . $query . '%')
+                ->orWhere('company', 'LIKE', '%' . $query . '%')->paginate(10);
+        }
+
+        foreach($contacts as $contact){
+
+            $previousEvent = array();
+            $anyPhone = $contact->phoneNumber()->first();
+
+            if ($anyPhone){
+                $contact->display_phoneNumber = $anyPhone->phone_number;
+            }else{
+                $contact->display_phoneNumber = "N/A";
+            }
+
+            $guestsinfo = $contact->guestList()->get();
+
+            foreach($guestsinfo as $previousGuest){
+                $previousEvent[] = $previousGuest->event['event_name'];
+            }
+
+            $contact->previous_event = $previousEvent;
+
+            //$contact->added_user = $contact->user()->get();
+            //$whoAdded = Contact::find(451)->user()->get();
+            //dd($whoAdded);
+        } 
+
+    	return view('contactFolder.contacts', compact('contacts','open_events', 'phoneindex'));
     }
 
     public function create()
     {
-        return view('contactFolder.createContacts');
+        $phoneindex = 0;
+        return view('contactFolder.createContacts', compact('phoneindex'));
     }
 
-    public function store(Request $request){
+    public function store(ContactRequest $request){
 
-        $authId = Auth::user()->user_id;
-        //dd($authEmail);
-        $input = Request::all();
-        $input["added_by"] = $authId;
-        //dd($input);
+        $request["added_by"] = Auth::user()->user_id;
+        $contact = Contact::create($request->all());
 
-        Contact::create($input);
+        $request["contact_id"] = $contact->contact_id;
+
+        foreach($request['phonegroup'] as $phoneNumber){
+
+            if (strlen($phoneNumber) > 1){
+                PhoneNumber::create(array('phone_number'=>$phoneNumber, 'contact_id'=>$contact->contact_id));
+            }
+        }
 
         return redirect('contacts');
     }
 
-    public function edit($id){
+    public function update(ContactRequest $request, $id)
+    {
 
-        $contact = Contact::find($id);
+        $eventId = $request->event_id;
 
-        return view('contactFolder.editContacts', compact("contact"));
+        $guest = Contact::findOrFail($id);
+        $contact = $guest->update($request->all());
+
+        $currentNumbers = $guest->phoneNumber()->get();
+        $allNumbers = $request->phonegroup;
+
+        foreach($currentNumbers as $row)
+        {
+            $row->forceDelete();
+        }
+
+        foreach ($allNumbers as $number) 
+        {
+            if(strlen($number) > 1)
+            {
+                PhoneNumber::create(array('phone_number'=>$number, 'contact_id'=>$id));
+            }
+        }
+
+        if ($eventId != null){
+            return redirect()->action('EventController@show', $eventId);
+        }
+        else{
+            return redirect('contacts'); 
+        }
     }
 
-    public function update(Request $request, $id)
-    {
-        //Validating data
-        $this->validate($request, [
-            'first_name' => 'required|max:255',
-            'last_name'  => 'required|max:255',
-            'email'      => 'required|max:255',
-            /*
-            'occupation',
-            'company',
-            'wechat_id',
-            'notes',
-            */
-            'added_by'   => 'required',           
-        ]);
-                       
-        //Save data to database
-        $contact = Contact::find($id);
+    public function destroy($id){
 
-        $contact->first_name = $request->input('first_name');
-        $contact->last_name = $request->input('last_name');        
-        $contact->email = $request->input('email');
-        $contact->occupation = $request->input('occupation');
-        $contact->company = $request->input('company');
-        $contact->wechat_id = $request->input('wechat_id');
-        $contact->notes = $request->input('notes');
-        $contact->added_by = $request->input('added_by');
+        $contact = Contact::findOrFail($id);
 
-        $contact->save();
-        return redirect('contacts');                    
+        $contactInGuestLists = count($contact->guestlist);
 
+        if($contactInGuestLists == 0){
+
+            $contact->phoneNumber()->forceDelete();
+            $contact->forceDelete();
+        }else{
+
+            $contact->phoneNumber()->delete();
+            $contact->delete();
+        }
+        return redirect('contacts');
     }
 }

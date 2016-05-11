@@ -1,7 +1,4 @@
-@extends('layouts.app')
-
-<!-- Main Content -->
-@section('content')
+<!--
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -44,4 +41,44 @@
         </div>
     </div>
 </div>
-@endsection
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width; maximum-scale=1; minimum-scale=1;" />
+        <title>Istuary Event CRM</title>
+        <link rel="stylesheet" type="text/css" href="/css/framework.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Rajdhani:600' rel='stylesheet' type='text/css'>
+    </head>
+    <body class="login">
+        <div class="flexbox">
+            <h2>Istuary Event Management & CRM</h2>
+
+            <h2>Reset Password</h2>
+
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            {!! Form::open(['url' => '/password/email', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => 'true']) !!}
+          
+                <div class="form-group">
+                    {!! Form::label('email', 'Email Address: ') !!}
+                    {!! Form::text('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
+                </div>                
+
+                <div class="form-group">
+                    {!! Form::submit("Send Password Reset Link", ['class' => 'btn btn-primary form-control']) !!}
+                </div>   
+
+            {!! Form::close() !!}
+
+            @include('errors._list')
+
+        </div>
+    </body>
+</html>
