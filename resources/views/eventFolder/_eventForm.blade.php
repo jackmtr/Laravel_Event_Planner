@@ -2,14 +2,14 @@
 <div>
     <div>
         {!! Form::label('event_name', 'Event Name: ') !!}
-        {!! Form::text('event_name', null, ['class' => 'form-control']) !!}
+        {!! Form::text('event_name', null, ['class' => 'form-control', 'required']) !!}
     </div>
 </div>
 
 <div>
     <div class="form-group">
         {!! Form::label('event_date', 'Date: ') !!}
-        {!! Form::input('date', 'event_date', $eventDate, ['class' => 'form-control']) !!} <!--date('Y-m-d') date('h:i')-->
+        {!! Form::input('date', 'event_date', $eventDate, ['class' => 'form-control']) !!}
     </div>   
 
     <div class="form-group">

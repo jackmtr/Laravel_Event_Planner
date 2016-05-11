@@ -16,9 +16,9 @@
       <h2>Edit Event {!! $event->event_name !!}</h2>
 
       <div>
-        {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
+        {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'id' => 'eventForm' ]) !!}
 
-        @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
+          @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
 
         {!! Form::close() !!}
       </div>
@@ -90,8 +90,8 @@
 
     <div>
       {!! Form::open(['action' => ['EventController@show', $event->event_id], 'method' => 'get']) !!}
-      {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
-      {!! Form::submit("Search Guestlist") !!}
+        {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
+        {!! Form::submit("Search Guestlist") !!}
       {!! Form::close() !!}
     </div>
     @if($event['event_status'] == 0)
@@ -151,9 +151,9 @@
                 </div>
                 <div class="edit-events container">
                   <h2>Create New Guest</h2>
-                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'method' => 'post', 'class' => 'form', 'novalidate' => 'novalidate']) !!}
-                  {!! Form::hidden("eventId", $event->event_id) !!}
-                      @include('eventFolder._contactAddGuestForm', ['submitButtonText' => 'Create Guest'])
+                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'method' => 'post', 'class' => 'form', 'id' => 'guestContactForm']) !!}
+                    {!! Form::hidden("eventId", $event->event_id) !!}
+                    @include('eventFolder._contactAddGuestForm', ['submitButtonText' => 'Create Guest'])
                   {!! Form::close() !!}
                 </div>
               </div>
@@ -214,11 +214,11 @@
           <div class="edit-events container">
             <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
 
-            {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
+            {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form', 'id' => 'contactForm']) !!}
 
-            {!! Form::hidden('event_id', $event->event_id) !!}
+              {!! Form::hidden('event_id', $event->event_id) !!}
 
-            @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
+              @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
 
             {!! Form::close() !!}
           </div>
@@ -239,6 +239,10 @@
     $.ajaxSetup({
       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
     });
+
+    $('#eventForm').validate();
+    $('#contactForm').validate();
+    $('#guestContactForm').validate();
 
     @include('javascript._phoneJavascript')
 

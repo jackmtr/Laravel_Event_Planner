@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GuestList;
 use Auth;
+use App\Http\Requests\ContactRequest;
 use App\Contact;
 use App\PhoneNumber;
 
@@ -169,7 +170,7 @@ class GuestListController extends Controller
       return redirect()->action('EventController@show', $eventId);
     }
 
-    public function createContactGuest(Request $request)
+    public function createContactGuest(ContactRequest $request)
     {
       $eventId = $request->eventId;
       $request["added_by"] = Auth::user()->user_id;
