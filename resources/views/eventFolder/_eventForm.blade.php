@@ -13,13 +13,21 @@
     </div>   
 
     <div class="form-group">
-        {!! Form::label('event_time', 'Time: ') !!}
-        {!! Form::input('time', 'event_time', $eventTime, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
         {!! Form::label('event_location', 'Location: ') !!}
         {!! Form::text('event_location', null, ['class' => 'form-control']) !!}
     </div>    
+</div>
+
+<div>
+    <div class="form-group">
+        {!! Form::label('event_time', 'Start time: ') !!}
+        {!! Form::input('time', 'event_time', $eventTime, ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('event_end_time', 'End time: ') !!}
+        {!! Form::input('time', 'event_end_time', $eventEndTime, ['class' => 'form-control']) !!}
+    </div>        
 </div>
 
 <div>
