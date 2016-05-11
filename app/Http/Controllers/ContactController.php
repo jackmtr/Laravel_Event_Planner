@@ -8,6 +8,7 @@ use App\PhoneNumber;
 use App\Http\Requests\ContactRequest;
 use Request;
 use Auth;
+use App\User;
 
 class ContactController extends Controller
 {
@@ -52,6 +53,9 @@ class ContactController extends Controller
             $pastEvents = array();
             $ongoingEvents = array();
 
+            $whoAdded = User::find($contact->added_by)->name;
+            $contact->whoAdded = $whoAdded;     
+
             $anyPhone = $contact->phoneNumber()->first();
 
             if ($anyPhone){
@@ -75,20 +79,11 @@ class ContactController extends Controller
                 }else if($guestEventInfo['event_status'] < 2 && $guestEventInfo['rsvp'] != 2){
                     $ongoingEvents[] = $guestEventInfo['event_name'];
                 }
-                //dd($guestEventInfo);
-                //$allEvents[] = $guestEventInfo;
-                //$allEvents[] = $previousGuest->event['event_name'];
             }
-            //dd($pastEvents);
+
             $contact->past_events = $pastEvents;
-            $contact->ongoing_events = $ongoingEvents;
-            //dd($contact);
-
-            //$contact->added_user = $contact->user()->get();
-            //$whoAdded = Contact::find(451)->user()->get();
-            //dd($whoAdded);
+            $contact->ongoing_events = $ongoingEvents;     
         } 
-
     	return view('contactFolder.contacts', compact('contacts','open_events', 'phoneindex'));
     }
 

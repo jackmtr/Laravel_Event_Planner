@@ -80,7 +80,7 @@
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['occupation']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['company']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['notes']}}</td>
-						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['added_by']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['whoAdded']}}</td>
 					</tr>
 				@endforeach
 			@else

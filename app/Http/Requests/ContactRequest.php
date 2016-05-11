@@ -35,8 +35,8 @@ class ContactRequest extends Request
         ];*/
 
         $rules = [
-            'first_name' => 'alpha|max:50',//we will need to check if chinese letters can be accepted
-            'last_name' => 'required|alpha|max:50',
+            'first_name' => 'max:50',//we will need to check if chinese letters can be accepted
+            'last_name' => 'required|max:50',
             'email' => 'email', //|unique:contacts but causing issues with updating contacts and not wanting to change the email
             'occupation' => 'max:100',
             'company' => 'max:100',
