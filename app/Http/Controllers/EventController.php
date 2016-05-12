@@ -231,9 +231,7 @@ class EventController extends Controller
             $added_to = GuestList::where('event_id', $id)->get()->pluck('contact_id')->toArray();
                $added = GuestList::where('event_id', $added_event_id)->get()->pluck('contact_id')->toArray();
            // $merged_array = array_merge($added_to, $added);
-            $contacts_combined = array_diff($added_to, $added);
-
-            dd($contacts_combined);
+            $contacts_combined = array_diff($added, $added_to);
             foreach ($contacts_combined as $contact) {
                     GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $contact, 'event_id' => $id]);
             }
