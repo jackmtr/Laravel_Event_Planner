@@ -49,13 +49,13 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "first_name") !!}
-						{!! Form::button('First Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('First Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter','id'=>'fname_sort_btn']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "last_name") !!}
-						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter','id'=>'lname_sort_btn']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-minimum">Email</th>
@@ -168,7 +168,7 @@
 	<script>
 		$(document).ready(function(){
 
-			$(#contactForm).validate();
+			$('#contactForm').validate();
 
 			@include('javascript._phoneJavascript')	
 
@@ -176,6 +176,20 @@
 				var checkbox = $(this).parent().find("input");
 				checkbox.prop("checked", !checkbox.prop("checked"));
 			});
+
+			$('.sorter').hover(
+					function(){
+						$(this).css("background-color", "gray");
+			},function(){
+						$(this).css("background-color", "white");
+					}
+			);
+
+
+
 		});
+
+		//Adding some color on the selected sorting button
 	</script>
+
 @endsection
