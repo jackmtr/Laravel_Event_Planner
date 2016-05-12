@@ -15,16 +15,18 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table){
             $table->increments('event_id');
             $table->string('event_name');
-            $table->date('event_date');
-            $table->time('event_time');
-            $table->string('event_location');
-            $table->longtext('event_description');
-            $table->integer('num_of_tables');
-            $table->integer('seats_per_table');
-            $table->integer('event_status');
-            $table->timestamps();            
+            $table->date('event_date')->nullable();
+            $table->time('event_time')->nullable();
+            $table->time('event_end_time')->nullable();
+            $table->string('event_location')->nullable();
+            $table->longtext('event_description')->nullable();
+            $table->integer('num_of_tables')->nullable();
+            $table->integer('seats_per_table')->nullable();
+            $table->integer('event_status')->default(0);
+            $table->softDeletes();
         });
     }
+
 
     /**
      * Reverse the migrations.

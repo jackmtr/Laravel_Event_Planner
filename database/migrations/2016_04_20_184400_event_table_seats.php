@@ -17,11 +17,11 @@ class EventTableSeats extends Migration
       $table->integer('table_number');
       $table->integer('seat_number');
       $table->integer('guest_list_id')->unsigned();
-      $table->timestamps();
 
-      $table->foreign('guest_list_id')->references('guest_list_id')->on('guestlists')->nullable();
+      $table->foreign('guest_list_id')->references('guest_list_id')->on('guest_lists')->nullable();
     });
   }
+
 
   /**
   * Reverse the migrations.

@@ -26,7 +26,7 @@ class EventRequest extends Request
         return [
             'event_name' => 'required|min:3',
             'event_date' => 'date',
-            'event_time' => 'date_format:H:i:s',
+            'event_time' => 'date_format:H:i',
             'event_location' => 'min:3',
             //'event_description' => '',
             'num_of_tables' => 'integer',
