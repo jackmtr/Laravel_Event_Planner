@@ -10,8 +10,9 @@
 
     {!! Form::close() !!}
 
-    @include('errors._list')
+    @include('.flash')
 </div>
+@include('errors._list')
 @endsection
 
 @section('javascript')

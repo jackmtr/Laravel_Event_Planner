@@ -1,3 +1,6 @@
 @if (session()->has('message'))
-    <div class="alert alert-info">{{ session('message') }}</div>
+    <div class="toast success sg-toast">
+    {{ session('message') }}
+    </div>
+
 @endif

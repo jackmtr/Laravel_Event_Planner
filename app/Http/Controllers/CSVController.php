@@ -26,6 +26,8 @@ class CSVController extends Controller
         $sheet->fromModel($data);
       });
     })->export('csv');
+
+    flash('You have successfully imported a list of contacts!');
   }
   public function exportGuestList($event_id)
   {

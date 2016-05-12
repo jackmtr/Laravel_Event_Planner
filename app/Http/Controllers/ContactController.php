@@ -70,7 +70,6 @@ class ContactController extends Controller
             $whoAdded = User::find($contact->added_by)->name;
             $contact->whoAdded = $whoAdded;          
         } 
-        //dd($contacts);
 
     	return view('contactFolder.contacts', compact('contacts','open_events', 'phoneindex'));
     }
@@ -94,6 +93,8 @@ class ContactController extends Controller
                 PhoneNumber::create(array('phone_number'=>$phoneNumber, 'contact_id'=>$contact->contact_id));
             }
         }
+
+        flash('You have successfully added a contact!');
 
         return redirect('contacts');
     }
