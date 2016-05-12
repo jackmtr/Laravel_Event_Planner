@@ -115,7 +115,7 @@
   </div>
 
   <div class="guestList">
-    <table class="sg-table">
+    <table id="guestListTable" class="sg-table">
 
       <tr>
         <th>Status</th>
@@ -287,7 +287,7 @@
       $("#showDetails").slideToggle("fast");
     });
 
-    // This button will increment the additional_guests value
+    // This will increment the additional_guests value
     $('.qtyplus').click(function(e){
       e.preventDefault();
       var fieldName = $(this).attr('field');
@@ -302,7 +302,7 @@
       }
     });
 
-    // This button will decrement the additional_guests value till 0
+    // This will decrement the additional_guests value till 0
     $(".qtyminus").click(function(e) {
       e.preventDefault();
       var fieldName = $(this).attr('field');
@@ -320,36 +320,20 @@
     // This function changes the additional_guests value in the db
     $(".qtybtn").click(function(){
       var data = $(this).siblings(".qty").val();
-      var guestid = this.name;
-      additionalGuests(data, guestid);
-      alert("haaaaalllllooooo");
-    });
-
-    $('.qty').bind("enterKey",function(){
-
-    });
-    $('.qty').keyup(function(e){
-      if(e.keyCode == 13)
-      {
-        var data = $(this).val();
-        var guestid = $(this).siblings('.qtyplus').attr('name');
-        additionalGuests(data, guestid);
-      }
-    });
-
-    function additionalGuests (data, guestid) {
       var action = '/guestlist/addguests';
-      var request = { theGuest : guestid, guests : data };
+      var request = { theGuest : this.name, guests : data, eventStatus : event_status };
       $.post(action, request, function (response) {
         if (response) {
-          // flash Success message
+          // with more time would build table rows and change Event Status counts with js
+          // faster than a page reload...
+          location.reload();
         } else {
           //something went wrong
         }
       });
-    };
+    });
 
-    // This function changes the rsvp checked in and event status
+    // This function changes the rsvp checked in and event status in the db
     $(".ajaxSelect").change(function () {
       var thisObject = $(this);
       var data = thisObject.children(":selected").html();
@@ -368,8 +352,14 @@
           // flash Success message
           location.reload();
         } else if (response) {
-          console.log($(thisObject).attr('class').split(' ')[1]);
           $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
+          if(thisObject.hasClass('goingstatus')){
+            $('table#guestListTable form#myform' + request.theGuest).show();
+          } else if(thisObject.hasClass('guestnotcheckin')||thisObject.hasClass('guestcheckedin')) {
+
+          } else {
+            $('table#guestListTable form#myform' + request.theGuest).hide();
+          }
         } else {
           //something went wrong
         }
