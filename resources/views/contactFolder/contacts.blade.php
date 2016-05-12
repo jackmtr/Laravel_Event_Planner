@@ -3,16 +3,14 @@
 @section('content')
 <div class="contacts container" ng-app="">
 
-	<div class="subnav1">
+	<div class="subnav">
 
 		<h2>Contacts</h2>
-
+      @include('flash')
 		<div>
-			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
-			<div>
-				<a href="#" ng-click="popupImport=true"><i class="fa fa-download" aria-hidden="true"></i> Import Contacts</a>
-				<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
-			</div>
+			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a><br/>
+			<a href="#" ng-click="popupImport=true"><i class="fa fa-download portButton" aria-hidden="true"></i> Import Contacts</a><br/>
+			<a href="{{url('/export/contacts') }}"><i class="fa fa-download portButton" aria-hidden="true"></i> Export Contacts</a>
 		</div>
 
 			<div class="popup ng-hide" style="display: block;" ng-show="popupImport">
@@ -35,6 +33,7 @@
 			</div>
 	</div>
 
+
 	<div class="contact-nav-bar">
 		{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 			{!! Form::text("searchitem", "", ['placeholder'=>'First or Last Name']) !!}
@@ -49,13 +48,13 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "first_name") !!}
-						{!! Form::button('First Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('First Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "last_name") !!}
-						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-minimum">Email</th>
@@ -64,7 +63,7 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "company") !!}
-						{!! Form::button('Company:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('Company:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-remove">Notes</th>
@@ -168,14 +167,10 @@
 	<script>
 		$(document).ready(function(){
 
-			$('#contactForm').validate();
+			$('#contactCreateForm').validate();
 
 			@include('javascript._phoneJavascript')
 
-			$('.cellcheckbox').on('click', 'span', function(){
-				var checkbox = $(this).parent().find("input");
-				checkbox.prop("checked", !checkbox.prop("checked"));
-			});
 		});
 	</script>
 @endsection

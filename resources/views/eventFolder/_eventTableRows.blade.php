@@ -23,6 +23,7 @@
 		@endif
 	</td>
 	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{ str_limit($guest['name'], $limit = 27, $end = '...') }}</td>
+<<<<<<< HEAD
 	<td>
 		@if($status < 2)
 			@if($status == 0 && $guest['rsvp']!=1)
@@ -34,22 +35,22 @@
             <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' readonly=true />
             <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
           </form>
-        @else
-
-        @endif
-	</td>
+		</td>
+    @endif
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{ str_limit($guest['work'], $limit = 27, $end = '...') }}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
 		@if($guest['note'] != null)
-		<a href="#" class="tooltip">
-		<i class="fa fa-info-circle"></i>
-			<div class="inner">
-				<div class="arrow"><i class="fa fa-caret-left"></i></div>
-				{{ str_limit($guest['note'], $limit = 27, $end = '...') }}
-			</div>
-		</a>
+			<a href="#" class="tooltip">
+				<i class="fa fa-info-circle"></i>
+				<div class="inner">
+					<div class="arrow"><i class="fa fa-caret-left"></i></div>
+					{{ str_limit($guest['note'], $limit = 27, $end = '...') }}
+				</div>
+			</a>
 		@else
-
-        @endif
-		</td>
+	    @endif
+	</td>
+	@if($status == 1)
+		<td>{{$guest['checked_in_by']}}</td>
+	@endif
 </tr>

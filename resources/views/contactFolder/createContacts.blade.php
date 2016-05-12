@@ -1,10 +1,9 @@
-
 @extends('layouts.app')
 @section('content')
 <div class="form container">
     <h1>Create Contact</h1>
 
-    {!! Form::open(['url' => 'contacts', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => true, 'id' => 'contactForm']) !!}
+    {!! Form::open(['url' => 'contacts', 'class' => 'form', 'id' => 'contactCreateForm']) !!}
 
         @include('contactFolder._contactForm', ['submitButtonText' => 'Create Contact', 'edit' => false])
 
@@ -18,10 +17,9 @@
 	<script>
 		$(document).ready(function(){
 
-			$('#contactForm').validate();
+			$('#contactCreateForm').validate();
 
 			@include('javascript._phoneJavascript')
-
 		});
 	</script>
 @endsection
