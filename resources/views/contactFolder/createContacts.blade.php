@@ -18,10 +18,10 @@
 	<script>
 		$(document).ready(function(){
 
-			$(#contactForm).validate();
+			$('#contactForm').validate();
 
-			@include('javascript._phoneJavascript')		
-		
+			@include('javascript._phoneJavascript')
+
 		});
 	</script>
 @endsection
