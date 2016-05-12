@@ -48,13 +48,17 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "first_name") !!}
+
 						{!! Form::button('First Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+
 					{!! Form::close() !!}
 				</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "last_name") !!}
+
 						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-minimum">Email</th>
@@ -74,7 +78,7 @@
 				@foreach($contacts as $contact)
 					<tr>
 						<td>
-							<button type="button" name="button" class="sorter" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>
+							<button type="button" name="button" class="sorter" id="delete" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>
 						</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['first_name']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['last_name']}}</td>
@@ -166,11 +170,19 @@
 @section('javascript')
 	<script>
 		$(document).ready(function(){
+		$('#contactCreateForm').validate();
 
-			$('#contactCreateForm').validate();
+		@include('javascript._phoneJavascript')
 
-			@include('javascript._phoneJavascript')
-
+		$('.sorter').hover(
+				function(){
+					$(this).css("background-color", "gray").css('color','white');
+		},function(){
+					$(this).css("background-color", "white").css('color','gray');
+				}
+			);
 		});
+		//Adding some color on the selected sorting button
 	</script>
+
 @endsection
