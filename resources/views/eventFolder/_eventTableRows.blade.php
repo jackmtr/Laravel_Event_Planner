@@ -23,7 +23,6 @@
 		@endif
 	</td>
 	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{ str_limit($guest['name'], $limit = 27, $end = '...') }}</td>
-<<<<<<< HEAD
 	<td>
 		@if($status < 2)
 			@if($status == 0 && $guest['rsvp']!=1)
