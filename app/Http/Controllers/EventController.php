@@ -109,8 +109,8 @@ class EventController extends Controller
       foreach($allGuests as $guest ){
         $guests[] = $guest;
       }
-    }
-
+    }           
+   
     foreach( $guests as $guest)
     {
 
@@ -159,11 +159,14 @@ class EventController extends Controller
       }
     }
 
+
     $guests = $event->guestList()->get();
+    
+    $countAllGuests = count(Event::find($id)->guestList);  
 
     $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
     $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
-    return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex', 'contactList', 'comeFromSearch', 'query'));
+    return view('eventFolder.eventsDetail', compact('events', 'event', 'guestList', 'rsvpYes','checkedIn','index', 'phoneindex', 'contactList', 'comeFromSearch', 'query','countAllGuests'));
   }
 
   public function update(EventRequest $request, $id)

@@ -66,7 +66,6 @@
     $(function(){
         var catagory = window.location.href;
         if (catagory.indexOf("event") > 1) {
-            $('#eventSide').css("background-color: blue")
             $("#eventSide").addClass("selected");
         }else if (catagory.indexOf("contact") > 1){
             $("#contactSide").addClass("selected");
