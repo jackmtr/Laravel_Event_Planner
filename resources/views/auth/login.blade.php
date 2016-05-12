@@ -8,7 +8,7 @@
 		<link href='https://fonts.googleapis.com/css?family=Rajdhani:600' rel='stylesheet' type='text/css'>
 	</head>
 	<body class="login">
-		<div class="flexbox">
+		<div class="flexbox login-box">
 			<h2>Istuary Event Management & CRM</h2>
 			<div>
 				<form role="form" method="POST" action="{{ url('/login') }}">
@@ -31,8 +31,9 @@
 				</div>
 
 				<input class="login-submit" type="submit" value="Login"/>
-				<a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+				
 				</form>
+				<a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
 			</div>
 		</div>
 	</body>

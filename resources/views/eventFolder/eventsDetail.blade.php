@@ -1,32 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<style>
-/* Tooltip container */
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-</style>
 
 <div class="container" ng-app="">
 
@@ -39,24 +12,18 @@
       </h2>
     </div>
 
-    <div id="showDetails" class="middleside popup-form" hidden>
-      <h2>Edit Event {!! $event->event_name !!}</h2>
+    <div>
+      @include('flash')
+      <div id="showDetails" class="middleside popup-form" hidden>
+        <h2>Edit Event {!! $event->event_name !!}</h2>
 
 
-      {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form' ]) !!}
+        {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'id' => 'eventForm' ]) !!}
 
-      @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null])
+          @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null, 'eventEndTime' => null])
 
-      {!! Form::close() !!}
-
-
-      @if( $event['event_status']  != 1)
-      {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
-      {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control']) !!}
-      {!! Form::close() !!}
-      @endif
+        {!! Form::close() !!}
         @if( $event['event_status']  != 1)
-
           <input type="submit" name="button" class="button-default" ng-click="popupdelete = true;" value="Delete Event" />
 
           <div class="popup ng-hide" style="display: block;" ng-show="popupdelete">
@@ -77,11 +44,13 @@
               </div>
             </div>
           </div>
-
-        @endif
+      </div>
+      
+      @endif
 
       @include('errors._list')
-    </div>
+
+    </div>    
 
     <div class="rightside">
       <div class="eventStatus">
@@ -113,18 +82,16 @@
           <h3>Invited</h3>
           @endif
         </div>
-
       </div>
     </div>
-
   </div>
 
   <div class="subnav">
 
     <div>
       {!! Form::open(['action' => ['EventController@show', $event->event_id], 'method' => 'get']) !!}
-      {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
-      {!! Form::submit("Search Guestlist") !!}
+        {!! Form::text("searchitem", $query, ['placeholder'=>'First or Last Name']) !!}
+        {!! Form::submit("Search Guestlist") !!}
       {!! Form::close() !!}
     </div>
     @if($event['event_status'] == 0)
@@ -183,11 +150,19 @@
                   <a href="#" ng-click="popupNewContact=false;"><i class="fa fa-fw fa-times"></i></a>
                 </div>
                 <div class="edit-events container">
-                  <h2>Create New Guest</h2>
-                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'method' => 'post', 'class' => 'form', 'novalidate' => 'novalidate']) !!}
-                  {!! Form::hidden("eventId", $event->event_id) !!}
-                      @include('eventFolder._contactAddGuestForm', ['submitButtonText' => 'Create Guest'])
+
+                  <h1>Create Contact</h1>
+
+                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'class' => 'form']) !!}
+
+                    {!! Form::hidden('eventId', $event->event_id) !!}
+
+                    @include('contactFolder._contactForm', ['submitButtonText' => 'Create Contact and Invite to Event', 'edit' => false])
+
                   {!! Form::close() !!}
+
+                  @include('errors._list')
+
                 </div>
               </div>
             </div>
@@ -247,11 +222,11 @@
           <div class="edit-events container">
             <h2>Edit Information for {{$guest['contact']['first_name'] . " " . $guest['contact']['last_name']}}</h2>
 
-            {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form']) !!}
+            {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form', 'id' => 'contactForm']) !!}
 
-            {!! Form::hidden('event_id', $event->event_id) !!}
+              {!! Form::hidden('event_id', $event->event_id) !!}
 
-            @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
+              @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
 
             {!! Form::close() !!}
           </div>
@@ -272,6 +247,10 @@
     $.ajaxSetup({
       headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
     });
+
+    $('#eventForm').validate();
+    $('#contactForm').validate();
+    $('#guestContactForm').validate();
 
     @include('javascript._phoneJavascript')
 
@@ -341,7 +320,7 @@
     $(".qtybtn").click(function(){
       var data = $(this).siblings(".qty").val();
       var action = '/guestlist/addguests';
-      var request = { theGuest : this.name , theEvent : {{$event['event_id']}}, guests : data };
+      var request = { theGuest : this.name, guests : data };
       $.post(action, request, function (response) {
         if (response) {
           // flash Success message

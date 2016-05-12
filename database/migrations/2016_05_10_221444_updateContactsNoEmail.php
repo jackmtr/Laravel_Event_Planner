@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateContactsTable extends Migration
+class UpdateContactsNoEmail extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class UpdateContactsTable extends Migration
     public function up()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->integer('guest_of_id')->nullable();
+            $table->string('email')->nullable()->change();
         });
     }
 
@@ -25,7 +25,7 @@ class UpdateContactsTable extends Migration
     public function down()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->dropColumn('guest_of_id');
+            $table->string('email')->nullable(false)->change();
         });
     }
 }
