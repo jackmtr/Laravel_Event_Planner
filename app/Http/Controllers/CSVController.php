@@ -79,6 +79,8 @@ class CSVController extends Controller
     Excel::filter('chunk')->load(base_path() . '/public/imports/' . $fileName)->chunk(250, function($results)
     {
       $count_of_additions = 0;
+      $duplicate_contacts = array();
+      $duplicate_names = array();
 
       $authId = Auth::user()->user_id;
       foreach($results as $row)
@@ -108,9 +110,16 @@ class CSVController extends Controller
         }
 
       }
-        $count_of_duplicates = count($duplicate_contacts);
+        if($duplicate_contacts){
+          $count_of_duplicates = count($duplicate_contacts);
+        }else{
+          $count_of_duplicates = 0;
+        }
+        
 
         $passToView = array_merge(['popup' => $count_of_additions, 'amount_of_duplicates' => $count_of_duplicates ], $duplicate_names);
+
+        //dd($passToView);
 
         return redirect()->back()->with($passToView);
     });
