@@ -110,8 +110,8 @@ class EventController extends Controller
       foreach($allGuests as $guest ){
         $guests[] = $guest;
       }
-    }           
-   
+    }
+
     foreach( $guests as $guest)
     {
       $whoAdded = null;
@@ -156,7 +156,7 @@ class EventController extends Controller
         $first_name = $guest->first_name;
         $last_name = $guest->last_name;
         $oneGuest['name'] = $first_name . " " . $last_name;
-        
+
         $occupation = $guest->occupation;
         $company = $guest->company;
         $oneGuest['work'] = $occupation . " " . $company;
@@ -170,8 +170,8 @@ class EventController extends Controller
 
 
     $guests = $event->guestList()->get();
-    
-    $countAllGuests = count(Event::find($id)->guestList);  
+
+    $countAllGuests = count(Event::find($id)->guestList);
 
     $rsvpYes = count($guests->where('rsvp', 1)); //count of guestList rsvp yes to pass to view
     $checkedIn =count($guests) - count($guests->where('checked_in_by', null)); //count of guestList already checked in to pass to view
@@ -247,8 +247,8 @@ class EventController extends Controller
 
           foreach($duplicates_to_remove as $duplicate){
 
-            $previous_guest_first_name = Contact::find($duplicate)->toArray()['first_name'];
-            $previous_guest_last_name = Contact::find($duplicate)->toArray()['last_name'];
+            $previous_guest_first_name = Contact::withTrashed()->find($duplicate)->toArray()['first_name'];
+            $previous_guest_last_name = Contact::withTrashed()->find($duplicate)->toArray()['last_name'];
             //dd($previous_guest_first_name . " " . $previous_guest_last_name);
             $duplicate_names[] = $previous_guest_first_name . " " . $previous_guest_last_name;
           }

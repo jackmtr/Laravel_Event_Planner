@@ -21,7 +21,7 @@
 			errorElement: 'div',
 		});
 
-			@include('javascript._phoneJavascript')		
+			@include('javascript._phoneJavascript')
 		});
 	</script>
 @endsection
