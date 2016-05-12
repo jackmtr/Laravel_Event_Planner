@@ -6,7 +6,7 @@
 	<div class="subnav1">
 
 		<h2>Contacts</h2>
-
+      @include('flash')
 		<div>
 			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
 			<div>

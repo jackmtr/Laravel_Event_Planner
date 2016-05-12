@@ -63,6 +63,7 @@ class CSVController extends Controller
     
     $duplicate_contacts = array();
     $duplicate_names = array();
+    $passToView = array();
 
     $this->validate($request, ['csvContacts' => 'required|mimes:csv,txt,xlsx'], ['required' => 'You must input a csv or xlsx file.']);//TURN ON extension=php_fileinfo.dll IN php.ini, restart server after.
     if ($request->hasFile('csvContacts')) {
@@ -110,7 +111,10 @@ class CSVController extends Controller
         $count_of_duplicates = count($duplicate_contacts);
 
         $passToView = array_merge(['popup' => $count_of_additions, 'amount_of_duplicates' => $count_of_duplicates ], $duplicate_names);
+
+        return redirect()->back()->with($passToView);
     });
+
     return redirect()->action('ContactController@index');
   }
 }
