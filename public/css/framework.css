@@ -985,7 +985,7 @@ button.with-icon-right i, a.with-icon-right i {
   -ms-flex-pack: start;
   justify-content: flex-start; }
   .form-group label {
-    width: 100px; }
+    width: 125px; }
 
 /* ------------------------------
   Helpers
