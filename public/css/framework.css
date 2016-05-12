@@ -2133,5 +2133,8 @@ select, option {
   background-color: #bed883; }
   .guestcheckedin:hover {
     background-color: #d2e4aa; }
+#delete {
+  background-color: #FF4031;
+}
 
 /*# sourceMappingURL=framework.css.map */

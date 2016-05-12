@@ -79,7 +79,7 @@
 				@foreach($contacts as $contact)
 					<tr>
 						<td>
-							<button type="button" name="button" class="sorter" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>   							    								
+							<button type="button" name="button"  id="delete" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>
 						</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['first_name']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['last_name']}}</td>
@@ -182,11 +182,12 @@
 
 			$('.sorter').hover(
 					function(){
-						$(this).css("background-color", "gray");
+						$(this).css("background-color", "gray").css('color','white');
 			},function(){
-						$(this).css("background-color", "white");
+						$(this).css("background-color", "white").css('color','gray');
 					}
 			);
+
 
 		});
 
