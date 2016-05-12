@@ -6,7 +6,7 @@
 	<div class="subnav1">
 
 		<h2>Contacts</h2>
-
+      @include('flash')
 		<div>
 			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
 			<div>
@@ -49,13 +49,17 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "first_name") !!}
-						{!! Form::button('First Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter','id'=>'fname_sort_btn']) !!}
+
+						{!! Form::button('First Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+
 					{!! Form::close() !!}
 				</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "last_name") !!}
-						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter','id'=>'lname_sort_btn']) !!}
+
+						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-minimum">Email</th>
@@ -64,7 +68,7 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "company") !!}
-						{!! Form::button('Company:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('Company:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-remove">Notes</th>
@@ -167,10 +171,9 @@
 @section('javascript')
 	<script>
 		$(document).ready(function(){
+		$('#contactCreateForm').validate();
 
-			$('#contactForm').validate();
-
-			@include('javascript._phoneJavascript')	
+			@include('javascript._phoneJavascript')
 
 			$('.cellcheckbox').on('click', 'span', function(){
 				var checkbox = $(this).parent().find("input");
@@ -184,8 +187,6 @@
 						$(this).css("background-color", "white");
 					}
 			);
-
-
 
 		});
 

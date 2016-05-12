@@ -1,6 +1,6 @@
 
 <div>
-    <div>
+    <div class="form-group">
         {!! Form::label('event_name', 'Event Name: ') !!}
         {!! Form::text('event_name', null, ['class' => 'form-control', 'required']) !!}
     </div>
@@ -31,7 +31,7 @@
 </div>
 
 <div>
-    <div>
+    <div class="form-group">
         {!! Form::label('event_description', 'Description: ') !!}
         {!! Form::textarea('event_description', null, ['class' => 'form-control']) !!}
     </div>

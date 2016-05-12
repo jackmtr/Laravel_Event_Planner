@@ -1,16 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 //use App\Http\Requests;
 use App\Contact;
 use App\ContactImport;
 use Auth;
 use Excel;
 use App\Event;
-
 class CSVController extends Controller
 {
   public function exportContactList()
@@ -21,7 +17,6 @@ class CSVController extends Controller
       ->setCreator('Maatwebsite')
       ->setCompany('Maatwebsite')
       ->setDescription('A demonstration to change the file properties');
-
       $excel->sheet('export1_sheet1', function($sheet) use($data) {
         $sheet->fromModel($data);
       });
@@ -33,7 +28,6 @@ class CSVController extends Controller
     $event_name = $event->event_name;
     $guestLists = $event->guestList;
     // Foreach Guests //
-
     foreach( $guestLists as $guest)
     {
       if($guest->checked_in_by != null){
@@ -48,7 +42,6 @@ class CSVController extends Controller
       $first_name = $guest->contact()->withTrashed()->get()->toArray()[0]['first_name'];
       $last_name = $guest->contact()->withTrashed()->get()->toArray()[0]['last_name'];
       $oneGuest['name'] = $first_name . " " . $last_name;
-
       $occupation = $guest->contact()->withTrashed()->get()->toArray()[0]['occupation'];
       $company = $guest->contact()->withTrashed()->get()->toArray()[0]['company'];
       $oneGuest['work'] = $occupation . " " . $company;
@@ -67,8 +60,12 @@ class CSVController extends Controller
   }
   public function importContacts(Request $request)
   {
-    $this->validate($request, ['csvContacts' => 'required|mimes:csv,txt,xlsx'], ['required' => 'You must input a csv or xlsx file.']);//TURN ON extension=php_fileinfo.dll IN php.ini, restart server after.
+    
+    $duplicate_contacts = array();
+    $duplicate_names = array();
+    $passToView = array();
 
+    $this->validate($request, ['csvContacts' => 'required|mimes:csv,txt,xlsx'], ['required' => 'You must input a csv or xlsx file.']);//TURN ON extension=php_fileinfo.dll IN php.ini, restart server after.
     if ($request->hasFile('csvContacts')) {
       $fileName = 'contactsImport.' . $request->file('csvContacts')->getClientOriginalExtension();
       $request->file('csvContacts')->move(
@@ -81,6 +78,10 @@ class CSVController extends Controller
     // add break for pop up proceed/cancel
     Excel::filter('chunk')->load(base_path() . '/public/imports/' . $fileName)->chunk(250, function($results)
     {
+      $count_of_additions = 0;
+      $duplicate_contacts = array();
+      $duplicate_names = array();
+
       $authId = Auth::user()->user_id;
       foreach($results as $row)
       {
@@ -90,7 +91,9 @@ class CSVController extends Controller
           'email'=>$row->email
         ]);
         if ($contact->exists) {
-          //contact already in db
+          $duplicate_contacts[] = $contact;
+          $duplicate_names[] = $contact->first_name . " " . $contact->last_name;
+
         } else {
           $newContact = Contact::create([
             'first_name'=>$row->first_name,
@@ -102,9 +105,22 @@ class CSVController extends Controller
             'notes'=>$row->notes,
             'added_by'=>$authId
           ]);
+          $count_of_additions++;
+
         }
+
       }
+        if($duplicate_contacts){
+          $count_of_duplicates = count($duplicate_contacts);
+        }else{
+          $count_of_duplicates = 0;
+        }
+        
+        $passToView = array_merge(['popup' => $count_of_additions, 'amount_of_duplicates' => $count_of_duplicates ], $duplicate_names);
+
+        return redirect()->back()->with($passToView);
     });
+
     return redirect()->action('ContactController@index');
   }
 }

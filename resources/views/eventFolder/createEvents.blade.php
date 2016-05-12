@@ -2,7 +2,7 @@
 @section('content')
 <div class="form container">
 	<h1>Create Event</h1>
-	{!! Form::open(['url' => 'events', 'class' => 'form', 'id' => 'eventForm']) !!}
+	{!! Form::open(['url' => 'events', 'class' => 'form', 'id' => 'eventCreateForm']) !!}
 
 		@include('eventFolder._eventForm', ['submitButtonText' => 'Create Event', 'eventDate' => date('Y-m-d'), 'eventTime' => '18:00:00', 'eventEndTime' => '21:00:00' ])
 		

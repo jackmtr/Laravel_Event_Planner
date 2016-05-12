@@ -22,8 +22,8 @@
     @forelse($object['phoneNumber'] as $i => $phonenumber)
         @if($i == 0)
             <div class="form-group">
-                {!! sprintf(Form::label('phone_number'. ($i+1), '%s', array('class' => 'control-label tncs-label')), '<a href="#" class=" add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a> Phone Number' . ($i+1) . ':') !!}
-                {!! Form::text('phone_number'. ($i+1) . ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+                {!! sprintf(Form::label('phone_number'. ($i+1), '%s', array('class' => 'control-label tncs-label')), '<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a> Phone Number' . ($i+1) . ':') !!}
+                {!! Form::text('phone_number'. ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
             </div>
         @else
             <div class="form-group delete-phone-numbers"><a href="#" class="remove_field"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
@@ -31,19 +31,21 @@
                 {!! Form::text('phone_number'. ($i+1), $phonenumber['phone_number'], ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
             </div>        
         @endif
-    <!--{{$phoneindex++}}-->
+        <!--{{$phoneindex++}}-->
     @empty
-        <div class="form-group">
-            {!! sprintf(Form::label('phone_number', '%s', array('class' => 'control-label tncs-label')), '<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a> Phone Number 1: ') !!}
-            {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
+        <div class="form-group delete-phone-numbers">
+        {!! sprintf(Form::label('phone_number', '%s', array('class' => 'control-label tncs-label')), '<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a> Phone Number 1: ') !!}
+        {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
         </div>
+        <!--{{$phoneindex++}}-->
     @endforelse
 
 @else
-    <div class="form-group">
-            {!! sprintf(Form::label('phone_number', '%s', array('class' => 'control-label tncs-label')), '<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a> Phone Number 1: ') !!}
+    <div class="form-group delete-phone-numbers">
+        {!! sprintf(Form::label('phone_number', '%s', array('class' => 'control-label tncs-label')), '<a href="#" class="add_phone"><i class="fa fa-plus-circle" aria-hidden="true"></i></a> Phone Number: ') !!}
         {!! Form::text('phone_number', null, ['class' => 'form-control', 'name' => 'phonegroup[]']) !!}
     </div>
+    <!--{{$phoneindex++}}-->
 @endif
 
 <!-- new phone inputs come here -->
@@ -60,7 +62,6 @@
     {!! Form::label('wechat_id', 'Wechat Id: ') !!}
     {!! Form::text('wechat_id', null, ['class' => 'form-control']) !!}
 </div>
-<br/>
 
 <div class="form-group">
     {!! Form::label('notes', 'Notes: ') !!}
