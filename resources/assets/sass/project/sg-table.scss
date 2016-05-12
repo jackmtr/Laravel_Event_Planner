@@ -4,6 +4,7 @@
 
 .sg-table {
   tbody {border: none;}
+
   tr {
     border: solid $gray-20;
     border-width:  0 0 $border-thin;
@@ -73,4 +74,9 @@
 
 .qty{
   width: 45px;
+}
+
+.sorter{
+  border: none;
+  background: none;
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GuestList;
 use Auth;
+use App\Http\Requests\ContactRequest;
 use App\Contact;
 use App\PhoneNumber;
 
@@ -47,14 +48,11 @@ class GuestListController extends Controller
     public function store(Request $request)
     {
         $authId = Auth::user()->user_id;
-        $eventId = $request->events;
-        $guestlist = $request->toArray();
+        $eventId = $request->eventId;
 
-        foreach ($guestlist["invitelist"] as $invitee){
-            GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
-        }
+        GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $request->contactId, 'event_id' => $eventId));
 
-        return redirect()->action('EventController@show', $eventId);
+        return redirect()->action('EventController@show', $eventId);      
     }
 
     /**
@@ -161,15 +159,8 @@ class GuestListController extends Controller
         GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
       }
     }
-
-    public function invite(Request $request)
-    {
-      $eventId = $request->eventId;
-      GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $request->contactId, 'event_id' => $eventId));
-      return redirect()->action('EventController@show', $eventId);
-    }
-
-    public function createContactGuest(Request $request)
+    
+    public function createContactGuest(ContactRequest $request)
     {
       $eventId = $request->eventId;
       $request["added_by"] = Auth::user()->user_id;

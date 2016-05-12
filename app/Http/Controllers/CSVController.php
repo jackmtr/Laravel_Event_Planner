@@ -69,6 +69,8 @@ class CSVController extends Controller
   }
   public function importContacts(Request $request)
   {
+    $this->validate($request, ['csvContacts' => 'required|mimes:csv,txt,xlsx'], ['required' => 'You must input a csv or xlsx file.']);//TURN ON extension=php_fileinfo.dll IN php.ini, restart server after.
+
     if ($request->hasFile('csvContacts')) {
       $fileName = 'contactsImport.' . $request->file('csvContacts')->getClientOriginalExtension();
       $request->file('csvContacts')->move(
@@ -77,6 +79,8 @@ class CSVController extends Controller
     } else {
       // no file
     }
+
+    // add break for pop up proceed/cancel
     Excel::filter('chunk')->load(base_path() . '/public/imports/' . $fileName)->chunk(250, function($results)
     {
       $authId = Auth::user()->user_id;

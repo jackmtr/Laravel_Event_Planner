@@ -16,11 +16,12 @@ class Event extends Model
     'event_name',
     'event_date',
     'event_time',
+    'event_end_time',
     'event_location',
     'event_description',
-    'num_of_tables',
-    'seats_per_table',
-    'event_status',
+    'event_status',    
+    //'num_of_tables',
+    //'seats_per_table',
   ];
   protected $dates = ["deleted_at"];
 

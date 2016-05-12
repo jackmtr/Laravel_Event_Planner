@@ -2,14 +2,37 @@
 
 @section('content')
 <div class="contacts container" ng-app="">
-	<div class="subnav">
+
+	<div class="subnav1">
+
 		<h2>Contacts</h2>
-		<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
-		{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'novalidate' => 'novalidate', 'files' => true]) !!}
-			{!! Form::file('csvContacts') !!}
-			{!! Form::submit("Import Contacts") !!}
-		{!! Form::close() !!}
-		<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
+
+		<div>
+			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
+			<div>
+				<a href="#" ng-click="popupImport=true"><i class="fa fa-download" aria-hidden="true"></i> Import Contacts</a>
+				<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
+			</div>
+		</div>
+
+			<div class="popup ng-hide" style="display: block;" ng-show="popupImport">
+				<div class="popup-mask">
+				  <div class="panel">
+				    <div class="panel-inner">
+
+						{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'files' => true]) !!}
+							{!! Form::file('csvContacts', ['class' => 'fileinput']) !!}
+							{!! Form::submit("Import Contacts", ['class' => 'btn btn-primary form-control button-default import']) !!}
+						{!! Form::close() !!}						   
+
+				      <p class="link-cancel">
+				        <a href="#" ng-click="popupImport=false;">No, take me back.</a>
+				      </p>
+
+				    </div>
+				  </div>
+				</div>
+			</div> 		
 	</div>
 
 	<div class="contact-nav-bar">
@@ -23,17 +46,16 @@
 		<table class="sg-table">
 			<tr>
 				<th>Delete</th>
-				<th>CheckBox</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "first_name") !!}
-						{!! Form::submit("First Name") !!}
+						{!! Form::button('First Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "last_name") !!}
-						{!! Form::submit("Last Name") !!}
+						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-minimum">Email</th>
@@ -42,34 +64,18 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "company") !!}
-						{!! Form::submit("Company") !!}
+						{!! Form::button('Company:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-remove">Notes</th>
 				<th class="responsive-remove">Added By</th>
 			</tr>
-			{{Form::open(array('action' => 'GuestListController@store', 'method' => 'post', 'name'=>'guest_list_submit'))}}
-
-			<div class="search-event">
-				<label for="events">Select an Event: </label>
-				<select id="events" name="events">
-					@foreach($open_events as $event)
-						<option value="{{$event['event_id']}}">{{$event['event_name']}}</option>
-					@endforeach
-				</select>
-				<input type="submit" name="guest_list_submit" value="Invite" />
-			</div>
 
 			@if (count($contacts) > 0)
 				@foreach($contacts as $contact)
 					<tr>
 						<td>
-							<button type="button" name="button" class="button-default" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>   							    								
-						</td>
-						<td class='cellcheckbox'>
-							{!! Form::label("invitelist[]", " ", array('class' => 'label-checkbox')) !!}
-							{{ Form::checkbox('invitelist[]', $contact['contact_id'], false, ['id' => 'invitecheckbox'.$contact["contact_id"]]) }}
-							<span></span>
+							<button type="button" name="button" class="sorter" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>   							    								
 						</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['first_name']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['last_name']}}</td>
@@ -77,7 +83,7 @@
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-minimum">{{$contact['display_phoneNumber']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['occupation']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['company']}}</td>
-						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['notes']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{ str_limit($contact['notes'], $limit = 27, $end = '...') }}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['whoAdded']}}</td>
 					</tr>
 				@endforeach
@@ -86,7 +92,6 @@
 			@endif
 		</table>
 		<div class="pagination"> {{$contacts->links()}} </div>
-		{{Form::close()}}
 	</div>
 
 	@foreach($contacts as $contact)
@@ -121,19 +126,35 @@
 
 						<h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
 
-						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form']) !!}
+						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form',  'id' => 'contactForm']) !!}
 
 							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 
 						{!! Form::close() !!}
+						@include('errors._list')
+						<div>
+						<h2>Upcoming Attending Events</h2>
 
+							<ul>
+								@forelse($contact['ongoing_events'] as $ongoingEvent)
+									<li>{{$ongoingEvent}}</li>
+								@empty
+									<li>This contact is currently not registered for any upcoming event.</li>
+								@endforelse
+							</ul>
+						</div>
+						<br/>
+						<div>
 						<h2>Previously Attended Events</h2>
 
 							<ul>
-								@foreach($contact['previous_event'] as $previousEvent)
+								@forelse($contact['past_events'] as $previousEvent)
 									<li>{{$previousEvent}}</li>
-								@endforeach
+								@empty
+									<li>This contact has not attended any previous event.</li>
+								@endforelse
 							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -147,14 +168,14 @@
 	<script>
 		$(document).ready(function(){
 
+			$(#contactForm).validate();
+
 			@include('javascript._phoneJavascript')	
 
 			$('.cellcheckbox').on('click', 'span', function(){
 				var checkbox = $(this).parent().find("input");
 				checkbox.prop("checked", !checkbox.prop("checked"));
 			});
-
-			
 		});
 	</script>
 @endsection
