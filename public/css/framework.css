@@ -973,7 +973,7 @@ button.with-icon-right i, a.with-icon-right i {
     font-family: FontAwesome;
     font-size: 14px; }
 
-#contactCreateForm, #eventCreateForm {
+#contactCreateForm, #eventCreateForm, #userCreateForm {
   margin: auto; }
 
 .form-group {
