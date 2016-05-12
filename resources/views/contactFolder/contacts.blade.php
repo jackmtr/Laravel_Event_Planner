@@ -168,14 +168,11 @@
 	<script>
 		$(document).ready(function(){
 
-			$(#contactForm).validate();
+
+			$('#contactCreateForm').validate();
 
 			@include('javascript._phoneJavascript')	
 
-			$('.cellcheckbox').on('click', 'span', function(){
-				var checkbox = $(this).parent().find("input");
-				checkbox.prop("checked", !checkbox.prop("checked"));
-			});
 		});
 	</script>
 @endsection

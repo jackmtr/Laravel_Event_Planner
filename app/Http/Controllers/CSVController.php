@@ -110,7 +110,6 @@ class CSVController extends Controller
         $count_of_duplicates = count($duplicate_contacts);
 
         $passToView = array_merge(['popup' => $count_of_additions, 'amount_of_duplicates' => $count_of_duplicates ], $duplicate_names);
-        dd($passToView);
     });
     return redirect()->action('ContactController@index');
   }
