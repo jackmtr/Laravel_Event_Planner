@@ -2,7 +2,7 @@
 	<div class="box-left-side">
 		<a href="/events/{{$event['event']->event_id}}" >
 			<p>{{ date('M j, Y', strtotime($event['event']->event_date)) }}</p>
-			<p>{{$event['event']->event_name}}</p>
+			<p>{{ str_limit($event['event']->event_name, $limit = 27, $end = '...') }}</p>
 			<p><span>{{$event['event']->event_location}}</span></p>
 		</a>
 	</div>
