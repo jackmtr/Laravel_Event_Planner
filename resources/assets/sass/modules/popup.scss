@@ -72,9 +72,15 @@
 
   .popup-form{
     text-align: center;
-    div{
-      display: flex;
-      justify-content: space-around;
-      margin: 5px;
+
+    #eventForm{
+      align-items: center;
+      #innerPopupEventForm{
+      margin: auto;
+        display:flex;
+      }
+      #innerPopupEventSubmit{
+
+      }
     }
   }

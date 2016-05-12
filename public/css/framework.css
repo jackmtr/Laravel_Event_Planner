@@ -1382,14 +1382,15 @@ button.with-icon-right i, a.with-icon-right i {
 
 .popup-form {
   text-align: center; }
-  .popup-form div {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-    margin: 5px; }
+  .popup-form #eventForm {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .popup-form #eventForm #innerPopupEventForm {
+      margin: auto;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex; }
 
 /* ------------------------------
   Status
