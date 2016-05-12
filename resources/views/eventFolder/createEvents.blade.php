@@ -4,8 +4,8 @@
 	<h1>Create Event</h1>
 	{!! Form::open(['url' => 'events', 'class' => 'form', 'id' => 'eventCreateForm']) !!}
 
-		@include('eventFolder._eventForm', ['submitButtonText' => 'Create Event', 'eventDate' => date('Y-m-d'), 'eventTime' => '18:00:00', 'eventEndTime' => '21:00:00' ])
-
+		@include('eventFolder._eventForm', ['submitButtonText' => 'Create Event', 'eventDate' => date('Y-m-d'), 'eventTime' => '18:00', 'eventEndTime' => '21:00' ])
+		
 	{!! Form::close() !!}
 
 	@include('errors._list')
@@ -14,6 +14,8 @@
 
 @section('javascript')
 	<script>
-		$('#eventForm').validate();
+		$(#eventCreateForm).validate({
+			errorElement: 'div',
+		});
 	</script>
 @endsection

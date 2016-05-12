@@ -101,7 +101,8 @@
 .form-group{
 	display: flex;
 	margin: 5px;
-	justify-content: flex-end;
+	justify-content: flex-start;
+	label{
+		width: 125px;
+	}
 }
-
-

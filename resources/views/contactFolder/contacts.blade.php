@@ -129,7 +129,7 @@
 
 						<h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
 
-						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form',  'id' => 'contactForm']) !!}
+						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form',  'id' => 'contactCreateForm']) !!}
 
 							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 
@@ -170,19 +170,20 @@
 @section('javascript')
 	<script>
 		$(document).ready(function(){
-		$('#contactCreateForm').validate();
 
-		@include('javascript._phoneJavascript')
+			$('#contactCreateForm').validate({
+				errorElement: 'div',
+			});
+			@include('javascript._phoneJavascript')
 
-		$('.sorter').hover(
-				function(){
-					$(this).css("background-color", "gray").css('color','white');
-		},function(){
-					$(this).css("background-color", "white").css('color','gray');
-				}
-			);
+			$('.sorter').hover(
+					function(){
+						$(this).css("background-color", "gray").css('color','white');
+			},function(){
+						$(this).css("background-color", "white").css('color','gray');
+					}
+				);
 		});
 		//Adding some color on the selected sorting button
 	</script>
-
 @endsection

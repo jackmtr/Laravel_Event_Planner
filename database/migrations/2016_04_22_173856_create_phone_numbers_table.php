@@ -16,7 +16,7 @@ class CreatePhoneNumbersTable extends Migration
              $table->increments('phone_number_id');
              $table->string('phone_number');
              $table->integer('contact_id')->unsigned();
-             $table->timestamps();
+             $table->softDeletes();
              $table->foreign('contact_id')->references('contact_id')->on('contacts');
          });
      }
