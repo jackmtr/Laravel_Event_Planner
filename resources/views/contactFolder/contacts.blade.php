@@ -49,13 +49,13 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "first_name") !!}
-						{!! Form::button('First Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('First Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "last_name") !!}
-						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('Last Name:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-minimum">Email</th>
@@ -64,7 +64,7 @@
 				<th>
 					{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
 						{!! Form::hidden("sortby", "company") !!}
-						{!! Form::button('Company:<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
+						{!! Form::button('Company:<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>', ['type'=>'submit', 'class'=>'sorter']) !!}
 					{!! Form::close() !!}
 				</th>
 				<th class="responsive-remove">Notes</th>
