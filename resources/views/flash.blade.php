@@ -12,6 +12,12 @@
             </div>
             <div class="edit-events container">
               <h2>You have added {{ session('popup') }} contacts to the event.</h2>
+              <h2>Guests unable to add:</h2>
+              <ul><!-- Should not hard code the i max-->
+              	@for ($i = 0; $i < 50; $i++)
+              		<li>{{session($i)}}</li>
+              	@endfor
+              </ul>
             </div>
           </div>
         </div>
