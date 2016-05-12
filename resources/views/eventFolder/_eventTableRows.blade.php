@@ -15,10 +15,10 @@
 				@endif
 			@endif
 		@else
-		{!! Form::open(['action' => ['GuestListController@invite'], 'method' => 'post']) !!}
+		{!! Form::open(['action' => ['GuestListController@store'], 'method' => 'post']) !!}
 		{!! Form::hidden("contactId", $guest['contact']['contact_id']) !!}
 		{!! Form::hidden("eventId", $event->event_id) !!}
-		{!! Form::submit("Invite") !!}
+		{!! Form::submit("Invite", ['class' => 'fakeselect btn btn-primary form-control button-default']) !!}
 		{!! Form::close() !!}
 		@endif
 	</td>	
@@ -36,6 +36,16 @@
 	</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
-			<i class="fa fa-info-circle tooltip" aria-hidden="true">  <span class="tooltiptext">{{$guest['note']}}</span></i>
+			@if($guest['note'] != null)
+			<a href="#" class="tooltip">
+			<i class="fa fa-info-circle"></i>
+			<div class="inner">
+				<div class="arrow"><i class="fa fa-caret-left"></i></div>
+				{{$guest['note']}}
+			</div>
+		</a>
+		@else
+
+        @endif
 		</td>		
 </tr>

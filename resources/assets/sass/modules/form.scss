@@ -93,3 +93,9 @@
 		font-size: $font-size-button;
   }
 }
+
+.form-group{
+	display: flex;
+	margin: 2.5px;
+	justify-content: flex-end;
+}

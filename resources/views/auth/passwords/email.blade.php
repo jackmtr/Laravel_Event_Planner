@@ -77,6 +77,7 @@
 
             {!! Form::close() !!}
 
+            <a href="{{ url('/login') }}" class="btn btn-link" >Return back to login page.</a>
             @include('errors._list')
 
         </div>

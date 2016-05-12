@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateContactsTable extends Migration
+class AddEventEndTime extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class UpdateContactsTable extends Migration
      */
     public function up()
     {
-        Schema::table('contacts', function (Blueprint $table) {
-            $table->integer('guest_of_id')->nullable();
+        Schema::table('events', function (Blueprint $table) {
+            $table->time('event_end_time')->nullable()->after('event_time');
         });
     }
 
@@ -24,8 +24,8 @@ class UpdateContactsTable extends Migration
      */
     public function down()
     {
-        Schema::table('contacts', function (Blueprint $table) {
-            $table->dropColumn('guest_of_id');
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('event_end_time');
         });
     }
 }
