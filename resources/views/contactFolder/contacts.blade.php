@@ -83,7 +83,7 @@
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-minimum">{{$contact['display_phoneNumber']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['occupation']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['company']}}</td>
-						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['notes']}}</td>
+						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{ str_limit($contact['notes'], $limit = 27, $end = '...') }}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true" class="responsive-remove">{{$contact['whoAdded']}}</td>
 					</tr>
 				@endforeach

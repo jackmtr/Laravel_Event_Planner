@@ -22,7 +22,7 @@
 		{!! Form::close() !!}
 		@endif
 	</td>	
-	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
+	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{ str_limit($guest['name'], $limit = 27, $end = '...') }}</td>
 	<td>
 		@if($status < 2)
           <form id='myform' method='POST' action='#'>
@@ -34,14 +34,14 @@
 
         @endif
 	</td>
-    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{ str_limit($guest['work'], $limit = 27, $end = '...') }}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
-			@if($guest['note'] != null)
-			<a href="#" class="tooltip">
-			<i class="fa fa-info-circle"></i>
+		@if($guest['note'] != null)
+		<a href="#" class="tooltip">
+		<i class="fa fa-info-circle"></i>
 			<div class="inner">
 				<div class="arrow"><i class="fa fa-caret-left"></i></div>
-				{{$guest['note']}}
+				{{ str_limit($guest['note'], $limit = 27, $end = '...') }}
 			</div>
 		</a>
 		@else
