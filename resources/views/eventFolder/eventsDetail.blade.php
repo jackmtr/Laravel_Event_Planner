@@ -74,7 +74,7 @@
           <h2>{{ $rsvpYes }}</h2>
           <h3>Attending</h3>
           @else
-          <h2>{{ count($guestList) }}</h2>
+          <h2>{{ $countAllGuests }}</h2>
           <h3>Invited</h3>
           @endif
         </div>
