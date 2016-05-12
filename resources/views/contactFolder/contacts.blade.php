@@ -3,16 +3,14 @@
 @section('content')
 <div class="contacts container" ng-app="">
 
-	<div class="subnav1">
+	<div class="subnav">
 
 		<h2>Contacts</h2>
       @include('flash')
 		<div>
-			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a>
-			<div>
-				<a href="#" ng-click="popupImport=true"><i class="fa fa-download" aria-hidden="true"></i> Import Contacts</a>
-				<a href="{{url('/export/contacts') }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
-			</div>
+			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a><br/>		
+			<a href="#" ng-click="popupImport=true"><i class="fa fa-download portButton" aria-hidden="true"></i> Import Contacts</a><br/>
+			<a href="{{url('/export/contacts') }}"><i class="fa fa-download portButton" aria-hidden="true"></i> Export Contacts</a>
 		</div>
 
 			<div class="popup ng-hide" style="display: block;" ng-show="popupImport">
@@ -34,6 +32,7 @@
 				</div>
 			</div> 		
 	</div>
+
 
 	<div class="contact-nav-bar">
 		{!! Form::open(['action' => 'ContactController@index', 'method' => 'get']) !!}
