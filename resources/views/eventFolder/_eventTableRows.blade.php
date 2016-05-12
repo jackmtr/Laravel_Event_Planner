@@ -21,16 +21,20 @@
 		{!! Form::submit("Invite", ['class' => 'fakeselect btn btn-primary form-control button-default']) !!}
 		{!! Form::close() !!}
 		@endif
-	</td>	
+	</td>
 	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{ str_limit($guest['name'], $limit = 27, $end = '...') }}</td>
-	@if($status < 2)
-		<td>
-          <form id='myform' method='POST' action='#'>
+	<td>
+		@if($status < 2)
+			@if($status == 0 && $guest['rsvp']!=1)
+          <form id="myform{{ $guest['guest_list_id'] }}" method='POST' action='#' hidden>
+			@else
+					<form id="myform{{ $guest['guest_list_id'] }}" method='POST' action='#'>
+			@endif
             <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
-            <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
+            <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' readonly=true />
             <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
           </form>
-		</td>          
+		</td>
     @endif
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{ str_limit($guest['work'], $limit = 27, $end = '...') }}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
@@ -47,5 +51,5 @@
 	</td>
 	@if($status == 1)
 		<td>{{$guest['checked_in_by']}}</td>
-	@endif		
+	@endif
 </tr>

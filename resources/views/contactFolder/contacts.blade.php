@@ -8,7 +8,7 @@
 		<h2>Contacts</h2>
       @include('flash')
 		<div>
-			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a><br/>		
+			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a><br/>
 			<a href="#" ng-click="popupImport=true"><i class="fa fa-download portButton" aria-hidden="true"></i> Import Contacts</a><br/>
 			<a href="{{url('/export/contacts') }}"><i class="fa fa-download portButton" aria-hidden="true"></i> Export Contacts</a>
 		</div>
@@ -21,7 +21,7 @@
 						{!! Form::open(['action' => 'CSVController@importContacts', 'method' => 'POST', 'files' => true]) !!}
 							{!! Form::file('csvContacts', ['class' => 'fileinput']) !!}
 							{!! Form::submit("Import Contacts", ['class' => 'btn btn-primary form-control button-default import']) !!}
-						{!! Form::close() !!}						   
+						{!! Form::close() !!}
 
 				      <p class="link-cancel">
 				        <a href="#" ng-click="popupImport=false;">No, take me back.</a>
@@ -30,7 +30,7 @@
 				    </div>
 				  </div>
 				</div>
-			</div> 		
+			</div>
 	</div>
 
 
@@ -74,7 +74,7 @@
 				@foreach($contacts as $contact)
 					<tr>
 						<td>
-							<button type="button" name="button" class="sorter" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>   							    								
+							<button type="button" name="button" class="sorter" ng-click="popupdelete{{$contact['contact_id']}}=true"><i class="fa fa-trash" aria-hidden="true"></i></button>
 						</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['first_name']}}</td>
 						<td ng-click="popup{{$contact['contact_id']}}=true">{{$contact['last_name']}}</td>
@@ -102,7 +102,7 @@
 
 				{!! Form::open(['method' => 'DELETE', 'url' => 'contacts/' . $contact->contact_id]) !!}
 					{!! Form::submit("Delete Contact", ['class' => 'btn btn-primary form-control button-default']) !!}
-				{!! Form::close() !!}	   
+				{!! Form::close() !!}
 
 		      <p class="link-cancel">
 		        <a href="#" ng-click="popupdelete{{$contact['contact_id']}}=false;">No, take me back.</a>
@@ -111,7 +111,7 @@
 		    </div>
 		  </div>
 		</div>
-	</div> 
+	</div>
 
 	<div class="popup ng-hide" style="display: block;" ng-show="popup{{$contact['contact_id']}}">
 		<div class="popup-mask">
@@ -159,7 +159,7 @@
 			</div>
 		</div>
 	</div>
-	@endforeach	
+	@endforeach
 </div>
 @endsection
 
@@ -167,10 +167,9 @@
 	<script>
 		$(document).ready(function(){
 
-
 			$('#contactCreateForm').validate();
 
-			@include('javascript._phoneJavascript')	
+			@include('javascript._phoneJavascript')
 
 		});
 	</script>

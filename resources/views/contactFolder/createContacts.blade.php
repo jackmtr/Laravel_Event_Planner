@@ -19,7 +19,7 @@
 
 			$('#contactCreateForm').validate();
 
-			@include('javascript._phoneJavascript')		
+			@include('javascript._phoneJavascript')
 		});
 	</script>
 @endsection

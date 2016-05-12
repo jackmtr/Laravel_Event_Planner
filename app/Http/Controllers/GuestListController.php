@@ -52,7 +52,7 @@ class GuestListController extends Controller
 
         GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $request->contactId, 'event_id' => $eventId));
 
-        return redirect()->action('EventController@show', $eventId);      
+        return redirect()->action('EventController@show', $eventId);
     }
 
     /**
@@ -128,21 +128,21 @@ class GuestListController extends Controller
 
     public function addguests(Request $request)
     {
+      $message = "addGuests";
       $guest = GuestList::findOrFail($request->theGuest);
       $guest->additional_guests = $request->guests;
       $guest->save();
 
       $authId = Auth::user()->user_id;
-      $addedBy = $authId;
-      $contact = Contact::findOrFail($guest->contact_id);
+      $contact = Contact::withTrashed()->findOrFail($guest->contact_id);
       $firstName = "Friend of ". $contact->first_name;
       $lastName = $contact->last_name;
       $guestOfId = $guest->guest_list_id;
       $eventId = $guest->event_id;
       $email = $contact->email;
+      $guestRsvp = $guest->rsvp;
 
-      $findContacts = Contact::where('guest_of_id', '=', $guestOfId)->get();
-
+      $findContacts = Contact::withTrashed()->where('guest_of_id', '=', $guestOfId)->get();
 
       foreach($findContacts as $findContact){
         $invitee = $findContact->contact_id;
@@ -154,12 +154,18 @@ class GuestListController extends Controller
       }
 
       for($i = 0; $i < $request->guests; $i++){
-        $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'email' => $email, 'added_by'=> $addedBy, 'guest_of_id'=> $guestOfId  ]);
+        $newContact = Contact::create(['first_name' => $firstName, 'last_name' => $lastName, 'email' => $email, 'added_by'=> $authId, 'guest_of_id'=> $guestOfId  ]);
         $invitee = $newContact->contact_id;
-        GuestList::create(array('rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
+        if($request->eventStatus == "OPEN"){
+          GuestList::create(array('rsvp' => $guestRsvp, 'checked_in_by' => null, 'contact_id' => $invitee, 'event_id' => $eventId));
+        }
+        else{
+          GuestList::create(array('rsvp' => $guestRsvp, 'checked_in_by' => $authId, 'contact_id' => $invitee, 'event_id' => $eventId));
+        }
       }
+      return $message;
     }
-    
+
     public function createContactGuest(ContactRequest $request)
     {
       $eventId = $request->eventId;

@@ -46,7 +46,7 @@
         </div>
         @endif
       </div>
-      @include('errors._list')  
+      @include('errors._list')
     </div>
 
     <div class="rightside">
@@ -107,12 +107,12 @@
     </div>
     @endif
     @if($event['event_status'] == 2)
-    <a href="{{url("/export/guestlist/{$event['event_id']}") }}"><i class="fa fa-download" aria-hidden="true"></i> Export Contacts</a>
+      <a href="{{url("/export/guestlist/{$event['event_id']}") }}"><i class="fa fa-download" aria-hidden="true"></i> Export Guestlist</a>
     @endif
   </div>
 
   <div class="guestList">
-    <table class="sg-table">
+    <table id="guestListTable" class="sg-table">
 
       <tr>
         <th>Status</th>
@@ -257,30 +257,31 @@ $(document).ready(function(){
   @include('javascript._phoneJavascript')
 
   var event_status = $('.eventStatus').find('option:selected').html();
-
+  var openMode = $(".openmode");
   if(event_status == "OPEN"){
-    $(".openmode").addClass("openstatus");
+    openMode.addClass("openstatus");
   }else if(event_status == "CHECK-IN"){
-    $(".openmode").addClass("checkedinstatus");
+    openMode.addClass("checkedinstatus");
   }else if(event_status == "COMPLETED"){
-    $(".openmode").addClass("completedstatus");
+    openMode.addClass("completedstatus");
   }
 
   $('.status').each(function(){
-    var guest_status = $(this).find('option:selected').html();
+    let select = $(this);
+    var guest_status = select.find('option:selected').html();
     if (guest_status == "Invited"){
-      $(this).addClass("invitedstatus").removeClass("status");
+      select.addClass("invitedstatus").removeClass("status");
     }else if(guest_status == "Going"){
-      $(this).addClass("goingstatus").removeClass("status");
+      select.addClass("goingstatus").removeClass("status");
     }
     else if(guest_status == "Not Going"){
-      $(this).addClass("notstatus").removeClass("status");
+      select.addClass("notstatus").removeClass("status");
     }
     else if(guest_status == "Checked In"){
-      $(this).addClass("guestcheckedin").removeClass("status");
+      select.addClass("guestcheckedin").removeClass("status");
     }
     else if(guest_status == "Not Checked In"){
-      $(this).addClass("guestnotcheckedin").removeClass("status");
+      select.addClass("guestnotcheckedin").removeClass("status");
     }
   });
 
@@ -288,10 +289,10 @@ $(document).ready(function(){
     $("#showDetails").slideToggle("fast");
   });
 
-  // This button will increment the additional_guests value
+  // This will increment the additional_guests value
   $('.qtyplus').click(function(e){
     e.preventDefault();
-    fieldName = $(this).attr('field');
+    var fieldName = $(this).attr('field');
     var currentVal = parseInt($('input[name='+fieldName+']').val());
     // If is not undefined
     if (!isNaN(currentVal)) {
@@ -322,16 +323,19 @@ $(document).ready(function(){
   $(".qtybtn").click(function(){
     var data = $(this).siblings(".qty").val();
     var action = '/guestlist/addguests';
-    var request = { theGuest : this.name, guests : data };
+    var request = { theGuest : this.name, guests : data, eventStatus : event_status };
     $.post(action, request, function (response) {
       if (response) {
-        // flash Success message
+        // with more time would build table rows and change Event Status counts with js
+        // faster than a page reload...
+        location.reload();
       } else {
         //something went wrong
       }
     });
   });
 
+  // This function changes the rsvp checked in and event status in the db
   // This function changes the rsvp checked in and event status
   $(".ajaxSelect").change(function () {
     var thisObject = $(this);
@@ -351,8 +355,14 @@ $(document).ready(function(){
         // flash Success message
         location.reload();
       } else if (response) {
-        console.log($(thisObject).attr('class').split(' ')[1]);
         $(thisObject).removeClass($(thisObject).attr('class').split(' ')[1]).addClass(response);
+        if(thisObject.hasClass('goingstatus')){
+          $('table#guestListTable form#myform' + request.theGuest).show();
+        } else if(thisObject.hasClass('guestnotcheckin')||thisObject.hasClass('guestcheckedin')) {
+
+        } else {
+          $('table#guestListTable form#myform' + request.theGuest).hide();
+        }
       } else {
         //something went wrong
       }
