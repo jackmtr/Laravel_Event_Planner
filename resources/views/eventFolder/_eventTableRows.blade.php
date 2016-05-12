@@ -22,29 +22,28 @@
 		{!! Form::close() !!}
 		@endif
 	</td>	
-	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{$guest['name']}}</td>
-		@if($status < 2)
-			<td>
-	          <form id='myform' method='POST' action='#'>
-	            <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
-	            <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
-	            <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
-	          </form>
-			</td>          
-        @endif
-    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{$guest['work']}}</td>
+	<td ng-click="popup{{$guest['contact']['contact_id']}}=true">{{ str_limit($guest['name'], $limit = 27, $end = '...') }}</td>
+	@if($status < 2)
+		<td>
+          <form id='myform' method='POST' action='#'>
+            <input name="{{ $guest['guest_list_id'] }}" type='button' value='-' class='qtyminus qtybtn' field='quantity{{$index}}' />
+            <input type='number' name='quantity{{$index}}' value="{{ $guest['additional_guests'] }}" class='qty' />
+            <input name="{{ $guest['guest_list_id'] }}" type='button' value='+' class='qtyplus qtybtn' field='quantity{{$index}}' />
+          </form>
+		</td>          
+    @endif
+    <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">{{ str_limit($guest['work'], $limit = 27, $end = '...') }}</td>
     <td ng-click="popup{{$guest['contact']['contact_id']}}=true" class="responsive-remove">
-			@if($guest['note'] != null)
-				<a href="#" class="tooltip">
-					<i class="fa fa-info-circle"></i>
-					<div class="inner">
-						<div class="arrow"><i class="fa fa-caret-left"></i></div>
-						{{$guest['note']}}
-					</div>
-				</a>
-			@else
-
-	        @endif
+		@if($guest['note'] != null)
+			<a href="#" class="tooltip">
+				<i class="fa fa-info-circle"></i>
+				<div class="inner">
+					<div class="arrow"><i class="fa fa-caret-left"></i></div>
+					{{ str_limit($guest['note'], $limit = 27, $end = '...') }}
+				</div>
+			</a>
+		@else
+	    @endif
 	</td>
 	@if($status == 1)
 		<td>{{$guest['checked_in_by']}}</td>
