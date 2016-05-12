@@ -64,14 +64,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
     $(function(){
-        console.log(window.location.href);
         var catagory = window.location.href;
         if (catagory.indexOf("event") > 1) {
-            console.log("we are on the events side");
-            $('#eventSide').css("background-color: blue")
             $("#eventSide").addClass("selected");
         }else if (catagory.indexOf("contact") > 1){
-            console.log("we are on the contacts side");
             $("#contactSide").addClass("selected");
         }
     });
