@@ -26,7 +26,7 @@ class GuestList extends Model
     */
     public function user(){
     	return $this->belongsTo('App\User');
-    }		
+    }
 
     /**
     * A guest is connected to a contact.
