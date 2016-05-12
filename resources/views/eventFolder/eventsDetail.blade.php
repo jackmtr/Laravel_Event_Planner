@@ -12,40 +12,44 @@
       </h2>
     </div>
 
-    <div id="showDetails" class="middleside popup-form" hidden>
-      <h2>Edit Event {!! $event->event_name !!}</h2>
+    <div>
+      @include('flash')
+      <div id="showDetails" class="middleside popup-form" hidden>
+        <h2>Edit Event {!! $event->event_name !!}</h2>
 
-      <div>
+
         {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'id' => 'eventForm' ]) !!}
 
           @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null, 'eventEndTime' => null])
 
         {!! Form::close() !!}
-      </div>
+        @if( $event['event_status']  != 1)
+          <input type="submit" name="button" class="button-default" ng-click="popupdelete = true;" value="Delete Event" />
 
-      @if( $event['event_status']  != 1)
-      <input type="submit" name="button" class="button-default" ng-click="popupdelete = true;" value="Delete Event" />
+          <div class="popup ng-hide" style="display: block;" ng-show="popupdelete">
+            <div class="popup-mask">
+              <div class="panel">
+                <div class="panel-inner">
+                  <h2>Are you sure you want to delete this event?</h2>
 
-      <div class="popup ng-hide" style="display: block;" ng-show="popupdelete">
-        <div class="popup-mask">
-          <div class="panel">
-            <div class="panel-inner">
-              <h2>Are you sure you want to delete this event?</h2>
+                  {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
+                    {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control button-default']) !!}
+                  {!! Form::close() !!}
 
-              {!! Form::open(['method' => 'DELETE', 'url' => 'events/' . $event->event_id, 'class' => 'form']) !!}
-                {!! Form::submit("Delete Event", ['class' => 'btn btn-primary form-control button-default']) !!}
-              {!! Form::close() !!}
+                  <p class="link-cancel">
+                    <a href="#" ng-click="popupdelete=false;">No, send me back to edits.</a>
+                  </p>
 
-              <p class="link-cancel">
-                <a href="#" ng-click="popupdelete=false;">No, send me back to edits.</a>
-              </p>
-
+                </div>
+              </div>
             </div>
           </div>
-        </div>
       </div>
+      
       @endif
+
       @include('errors._list')
+
     </div>    
 
     <div class="rightside">
@@ -81,10 +85,6 @@
       </div>
     </div>
   </div>
-
-
-
-
 
   <div class="subnav">
 

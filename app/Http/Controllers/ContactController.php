@@ -112,7 +112,6 @@ class ContactController extends Controller
 
     public function update(ContactRequest $request, $id)
     {
-
         $eventId = $request->event_id;
 
         $guest = Contact::findOrFail($id);

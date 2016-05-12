@@ -218,21 +218,42 @@ class EventController extends Controller
     {
       GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $invitee["contact_id"], 'event_id' => $newEventId]);
     }
-
-    return redirect()->action('EventController@show', $newEventId);
+      return redirect()->action('EventController@show', $newEventId);
   }
 
   public function invitePreviousGuests($id){
-    if(Request::input('events')){
-      $previousGuestList = Event::findOrFail(Request::input('events'))->guestList()->get();
+      if(Request::input('events')) {
+          $added_event_id = Request::input('events');
 
-      foreach ($previousGuestList as $previousGuest) {
-        if($previousGuest->contact['contact_id'] > 0){
-          GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $previousGuest->contact['contact_id'], 'event_id' => $id]);
-        }
+          $currentEventGuestListIds = GuestList::where('event_id', $id)->get()->pluck('contact_id')->toArray();
+          $previousGuestListIds = GuestList::where('event_id', $added_event_id)->get()->pluck('contact_id')->toArray();
+
+          $contacts_to_add = array_diff($previousGuestListIds, $currentEventGuestListIds);
+          $duplicates_to_remove = array_intersect($previousGuestListIds, $currentEventGuestListIds);
+
+          $count_of_additions = count($contacts_to_add);
+
+          $count_of_duplicates = count($duplicates_to_remove);
+          $duplicate_names = array();
+
+          foreach($duplicates_to_remove as $duplicate){
+
+            $previous_guest_first_name = Contact::find($duplicate)->toArray()['first_name'];
+            $previous_guest_last_name = Contact::find($duplicate)->toArray()['last_name'];
+            //dd($previous_guest_first_name . " " . $previous_guest_last_name);
+            $duplicate_names[] = $previous_guest_first_name . " " . $previous_guest_last_name;
+          }
+
+          $passToView = array_merge(['popup' => $count_of_additions, 'amount_of_duplicates' => $count_of_duplicates ], $duplicate_names);
+
+          //dd($passToView);
+
+          foreach ($contacts_to_add as $contact) {
+            GuestList::create(['rsvp' => 0, 'checked_in_by' => null, 'contact_id' => $contact, 'event_id' => $id]);
+          }
       }
-    }
-    return redirect()->action('EventController@show', $id);
+    //return redirect()->back()->with('popup', $count_of_additions);
+      return redirect()->back()->with($passToView);
   }
 
   public function toggleStatus(Request $request){

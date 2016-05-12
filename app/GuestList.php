@@ -33,6 +33,9 @@ class GuestList extends Model
     * 
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
+	public function guestcontacts(){
+		return $this->hasMany('App\Contact','contact_id','contact_id');
+	}
     public function contact(){
     	return $this->belongsTo('App\Contact');
     }//does this relationship make sense?
