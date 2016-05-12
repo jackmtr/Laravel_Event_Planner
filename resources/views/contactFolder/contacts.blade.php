@@ -126,7 +126,7 @@
 
 						<h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
 
-						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form',  'id' => 'contactForm']) !!}
+						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form',  'id' => 'contactCreateForm']) !!}
 
 							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 
@@ -169,7 +169,9 @@
 		$(document).ready(function(){
 
 
-			$('#contactCreateForm').validate();
+			$('#contactCreateForm').validate({
+			errorElement: 'div',
+		});
 
 			@include('javascript._phoneJavascript')	
 

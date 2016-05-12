@@ -54,13 +54,13 @@
         <h2>Edit Event {!! $event->event_name !!}</h2>
 
         <div>
-        {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'id' => 'eventForm' ]) !!}
+          {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'id' => 'eventForm' ]) !!}
 
-        @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null, 'eventEndTime' => null])
+            @include('eventFolder._eventForm', ['submitButtonText' => 'Edit Event', 'eventDate' => null, 'eventTime' => null, 'eventEndTime' => null])
 
-        {!! Form::close() !!}
+          {!! Form::close() !!}
         </div>
-        
+
         @if( $event['event_status']  != 1)
         <input type="submit" name="button" class="button-default" ng-click="popupdelete = true;" value="Delete Event" />
 
@@ -160,7 +160,7 @@
 
                   <h1>Create Contact</h1>
 
-                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'class' => 'form']) !!}
+                  {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'class' => 'form', 'id' => 'guestContactForm']) !!}
 
                   {!! Form::hidden('eventId', $event->event_id) !!}
 
@@ -231,9 +231,9 @@
 
             {!! Form::model($guest['contact'], ['method' => 'PATCH', 'action' => ['ContactController@update', $guest['contact']['contact_id']],'class' => 'form', 'id' => 'contactForm']) !!}
 
-            {!! Form::hidden('event_id', $event->event_id) !!}
+              {!! Form::hidden('event_id', $event->event_id) !!}
 
-            @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
+              @include('contactFolder._contactForm', ['submitButtonText' => 'Update Contact', 'edit' => true, 'object' => $guest['contact']])
 
             {!! Form::close() !!}
           </div>
@@ -255,9 +255,15 @@ $(document).ready(function(){
     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
   });
 
-  $('#eventForm').validate();
-  $('#contactForm').validate();
-  $('#guestContactForm').validate();
+  $('#eventForm').validate({
+      errorElement: 'div',
+    });
+  $('#contactForm').validate({
+      errorElement: 'div',
+    });
+  $('#guestContactForm').validate({
+      errorElement: 'div',
+    });
 
   @include('javascript._phoneJavascript')
 

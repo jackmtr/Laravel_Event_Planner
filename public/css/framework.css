@@ -1387,7 +1387,6 @@ button.with-icon-right i, a.with-icon-right i {
     -ms-flex-align: center;
     align-items: center; }
     .popup-form #eventForm #innerPopupEventForm {
-      margin: auto;
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex; }

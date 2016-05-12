@@ -17,7 +17,9 @@
 	<script>
 		$(document).ready(function(){
 
-			$('#contactCreateForm').validate();
+			$('#contactCreateForm').validate({
+			errorElement: 'div',
+		});
 
 			@include('javascript._phoneJavascript')		
 		});

@@ -14,6 +14,8 @@
 
 @section('javascript')
 	<script>
-		$(#eventForm).validate();
+		$(#eventCreateForm).validate({
+			errorElement: 'div',
+		});
 	</script>
 @endsection
