@@ -5,7 +5,7 @@
 
     @include('flash')
 
-    {!! Form::open(['url' => 'register', 'class' => 'form', 'novalidate' => 'novalidate', 'files' => 'true']) !!}
+    {!! Form::open(['url' => 'register', 'class' => 'inputform', 'id' => 'userCreateForm']) !!}
 
         <div class="form-group">
             {!! Form::label('name', 'Name: ') !!}
@@ -28,7 +28,7 @@
         </div>  
 
         <div class="form-group">
-            {!! Form::submit("Register New Event Coordinator", ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit("Register New Event Coordinator", ['class' => 'btn btn-primary form-control button-default']) !!}
         </div>           
 
     {!! Form::close() !!}
