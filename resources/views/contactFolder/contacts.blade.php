@@ -7,10 +7,12 @@
 
 		<h2>Contacts</h2>
       @include('flash')
-		<div>
+		<div class="right-subnav-contact">
 			<a href="{{ url('/contacts/create') }}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Contact</a><br/>
-			<a href="#" ng-click="popupImport=true"><i class="fa fa-download portButton" aria-hidden="true"></i> Import Contacts</a><br/>
-			<a href="{{url('/export/contacts') }}"><i class="fa fa-download portButton" aria-hidden="true"></i> Export Contacts</a>
+			<div class="port-buttons">
+				<a href="#" ng-click="popupImport=true" class="portButton"><i class="fa fa-download portButton" aria-hidden="true"></i> Import Contacts</a><br/>
+				<a href="{{url('/export/contacts') }}" class="portButton"><i class="fa fa-upload" aria-hidden="true"></i> Export Contacts</a>			
+			</div>
 		</div>
 
 			<div class="popup ng-hide" style="display: block;" ng-show="popupImport">
@@ -129,7 +131,7 @@
 
 						<h2>Edit Information for {{$contact['first_name'] . " " . $contact['last_name']}}</h2>
 
-						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form',  'id' => 'contactCreateForm']) !!}
+						{!! Form::model($contact, ['method' => 'PATCH', 'action' => ['ContactController@update', $contact['contact_id']],'class' => 'form inputform',  'id' => 'contactCreateForm']) !!}
 
 							@include('contactFolder._contactForm', ['submitButtonText' => 'Edit Contact', 'edit' => true, 'object' => $contact])
 

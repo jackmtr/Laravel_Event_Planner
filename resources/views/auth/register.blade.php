@@ -5,7 +5,7 @@
 
     @include('flash')
 
-    {!! Form::open(['url' => 'register', 'class' => 'form', 'id' => 'userCreateForm']) !!}
+    {!! Form::open(['url' => 'register', 'class' => 'inputform', 'id' => 'userCreateForm']) !!}
 
         <div class="form-group">
             {!! Form::label('name', 'Name: ') !!}

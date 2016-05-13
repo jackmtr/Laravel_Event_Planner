@@ -3,7 +3,7 @@
 <div class="form container">
     <h1>Create Contact</h1>
 
-    {!! Form::open(['url' => 'contacts', 'class' => 'form', 'id' => 'contactCreateForm']) !!}
+    {!! Form::open(['url' => 'contacts', 'class' => 'inputform', 'id' => 'contactCreateForm']) !!}
 
         @include('contactFolder._contactForm', ['submitButtonText' => 'Create Contact', 'edit' => false])
 

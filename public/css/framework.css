@@ -987,6 +987,28 @@ button.with-icon-right i, a.with-icon-right i {
   .form-group label {
     width: 125px; }
 
+.inputform div:last-child input {
+  margin: auto; }
+
+.port-buttons {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+  .port-buttons a {
+    font-size: 14px !important;
+    margin-left: 20px; }
+
+.right-subnav-contact {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end; }
+
 /* ------------------------------
   Helpers
 ------------------------------ */
@@ -1390,6 +1412,9 @@ button.with-icon-right i, a.with-icon-right i {
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex; }
+
+.innerPopupEventSubmit {
+  margin: auto; }
 
 /* ------------------------------
   Status

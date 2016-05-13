@@ -55,7 +55,7 @@
         <h2>Edit Event {!! $event->event_name !!}</h2>
 
         <div>
-          {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form', 'id' => 'eventForm' ]) !!}
+          {!! Form::model($event, ['method' => 'PATCH', 'action' => ['EventController@update', $event->event_id],'class' => 'form inputform', 'id' => 'eventForm' ]) !!}
 
             @include('eventFolder._eventForm', ['submitButtonText' => 'Update Event', 'eventDate' => null, 'eventTime' => null, 'eventEndTime' => null])
 
@@ -163,9 +163,9 @@
 
                   {!! Form::open(['action' => ['GuestListController@createContactGuest'], 'class' => 'form', 'id' => 'guestContactForm']) !!}
 
-                  {!! Form::hidden('eventId', $event->event_id) !!}
+                    {!! Form::hidden('eventId', $event->event_id) !!}
 
-                  @include('contactFolder._contactForm', ['submitButtonText' => 'Create Contact and Invite to Event', 'edit' => false])
+                    @include('contactFolder._contactForm', ['submitButtonText' => 'Create Contact and Invite to Event', 'edit' => false])
 
                   {!! Form::close() !!}
 

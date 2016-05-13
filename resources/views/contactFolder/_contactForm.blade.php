@@ -69,6 +69,6 @@
 </div>
 <br/>
 
-<div class="form-group">
+<div class="form-group innerPopupEventSubmit">
     {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control button-default']) !!}
 </div>
